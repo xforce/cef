@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=824a78e502417eccd79d65691b35b9a965d72778$
+// $hash=032d3954a4593b3b8dbc02397772139a94338e9f$
 //
 
 #include "include/capi/cef_app_capi.h"
@@ -61,6 +61,7 @@
 #include "libcef_dll/cpptoc/image_cpptoc.h"
 #include "libcef_dll/cpptoc/jsdialog_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
+#include "libcef_dll/cpptoc/media_access_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/menu_model_cpptoc.h"
 #include "libcef_dll/cpptoc/navigation_entry_cpptoc.h"
 #include "libcef_dll/cpptoc/print_dialog_callback_cpptoc.h"
@@ -133,6 +134,7 @@
 #include "libcef_dll/ctocpp/keyboard_handler_ctocpp.h"
 #include "libcef_dll/ctocpp/life_span_handler_ctocpp.h"
 #include "libcef_dll/ctocpp/load_handler_ctocpp.h"
+#include "libcef_dll/ctocpp/media_access_handler_ctocpp.h"
 #include "libcef_dll/ctocpp/menu_model_delegate_ctocpp.h"
 #include "libcef_dll/ctocpp/navigation_entry_visitor_ctocpp.h"
 #include "libcef_dll/ctocpp/pdf_print_callback_ctocpp.h"
@@ -297,6 +299,8 @@ CEF_EXPORT void cef_shutdown() {
   DCHECK(base::AtomicRefCountIsZero(&CefLifeSpanHandlerCToCpp::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefListValueCppToC::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefLoadHandlerCToCpp::DebugObjCt));
+  DCHECK(base::AtomicRefCountIsZero(&CefMediaAccessCallbackCppToC::DebugObjCt));
+  DCHECK(base::AtomicRefCountIsZero(&CefMediaAccessHandlerCToCpp::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefMenuButtonCppToC::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefMenuButtonDelegateCToCpp::DebugObjCt));
   DCHECK(
