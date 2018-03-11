@@ -50,6 +50,7 @@
 #include "include/cef_keyboard_handler.h"
 #include "include/cef_life_span_handler.h"
 #include "include/cef_load_handler.h"
+#include "include/cef_media_access_handler.h"
 #include "include/cef_process_message.h"
 #include "include/cef_render_handler.h"
 #include "include/cef_request_handler.h"
@@ -106,6 +107,15 @@ class CefClient : public virtual CefBaseRefCounted {
   ///
   /*--cef()--*/
   virtual CefRefPtr<CefFocusHandler> GetFocusHandler() { return NULL; }
+
+  ///
+  // Return the handler for media access permissions requests. If no handler is
+  // provided media access will be denied by default.
+  ///
+  /*--cef()--*/
+  virtual CefRefPtr<CefMediaAccessHandler> GetMediaAccessHandler() {
+    return NULL;
+  }
 
   ///
   // Return the handler for JavaScript dialogs. If no handler is provided the

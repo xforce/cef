@@ -8,7 +8,7 @@
 # by hand. See the translator.README.txt file in the tools directory for
 # more information.
 #
-# $hash=67bc21133e37f5361a39f25dcfe004616d467dbc$
+# $hash=87b11fe37b06f89b0aac037d0f04f1a09d138760$
 #
 
 {
@@ -43,6 +43,7 @@
       'include/cef_keyboard_handler.h',
       'include/cef_life_span_handler.h',
       'include/cef_load_handler.h',
+      'include/cef_media_access_handler.h',
       'include/cef_menu_model.h',
       'include/cef_menu_model_delegate.h',
       'include/cef_navigation_entry.h',
@@ -134,6 +135,7 @@
       'include/capi/cef_keyboard_handler_capi.h',
       'include/capi/cef_life_span_handler_capi.h',
       'include/capi/cef_load_handler_capi.h',
+      'include/capi/cef_media_access_handler_capi.h',
       'include/capi/cef_menu_model_capi.h',
       'include/capi/cef_menu_model_delegate_capi.h',
       'include/capi/cef_navigation_entry_capi.h',
@@ -302,6 +304,10 @@
       'libcef_dll/cpptoc/list_value_cpptoc.h',
       'libcef_dll/ctocpp/load_handler_ctocpp.cc',
       'libcef_dll/ctocpp/load_handler_ctocpp.h',
+      'libcef_dll/cpptoc/media_access_callback_cpptoc.cc',
+      'libcef_dll/cpptoc/media_access_callback_cpptoc.h',
+      'libcef_dll/ctocpp/media_access_handler_ctocpp.cc',
+      'libcef_dll/ctocpp/media_access_handler_ctocpp.h',
       'libcef_dll/cpptoc/views/menu_button_cpptoc.cc',
       'libcef_dll/cpptoc/views/menu_button_cpptoc.h',
       'libcef_dll/ctocpp/views/menu_button_delegate_ctocpp.cc',
@@ -584,6 +590,10 @@
       'libcef_dll/ctocpp/list_value_ctocpp.h',
       'libcef_dll/cpptoc/load_handler_cpptoc.cc',
       'libcef_dll/cpptoc/load_handler_cpptoc.h',
+      'libcef_dll/ctocpp/media_access_callback_ctocpp.cc',
+      'libcef_dll/ctocpp/media_access_callback_ctocpp.h',
+      'libcef_dll/cpptoc/media_access_handler_cpptoc.cc',
+      'libcef_dll/cpptoc/media_access_handler_cpptoc.h',
       'libcef_dll/ctocpp/views/menu_button_ctocpp.cc',
       'libcef_dll/ctocpp/views/menu_button_ctocpp.h',
       'libcef_dll/cpptoc/views/menu_button_delegate_cpptoc.cc',

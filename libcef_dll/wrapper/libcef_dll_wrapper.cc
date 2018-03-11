@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=1ae3ab79edc4e841e64836985603e75cd6d9f185$
+// $hash=f431d5673f1233d181eee464240a1773be2b5b47$
 //
 
 #include "include/capi/cef_app_capi.h"
@@ -62,6 +62,7 @@
 #include "libcef_dll/cpptoc/keyboard_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/life_span_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/load_handler_cpptoc.h"
+#include "libcef_dll/cpptoc/media_access_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/menu_model_delegate_cpptoc.h"
 #include "libcef_dll/cpptoc/navigation_entry_visitor_cpptoc.h"
 #include "libcef_dll/cpptoc/pdf_print_callback_cpptoc.h"
@@ -121,6 +122,7 @@
 #include "libcef_dll/ctocpp/image_ctocpp.h"
 #include "libcef_dll/ctocpp/jsdialog_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/list_value_ctocpp.h"
+#include "libcef_dll/ctocpp/media_access_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/menu_model_ctocpp.h"
 #include "libcef_dll/ctocpp/navigation_entry_ctocpp.h"
 #include "libcef_dll/ctocpp/print_dialog_callback_ctocpp.h"
@@ -290,6 +292,8 @@ NO_SANITIZE("cfi-icall") CEF_GLOBAL void CefShutdown() {
   DCHECK(base::AtomicRefCountIsZero(&CefLifeSpanHandlerCppToC::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefListValueCToCpp::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefLoadHandlerCppToC::DebugObjCt));
+  DCHECK(base::AtomicRefCountIsZero(&CefMediaAccessCallbackCToCpp::DebugObjCt));
+  DCHECK(base::AtomicRefCountIsZero(&CefMediaAccessHandlerCppToC::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefMenuButtonCToCpp::DebugObjCt));
   DCHECK(base::AtomicRefCountIsZero(&CefMenuButtonDelegateCppToC::DebugObjCt));
   DCHECK(
@@ -441,7 +445,7 @@ NO_SANITIZE("cfi-icall") CEF_GLOBAL bool CefCrashReportingEnabled() {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefSetCrashKeyValue(const CefString& key, const CefString& value) {
+    void CefSetCrashKeyValue(const CefString& key, const CefString& value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: key; type: string_byref_const
@@ -586,10 +590,10 @@ CEF_GLOBAL void CefLoadCRLSetsFile(const CefString& path) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
-                                     const CefString& target_protocol,
-                                     const CefString& target_domain,
-                                     bool allow_target_subdomains) {
+    bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
+                                         const CefString& target_protocol,
+                                         const CefString& target_domain,
+                                         bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
@@ -613,10 +617,10 @@ bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-bool CefRemoveCrossOriginWhitelistEntry(const CefString& source_origin,
-                                        const CefString& target_protocol,
-                                        const CefString& target_domain,
-                                        bool allow_target_subdomains) {
+    bool CefRemoveCrossOriginWhitelistEntry(const CefString& source_origin,
+                                            const CefString& target_protocol,
+                                            const CefString& target_domain,
+                                            bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
@@ -677,7 +681,7 @@ CEF_GLOBAL bool CefCreateURL(const CefURLParts& parts, CefString& url) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL CefString
-CefFormatUrlForSecurityDisplay(const CefString& origin_url) {
+    CefFormatUrlForSecurityDisplay(const CefString& origin_url) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: origin_url; type: string_byref_const
@@ -715,8 +719,8 @@ CEF_GLOBAL CefString CefGetMimeType(const CefString& extension) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefGetExtensionsForMimeType(const CefString& mime_type,
-                                 std::vector<CefString>& extensions) {
+    void CefGetExtensionsForMimeType(const CefString& mime_type,
+                                     std::vector<CefString>& extensions) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: mime_type; type: string_byref_const
@@ -854,8 +858,8 @@ CEF_GLOBAL CefRefPtr<CefValue> CefParseJSONAndReturnError(
 }
 
 NO_SANITIZE("cfi-icall")
-CEF_GLOBAL CefString CefWriteJSON(CefRefPtr<CefValue> node,
-                                  cef_json_writer_options_t options) {
+CEF_GLOBAL CefString
+    CefWriteJSON(CefRefPtr<CefValue> node, cef_json_writer_options_t options) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: node; type: refptr_same
@@ -1066,7 +1070,7 @@ CEF_GLOBAL bool CefRegisterExtension(const CefString& extension_name,
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefVisitWebPluginInfo(CefRefPtr<CefWebPluginInfoVisitor> visitor) {
+    void CefVisitWebPluginInfo(CefRefPtr<CefWebPluginInfoVisitor> visitor) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: visitor; type: refptr_diff
@@ -1133,8 +1137,8 @@ CEF_GLOBAL void CefIsWebPluginUnstable(
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefRegisterWidevineCdm(const CefString& path,
-                            CefRefPtr<CefRegisterCdmCallback> callback) {
+    void CefRegisterWidevineCdm(const CefString& path,
+                                CefRefPtr<CefRegisterCdmCallback> callback) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: path; type: string_byref_const

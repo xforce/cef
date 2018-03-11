@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=1dbb0adf7ac5fd42b5a79d271834781664a7fd47$
+// $hash=8396f0db348f7488040ad157fc47c990add01c4f$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_CLIENT_CAPI_H_
@@ -52,6 +52,7 @@
 #include "include/capi/cef_keyboard_handler_capi.h"
 #include "include/capi/cef_life_span_handler_capi.h"
 #include "include/capi/cef_load_handler_capi.h"
+#include "include/capi/cef_media_access_handler_capi.h"
 #include "include/capi/cef_process_message_capi.h"
 #include "include/capi/cef_render_handler_capi.h"
 #include "include/capi/cef_request_handler_capi.h"
@@ -112,6 +113,13 @@ typedef struct _cef_client_t {
   // Return the handler for focus events.
   ///
   struct _cef_focus_handler_t*(CEF_CALLBACK* get_focus_handler)(
+      struct _cef_client_t* self);
+
+  ///
+  // Return the handler for media access permissions requests. If no handler is
+  // provided media access will be denied by default.
+  ///
+  struct _cef_media_access_handler_t*(CEF_CALLBACK* get_media_access_handler)(
       struct _cef_client_t* self);
 
   ///

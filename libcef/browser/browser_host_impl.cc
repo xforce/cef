@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 
+#include "include/cef_media_access_handler.h"
 #include "libcef/browser/browser_context_impl.h"
 #include "libcef/browser/browser_info.h"
 #include "libcef/browser/browser_info_manager.h"
@@ -2608,59 +2609,164 @@ void CefBrowserHostImpl::ResizeDueToAutoResize(content::WebContents* source,
   UpdatePreferredSize(source, new_size);
 }
 
+class CefMediaAccessCallbackImpl : public CefMediaAccessCallback {
+ public:
+  typedef content::MediaResponseCallback CallbackType;
+
+  explicit CefMediaAccessCallbackImpl(
+      const content::MediaStreamRequest& request,
+      CallbackType&& callback)
+      : callback_(std::move(callback)), request_(request) {}
+
+  void Continue(int allowed_permissions) override {
+    if (CEF_CURRENTLY_ON_UIT()) {
+      if (!callback_.is_null()) {
+        content::MediaStreamDevices devices;
+
+        if (allowed_permissions == 0) {
+          std::move(callback_).Run(devices,
+                                   content::MEDIA_DEVICE_PERMISSION_DENIED,
+                                   std::unique_ptr<content::MediaStreamUI>());
+        } else {
+          // Based on chrome/browser/media/media_stream_devices_controller.cc
+          bool microphone_requested =
+              (request_.audio_type == content::MEDIA_DEVICE_AUDIO_CAPTURE);
+          bool webcam_requested =
+              (request_.video_type == content::MEDIA_DEVICE_VIDEO_CAPTURE);
+          bool screen_audio_requested =
+              (request_.audio_type == content::MEDIA_GUM_DESKTOP_AUDIO_CAPTURE);
+          bool screen_requested =
+              (request_.video_type == content::MEDIA_GUM_DESKTOP_VIDEO_CAPTURE);
+          if (microphone_requested || webcam_requested ||
+              screen_audio_requested || screen_requested) {
+            // Pick the desired device or fall back to the first available of
+            // the given type.
+            if (microphone_requested &&
+                (allowed_permissions &
+                 cef_media_access_permission_types_t::
+                     MEDIA_PERMISSION_DEVICE_AUDIO_CAPTURE)) {
+              CefMediaCaptureDevicesDispatcher::GetInstance()
+                  ->GetRequestedDevice(request_.requested_audio_device_id, true,
+                                       false, &devices);
+            }
+            if (webcam_requested &&
+                (allowed_permissions &
+                 cef_media_access_permission_types_t::
+                     MEDIA_PERMISSION_DEVICE_VIDEO_CAPTURE)) {
+              CefMediaCaptureDevicesDispatcher::GetInstance()
+                  ->GetRequestedDevice(request_.requested_video_device_id,
+                                       false, true, &devices);
+            }
+            if (screen_audio_requested &&
+                (allowed_permissions &
+                 cef_media_access_permission_types_t::
+                     MEDIA_PERMISSION_DESKTOP_AUDIO_CAPTURE)) {
+              devices.push_back(content::MediaStreamDevice(
+                  content::MEDIA_GUM_DESKTOP_AUDIO_CAPTURE, "loopback",
+                  "System Audio"));
+            }
+            if (screen_requested &&
+                (allowed_permissions &
+                 cef_media_access_permission_types_t::
+                     MEDIA_PERMISSION_DESKTOP_VIDEO_CAPTURE)) {
+              content::DesktopMediaID media_id;
+              if (request_.requested_video_device_id.empty()) {
+                media_id = content::DesktopMediaID(
+                    content::DesktopMediaID::TYPE_SCREEN,
+                    -1 /* webrtc::kFullDesktopScreenId */);
+              } else {
+                media_id = content::DesktopMediaID::Parse(
+                    request_.requested_video_device_id);
+              }
+              devices.push_back(content::MediaStreamDevice(
+                  content::MEDIA_GUM_DESKTOP_VIDEO_CAPTURE, media_id.ToString(),
+                  "Screen"));
+            }
+          }
+
+          std::move(callback_).Run(devices,
+                                   devices.empty()
+                                       ? content::MEDIA_DEVICE_INVALID_STATE
+                                       : content::MEDIA_DEVICE_OK,
+                                   std::unique_ptr<content::MediaStreamUI>());
+        }
+        callback_.Reset();
+      }
+    } else {
+      CEF_POST_TASK(CEF_UIT, base::Bind(&CefMediaAccessCallbackImpl::Continue,
+                                        this, allowed_permissions));
+    }
+  }
+
+  void Disconnect() { callback_.Reset(); }
+
+ private:
+  CallbackType callback_;
+  content::MediaStreamRequest request_;
+
+  IMPLEMENT_REFCOUNTING(CefMediaAccessCallbackImpl);
+  DISALLOW_COPY_AND_ASSIGN(CefMediaAccessCallbackImpl);
+};
+
 void CefBrowserHostImpl::RequestMediaAccessPermission(
     content::WebContents* web_contents,
     const content::MediaStreamRequest& request,
     content::MediaResponseCallback callback) {
   CEF_REQUIRE_UIT();
 
-  content::MediaStreamDevices devices;
+  bool proceed = false;
 
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(switches::kEnableMediaStream)) {
-    // Cancel the request.
+  CefRefPtr<CefBrowserHostImpl> browser =
+      CefBrowserHostImpl::GetBrowserForContents(web_contents);
+
+  if (browser.get()) {
+    CefRefPtr<CefClient> client = browser->GetClient();
+    if (client.get()) {
+      CefRefPtr<CefMediaAccessHandler> handler =
+          client->GetMediaAccessHandler();
+      if (handler.get()) {
+        CefRefPtr<CefMediaAccessCallbackImpl> callbackImpl(
+            new CefMediaAccessCallbackImpl(request, std::move(callback)));
+
+        bool microphone_requested =
+            (request.audio_type == content::MEDIA_DEVICE_AUDIO_CAPTURE);
+        bool webcam_requested =
+            (request.video_type == content::MEDIA_DEVICE_VIDEO_CAPTURE);
+        bool screen_audio_requested =
+            (request.video_type == content::MEDIA_GUM_DESKTOP_AUDIO_CAPTURE);
+        bool screen_video_requested =
+            (request.video_type == content::MEDIA_GUM_DESKTOP_VIDEO_CAPTURE);
+
+        const int requested_permissions =
+            (microphone_requested ? cef_media_access_permission_types_t::
+                                        MEDIA_PERMISSION_DEVICE_AUDIO_CAPTURE
+                                  : 0) |
+            (webcam_requested ? cef_media_access_permission_types_t::
+                                    MEDIA_PERMISSION_DEVICE_VIDEO_CAPTURE
+                              : 0) |
+            (screen_audio_requested ? cef_media_access_permission_types_t::
+                                          MEDIA_PERMISSION_DESKTOP_AUDIO_CAPTURE
+                                    : 0) |
+            (screen_video_requested ? cef_media_access_permission_types_t::
+                                          MEDIA_PERMISSION_DESKTOP_VIDEO_CAPTURE
+                                    : 0);
+
+        // Notify the handler.
+        proceed = handler->OnRequestMediaAccessPermission(
+            browser.get(), request.security_origin.spec(),
+            requested_permissions, callbackImpl.get());
+        if (!proceed)
+          callbackImpl->Disconnect();
+      }
+    }
+  }
+
+  if (!proceed) {
+    // Disallow media access by default.
+    content::MediaStreamDevices devices;
     std::move(callback).Run(devices, content::MEDIA_DEVICE_PERMISSION_DENIED,
                             std::unique_ptr<content::MediaStreamUI>());
-    return;
   }
-
-  // Based on chrome/browser/media/media_stream_devices_controller.cc
-  bool microphone_requested =
-      (request.audio_type == content::MEDIA_DEVICE_AUDIO_CAPTURE);
-  bool webcam_requested =
-      (request.video_type == content::MEDIA_DEVICE_VIDEO_CAPTURE);
-  bool screen_requested =
-      (request.video_type == content::MEDIA_GUM_DESKTOP_VIDEO_CAPTURE);
-  if (microphone_requested || webcam_requested || screen_requested) {
-    // Pick the desired device or fall back to the first available of the
-    // given type.
-    if (microphone_requested) {
-      CefMediaCaptureDevicesDispatcher::GetInstance()->GetRequestedDevice(
-          request.requested_audio_device_id, true, false, &devices);
-    }
-    if (webcam_requested) {
-      CefMediaCaptureDevicesDispatcher::GetInstance()->GetRequestedDevice(
-          request.requested_video_device_id, false, true, &devices);
-    }
-    if (screen_requested) {
-      content::DesktopMediaID media_id;
-      if (request.requested_video_device_id.empty()) {
-        media_id =
-            content::DesktopMediaID(content::DesktopMediaID::TYPE_SCREEN,
-                                    -1 /* webrtc::kFullDesktopScreenId */);
-      } else {
-        media_id =
-            content::DesktopMediaID::Parse(request.requested_video_device_id);
-      }
-      devices.push_back(
-          content::MediaStreamDevice(content::MEDIA_GUM_DESKTOP_VIDEO_CAPTURE,
-                                     media_id.ToString(), "Screen"));
-    }
-  }
-
-  std::move(callback).Run(devices, content::MEDIA_DEVICE_OK,
-                          std::unique_ptr<content::MediaStreamUI>());
 }
 
 bool CefBrowserHostImpl::CheckMediaAccessPermission(
