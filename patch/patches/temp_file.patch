@@ -1,0 +1,41 @@
+diff --git base/base_switches.cc base/base_switches.cc
+index c1650ea30c1f..d547f0940843 100644
+--- base/base_switches.cc
++++ base/base_switches.cc
+@@ -73,6 +73,8 @@ const char kVModule[]                       = "vmodule";
+ // Will wait for 60 seconds for a debugger to come to attach to the process.
+ const char kWaitForDebugger[]               = "wait-for-debugger";
+ 
++const char kTempFileName[]                  = "temp-file-name";
++
+ // Sends trace events from these categories to a file.
+ // --trace-to-file on its own sends to default categories.
+ const char kTraceToFile[]                   = "trace-to-file";
+diff --git base/base_switches.h base/base_switches.h
+index 4ef070d3f547..267703cff950 100644
+--- base/base_switches.h
++++ base/base_switches.h
+@@ -29,6 +29,7 @@ extern const char kTraceToFileName[];
+ extern const char kV[];
+ extern const char kVModule[];
+ extern const char kWaitForDebugger[];
++extern const char kTempFileName[];
+ 
+ #if defined(OS_WIN)
+ extern const char kDisableUsbKeyboardDetect[];
+diff --git base/files/file_util_posix.cc base/files/file_util_posix.cc
+index e888c82e0784..d58e443e6bb7 100644
+--- base/files/file_util_posix.cc
++++ base/files/file_util_posix.cc
+@@ -127,6 +127,11 @@ bool VerifySpecificPathControlledByUser(const FilePath& path,
+ }
+ 
+ std::string TempFileName() {
++  if(CommandLine::ForCurrentProcess()->HasSwitch(
++    switches::kTempFileName)) {
++    return CommandLine::ForCurrentProcess()->GetSwitchValueASCII(switches::kTempFileName);
++  }
++
+ #if defined(OS_MACOSX)
+   return StringPrintf(".%s.XXXXXX", base::mac::BaseBundleID());
+ #endif
