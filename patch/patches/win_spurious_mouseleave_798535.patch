@@ -1,8 +1,8 @@
 diff --git content/browser/renderer_host/legacy_render_widget_host_win.cc content/browser/renderer_host/legacy_render_widget_host_win.cc
-index 30b95a5dcd0b..bf9d308879cc 100644
+index f80b0a6e8127..e742423bc01e 100644
 --- content/browser/renderer_host/legacy_render_widget_host_win.cc
 +++ content/browser/renderer_host/legacy_render_widget_host_win.cc
-@@ -342,7 +342,7 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseLeave(UINT message,
+@@ -339,7 +339,7 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseLeave(UINT message,
      // has moved outside the bounds of the parent.
      POINT cursor_pos;
      ::GetCursorPos(&cursor_pos);
