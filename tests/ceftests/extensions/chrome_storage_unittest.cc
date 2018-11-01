@@ -225,7 +225,8 @@ class LocalStorageTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.local.set({\"local_key_1\": \"local_value_1\"}, function() {"
+    return "chrome.storage.local.set({\"local_key_1\": \"local_value_1\"}, "
+           "function() {"
            "chrome.storage.local.get(\"local_key_1\", function (items) {"
            "if(items[\"local_key_1\"] == \"local_value_1\") {" +
            GetMessageJS(kSuccessMessage) +
@@ -253,8 +254,10 @@ class LocalStorageGetBytesInUseTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.local.set({\"local_key_2\": \"local_value_2\"}, function() {"
-           "chrome.storage.local.getBytesInUse(\"local_key_2\", function (bytesInUse) {"
+    return "chrome.storage.local.set({\"local_key_2\": \"local_value_2\"}, "
+           "function() {"
+           "chrome.storage.local.getBytesInUse(\"local_key_2\", function "
+           "(bytesInUse) {"
            "if (bytesInUse == 26) {" +
            GetMessageJS(kSuccessMessage) +
            "}});"
@@ -282,7 +285,8 @@ class LocalStorageRemoveTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.local.set({\"local_key_3\": \"local_value_3\"}, function() {"
+    return "chrome.storage.local.set({\"local_key_3\": \"local_value_3\"}, "
+           "function() {"
            "chrome.storage.local.remove(\"local_key_3\", function () {"
            "chrome.storage.local.get(\"local_key_3\", function(items) {"
            "if (items[\"local_key_3\"] == undefined) {" +
@@ -312,8 +316,8 @@ class LocalStorageClearTestHandler : public StorageTestHandler {
     return "var value1Cleared = false;"
            "var value2Cleared = false;"
            "function checkCleared() {"
-           "if (value1Cleared && value2Cleared) {"
-           + GetMessageJS(kSuccessMessage) +
+           "if (value1Cleared && value2Cleared) {" +
+           GetMessageJS(kSuccessMessage) +
            "}}"
            "chrome.storage.local.set({\"local_key_4\": \"local_value_4\","
            "\"local_key_5\": \"local_value_5\"}, function() {"
@@ -353,7 +357,8 @@ class SyncStorageTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.sync.set({\"sync_key_1\": \"sync_value_1\"}, function() {"
+    return "chrome.storage.sync.set({\"sync_key_1\": \"sync_value_1\"}, "
+           "function() {"
            "chrome.storage.sync.get(\"sync_key_1\", function (items) {"
            "if (items[\"sync_key_1\"] == \"sync_value_1\") {" +
            GetMessageJS(kSuccessMessage) +
@@ -381,8 +386,10 @@ class SyncStorageGetBytesInUseTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.sync.set({\"sync_key_2\": \"sync_value_2\"}, function() {"
-           "chrome.storage.sync.getBytesInUse(\"sync_key_2\", function (bytesInUse) {"
+    return "chrome.storage.sync.set({\"sync_key_2\": \"sync_value_2\"}, "
+           "function() {"
+           "chrome.storage.sync.getBytesInUse(\"sync_key_2\", function "
+           "(bytesInUse) {"
            "if (bytesInUse == 24) {" +
            GetMessageJS(kSuccessMessage) +
            "}});"
@@ -409,7 +416,8 @@ class SyncStorageRemoveTestHandler : public StorageTestHandler {
 
  protected:
   std::string GetStorageApiJS() const override {
-    return "chrome.storage.sync.set({\"sync_key_3\": \"sync_value_3\"}, function() {"
+    return "chrome.storage.sync.set({\"sync_key_3\": \"sync_value_3\"}, "
+           "function() {"
            "chrome.storage.sync.remove(\"sync_key_3\", function () {"
            "chrome.storage.sync.get(\"sync_key_3\", function(items) {"
            "if (items[\"sync_key_3\"] == undefined) {" +
@@ -440,8 +448,8 @@ class SyncStorageClearTestHandler : public StorageTestHandler {
            "var value2Cleared = false;"
 
            "function checkCleared() {"
-           "if (value1Cleared && value2Cleared) {"
-           + GetMessageJS(kSuccessMessage) +
+           "if (value1Cleared && value2Cleared) {" +
+           GetMessageJS(kSuccessMessage) +
            "}}"
 
            "chrome.storage.sync.set({\"sync_key_4\": \"sync_value_4\","

@@ -152,8 +152,10 @@ bool IsBoringCEFSwitch(const std::string& flag) {
       switches::kLogFile,
 
       // Chromium internals.
-      "content-image-texture-target", "mojo-platform-channel-handle",
-      "primordial-pipe-token", "service-pipe-token",
+      "content-image-texture-target",
+      "mojo-platform-channel-handle",
+      "primordial-pipe-token",
+      "service-pipe-token",
       "service-request-channel-token",
   };
 

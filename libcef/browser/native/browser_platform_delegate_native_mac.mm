@@ -56,7 +56,7 @@
 @end
 
 // Receives notifications from the browser window. Will delete itself when done.
-@interface CefWindowDelegate : NSObject<NSWindowDelegate> {
+@interface CefWindowDelegate : NSObject <NSWindowDelegate> {
  @private
   CefBrowserHostImpl* browser_;  // weak
   NSWindow* window_;
@@ -333,8 +333,8 @@ void CefBrowserPlatformDelegateNativeMac::TranslateKeyEvent(
       [[[NSString alloc] initWithCharacters:&key_event.unmodified_character
                                      length:1] autorelease];
   NSString* characters =
-      [[[NSString alloc] initWithCharacters:&key_event.character length:1]
-          autorelease];
+      [[[NSString alloc] initWithCharacters:&key_event.character
+                                     length:1] autorelease];
 
   NSEvent* synthetic_event =
       [NSEvent keyEventWithType:event_type

@@ -12,13 +12,13 @@
 #include "tests/cefsimple/simple_handler.h"
 
 // Receives notifications from the application.
-@interface SimpleAppDelegate : NSObject<NSApplicationDelegate>
+@interface SimpleAppDelegate : NSObject <NSApplicationDelegate>
 - (void)createApplication:(id)object;
 - (void)tryToTerminateApplication:(NSApplication*)app;
 @end
 
 // Provide the CefAppProtocol implementation required by CEF.
-@interface SimpleApplication : NSApplication<CefAppProtocol> {
+@interface SimpleApplication : NSApplication <CefAppProtocol> {
  @private
   BOOL handlingSendEvent_;
 }

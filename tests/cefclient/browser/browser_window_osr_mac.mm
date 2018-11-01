@@ -33,7 +33,7 @@ CefTextInputClientOSRMac* GetInputClientFromContext(
 }  // namespace
 
 @interface BrowserOpenGLView
-    : NSOpenGLView<NSDraggingSource, NSDraggingDestination, NSAccessibility> {
+    : NSOpenGLView <NSDraggingSource, NSDraggingDestination, NSAccessibility> {
  @private
   NSTrackingArea* tracking_area_;
   client::BrowserWindowOsrMac* browser_window_;
@@ -238,8 +238,8 @@ NSPoint ConvertPointFromWindowToScreen(NSWindow* window, NSPoint point) {
   point = [self convertPointToBackingInternal:point];
 
   if (!isUp) {
-    was_last_mouse_down_on_view_ =
-        ![self isOverPopupWidgetX:point.x andY:point.y];
+    was_last_mouse_down_on_view_ = ![self isOverPopupWidgetX:point.x
+                                                        andY:point.y];
   } else if (was_last_mouse_down_on_view_ &&
              [self isOverPopupWidgetX:point.x andY:point.y] &&
              ([self getPopupXOffset] || [self getPopupYOffset])) {
@@ -490,7 +490,7 @@ NSPoint ConvertPointFromWindowToScreen(NSWindow* window, NSPoint point) {
     browser->GetFocusedFrame()->Paste();
 }
 
-- (void) delete:(id)sender {
+- (void)delete:(id)sender {
   CefRefPtr<CefBrowser> browser = [self getBrowser];
   if (browser.get())
     browser->GetFocusedFrame()->Delete();

@@ -454,10 +454,10 @@ HRESULT DropSourceWin::QueryContinueDrag(BOOL fEscapePressed,
   return S_OK;
 }
 
-HRESULT DragEnumFormatEtc::CreateEnumFormatEtc(
-    UINT cfmt,
-    FORMATETC* afmt,
-    IEnumFORMATETC** ppEnumFormatEtc) {
+HRESULT
+DragEnumFormatEtc::CreateEnumFormatEtc(UINT cfmt,
+                                       FORMATETC* afmt,
+                                       IEnumFORMATETC** ppEnumFormatEtc) {
   if (cfmt == 0 || afmt == 0 || ppEnumFormatEtc == 0)
     return E_INVALIDARG;
 

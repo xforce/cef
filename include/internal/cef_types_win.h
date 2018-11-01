@@ -53,7 +53,9 @@ extern "C" {
 ///
 // Structure representing CefExecuteProcess arguments.
 ///
-typedef struct _cef_main_args_t { HINSTANCE instance; } cef_main_args_t;
+typedef struct _cef_main_args_t {
+  HINSTANCE instance;
+} cef_main_args_t;
 
 ///
 // Structure representing window information.

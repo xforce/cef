@@ -804,9 +804,7 @@ class TestMenuButtonCustomPopupDelegate : public CefMenuButtonDelegate,
     return parent_window_;
   }
 
-  bool IsFrameless(CefRefPtr<CefWindow> window) override {
-    return true;
-  }
+  bool IsFrameless(CefRefPtr<CefWindow> window) override { return true; }
 
   void OnFocus(CefRefPtr<CefView> view) override {
     if (popup_window_ && view->GetWindow()->IsSame(popup_window_)) {

@@ -13,7 +13,7 @@ class CommandLinePrefStore;
 namespace content {
 class RenderViewHost;
 struct WebPreferences;
-}
+}  // namespace content
 
 namespace user_prefs {
 class PrefRegistrySyncable;

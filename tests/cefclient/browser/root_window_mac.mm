@@ -19,7 +19,7 @@
 
 // Receives notifications from controls and the browser window. Will delete
 // itself when done.
-@interface RootWindowDelegate : NSObject<NSWindowDelegate> {
+@interface RootWindowDelegate : NSObject <NSWindowDelegate> {
  @private
   NSWindow* window_;
   client::RootWindowMac* root_window_;

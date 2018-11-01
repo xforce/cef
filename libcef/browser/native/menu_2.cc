@@ -56,4 +56,4 @@ void Menu2::SetMinimumWidth(int width) {
   wrapper_->SetMinimumWidth(width);
 }
 
-}  // namespace
+}  // namespace views

@@ -319,7 +319,7 @@ inline Atomic32 Release_Load(volatile const Atomic32* ptr) {
   return *ptr;
 }
 
-}  // namespace base::subtle
+}  // namespace subtle
 }  // namespace base
 
 #endif  // CEF_INCLUDE_BASE_INTERNAL_CEF_ATOMICOPS_ARM_GCC_H_

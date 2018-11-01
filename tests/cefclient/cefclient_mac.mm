@@ -40,7 +40,7 @@ NSMenuItem* GetMenuItemWithAction(NSMenu* menu, SEL action_selector) {
 }  // namespace
 
 // Receives notifications from the application. Will delete itself when done.
-@interface ClientAppDelegate : NSObject<NSApplicationDelegate> {
+@interface ClientAppDelegate : NSObject <NSApplicationDelegate> {
  @private
   bool with_controls_;
   bool with_osr_;
@@ -70,7 +70,7 @@ NSMenuItem* GetMenuItemWithAction(NSMenu* menu, SEL action_selector) {
 @end
 
 // Provide the CefAppProtocol implementation required by CEF.
-@interface ClientApplication : NSApplication<CefAppProtocol> {
+@interface ClientApplication : NSApplication <CefAppProtocol> {
  @private
   BOOL handlingSendEvent_;
 }

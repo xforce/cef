@@ -21,7 +21,7 @@ void AppendArray(const std::vector<std::string>& source,
     return;
   target->insert(target->end(), source.begin(), source.end());
 }
-}
+}  // namespace
 
 CefSchemeRegistrarImpl::CefSchemeRegistrarImpl() {}
 

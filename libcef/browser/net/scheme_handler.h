@@ -14,7 +14,7 @@
 namespace net {
 class HostResolver;
 class URLRequestJobFactoryImpl;
-}
+}  // namespace net
 
 class CefURLRequestManager;
 

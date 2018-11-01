@@ -13,7 +13,7 @@
 
 // Helper object that receives the notification that the dialog/sheet is
 // going away. Is responsible for cleaning itself up.
-@interface CefJavaScriptDialogHelper : NSObject<NSAlertDelegate> {
+@interface CefJavaScriptDialogHelper : NSObject <NSAlertDelegate> {
  @private
   base::scoped_nsobject<NSAlert> alert_;
   NSTextField* textField_;  // WEAK; owned by alert_

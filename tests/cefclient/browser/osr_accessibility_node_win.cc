@@ -431,9 +431,9 @@ STDMETHODIMP CefIAccessible::get_accState(VARIANT varChild,
 }
 
 // Check and returns Accessibility Shortcut if any for element
-STDMETHODIMP CefIAccessible::get_accKeyboardShortcut(
-    VARIANT varChild,
-    BSTR* pszKeyboardShortcut) {
+STDMETHODIMP
+CefIAccessible::get_accKeyboardShortcut(VARIANT varChild,
+                                        BSTR* pszKeyboardShortcut) {
   HRESULT retCode = DATACHECK(node_);
   if (SUCCEEDED(retCode)) {
     if (pszKeyboardShortcut && VALID_CHILDID(varChild))

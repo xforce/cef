@@ -215,7 +215,7 @@ inline Atomic64 Release_CompareAndSwap(volatile Atomic64* ptr,
 
 #endif  // defined(_WIN64)
 
-}  // namespace base::subtle
+}  // namespace subtle
 }  // namespace base
 
 #endif  // CEF_INCLUDE_BASE_INTERNAL_CEF_ATOMICOPS_X86_MSVC_H_

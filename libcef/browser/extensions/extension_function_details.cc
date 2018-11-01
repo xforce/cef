@@ -21,8 +21,8 @@
 #include "extensions/browser/extension_function_dispatcher.h"
 #include "extensions/common/error_utils.h"
 
-using content::WebContents;
 using content::RenderViewHost;
+using content::WebContents;
 
 namespace extensions {
 

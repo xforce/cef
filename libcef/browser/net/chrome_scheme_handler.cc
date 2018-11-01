@@ -83,7 +83,8 @@ const char* kAllowedWebUIHosts[] = {
 // Hosts that don't have useful output when linked directly. They'll be excluded
 // from the "chrome://webui-hosts" listing.
 const char* kUnlistedHosts[] = {
-    content::kChromeUINetworkErrorHost, content::kChromeUIResourcesHost,
+    content::kChromeUINetworkErrorHost,
+    content::kChromeUIResourcesHost,
 };
 
 enum ChromeHostId {

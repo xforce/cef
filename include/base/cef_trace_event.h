@@ -413,7 +413,7 @@ class CefTraceEndOnScopeClose {
   const char* name_;
 };
 
-}  // cef_trace_event
+}  // namespace cef_trace_event
 
 #endif  // !USING_CHROMIUM_INCLUDES
 

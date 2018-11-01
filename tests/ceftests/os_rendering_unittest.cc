@@ -473,7 +473,7 @@ class OSRTestHandler : public RoutingTestHandler,
         break;
       case OSR_TEST_TAKE_FOCUS:
         if (StartTest() || started()) {
-// Tab traversal across HTML element
+          // Tab traversal across HTML element
 
 #if defined(OS_WIN)
           SendKeyEvent(browser, VK_TAB);
@@ -703,7 +703,7 @@ class OSRTestHandler : public RoutingTestHandler,
             EXPECT_GT(dirtyRects[0].height, kExpandedSelectRect.height);
           }
 
-// first pixel of border
+          // first pixel of border
 
 #if defined(OS_MACOSX)
           EXPECT_EQ(0xff5d99d6U, *(reinterpret_cast<const uint32*>(buffer)));

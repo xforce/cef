@@ -14,10 +14,12 @@
 #include "tests/shared/browser/main_message_loop.h"
 #include "tests/shared/browser/util_win.h"
 
-#define ColorUNDERLINE 0xFF000000  // Black SkColor value for underline,
-                                   // same as Blink.
-#define ColorBKCOLOR 0x00000000    // White SkColor value for background,
-                                   // same as Blink.
+#define ColorUNDERLINE \
+  0xFF000000  // Black SkColor value for underline,
+              // same as Blink.
+#define ColorBKCOLOR \
+  0x00000000  // White SkColor value for background,
+              // same as Blink.
 
 namespace client {
 

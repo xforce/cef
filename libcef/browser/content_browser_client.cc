@@ -735,7 +735,8 @@ void CefContentBrowserClient::AppendExtraCommandLineSwitches(
     // Propagate the following switches to the zygote command line (along with
     // any associated values) if present in the browser command line.
     static const char* const kSwitchNames[] = {
-        switches::kPpapiFlashPath, switches::kPpapiFlashVersion,
+        switches::kPpapiFlashPath,
+        switches::kPpapiFlashVersion,
     };
     command_line->CopySwitchesFrom(*browser_cmd, kSwitchNames,
                                    arraysize(kSwitchNames));

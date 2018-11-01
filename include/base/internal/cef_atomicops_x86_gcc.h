@@ -260,7 +260,7 @@ inline Atomic64 Release_CompareAndSwap(volatile Atomic64* ptr,
 
 #endif  // defined(__x86_64__)
 
-}  // namespace base::subtle
+}  // namespace subtle
 }  // namespace base
 
 #undef ATOMICOPS_COMPILER_BARRIER

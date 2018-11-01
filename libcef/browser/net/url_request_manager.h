@@ -15,7 +15,7 @@ class NetworkDelegate;
 class URLRequest;
 class URLRequestJob;
 class URLRequestJobFactoryImpl;
-}
+}  // namespace net
 
 class CefProtocolHandler;
 

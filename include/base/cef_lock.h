@@ -163,9 +163,9 @@ class AutoUnlock {
 // Implement classes in the cef_internal namespace and then expose them to the
 // base namespace. This avoids conflicts with the base.lib implementation when
 // linking sandbox support on Windows.
-using cef_internal::Lock;
 using cef_internal::AutoLock;
 using cef_internal::AutoUnlock;
+using cef_internal::Lock;
 
 }  // namespace base
 
