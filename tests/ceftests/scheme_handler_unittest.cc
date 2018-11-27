@@ -1653,8 +1653,8 @@ void RegisterSchemeHandlerCustomSchemes(
     std::vector<CefString>& cookiable_schemes) {
   // Add a custom standard scheme.
   registrar->AddCustomScheme("customstd", true, false, false, false, true,
-                             false);
+                             false, false);
   // Ad a custom non-standard scheme.
   registrar->AddCustomScheme("customnonstd", false, false, false, false, false,
-                             false);
+                             false, false);
 }
