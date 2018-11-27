@@ -84,6 +84,9 @@ class CefContentClient : public content::ContentClient,
     // A scheme that can bypass Content-Security-Policy (CSP) checks. This value
     // should be false in most cases where |is_standard| is true.
     bool is_csp_bypassing;
+
+    // A scheme that can recevie fetch request.
+    bool is_fetch_enabled;
   };
   typedef std::list<SchemeInfo> SchemeInfoList;
 

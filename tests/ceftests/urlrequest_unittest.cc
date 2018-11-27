@@ -2218,7 +2218,8 @@ void RegisterURLRequestCustomSchemes(
     CefRawPtr<CefSchemeRegistrar> registrar,
     std::vector<CefString>& cookiable_schemes) {
   const std::string& scheme = GetRequestScheme(false);
-  registrar->AddCustomScheme(scheme, true, false, false, false, true, false);
+  registrar->AddCustomScheme(scheme, true, false, false, false, true, false,
+                             false);
   cookiable_schemes.push_back(scheme);
 }
 

@@ -137,6 +137,10 @@ class CefSchemeRegistrar : public CefBaseScoped {
   // (CSP) checks. This value should be false in most cases where |is_standard|
   // is true.
   //
+  //
+  // If |is_fetch_enabled| is true the scheme can be used to execute fetch API
+  // requests against...blah
+  //
   // This function may be called on any thread. It should only be called once
   // per unique |scheme_name| value. If |scheme_name| is already registered or
   // if an error occurs this method will return false.
@@ -148,7 +152,8 @@ class CefSchemeRegistrar : public CefBaseScoped {
                                bool is_display_isolated,
                                bool is_secure,
                                bool is_cors_enabled,
-                               bool is_csp_bypassing) = 0;
+                               bool is_csp_bypassing,
+                               bool is_fetch_enabled) = 0;
 };
 
 ///
