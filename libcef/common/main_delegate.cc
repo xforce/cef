@@ -558,15 +558,6 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
 
     std::vector<std::string> disable_features;
 
-    if (settings.windowless_rendering_enabled) {
-      // Disable VizDisplayCompositor when OSR is enabled until
-      // we have implemented Viz support
-      if (features::kVizDisplayCompositor.default_state ==
-          base::FEATURE_ENABLED_BY_DEFAULT) {
-        disable_features.push_back(features::kVizDisplayCompositor.name);
-      }
-    }
-
     // Disable NetworkService for now
     // TODO(cef): Implement the required changes for network service
     if (network::features::kNetworkService.default_state ==

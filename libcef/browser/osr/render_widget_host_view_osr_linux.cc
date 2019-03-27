@@ -164,22 +164,6 @@ XCursorCache* cursor_cache = nullptr;
 
 }  // namespace
 
-void CefRenderWidgetHostViewOSR::PlatformCreateCompositorWidget(
-    bool is_guest_view_hack) {
-  // Create a hidden 1x1 window. It will delete itself on close.
-  window_ = new CefWindowX11(NULL, None, gfx::Rect(0, 0, 1, 1), "");
-  compositor_widget_ = window_->xwindow();
-}
-
-void CefRenderWidgetHostViewOSR::PlatformResizeCompositorWidget(
-    const gfx::Size&) {}
-
-void CefRenderWidgetHostViewOSR::PlatformDestroyCompositorWidget() {
-  DCHECK(window_);
-  window_->Close();
-  compositor_widget_ = gfx::kNullAcceleratedWidget;
-}
-
 ui::PlatformCursor CefRenderWidgetHostViewOSR::GetPlatformCursor(
     blink::WebCursorInfo::Type type) {
   if (type == WebCursorInfo::kTypeNone) {
