@@ -15,8 +15,8 @@ CefVideoConsumerOSR::CefVideoConsumerOSR(CefRenderWidgetHostViewOSR* view)
     : view_(view),
       video_capturer_(view->CreateVideoCapturer()),
       weak_ptr_factory_(this) {
-  video_capturer_->SetResolutionConstraints(view_->SizeInPixels(),
-                                            view_->SizeInPixels(), true);
+  const gfx::Size view_size = view_->SizeInPixels();
+  video_capturer_->SetResolutionConstraints(view_size, view_size, true);
   video_capturer_->SetAutoThrottlingEnabled(false);
   video_capturer_->SetMinSizeChangePeriod(base::TimeDelta());
   video_capturer_->SetFormat(media::PIXEL_FORMAT_ARGB,
@@ -38,8 +38,8 @@ void CefVideoConsumerOSR::SetFrameRate(base::TimeDelta frame_rate) {
 }
 
 void CefVideoConsumerOSR::SizeChanged() {
-  video_capturer_->SetResolutionConstraints(view_->SizeInPixels(),
-                                            view_->SizeInPixels(), true);
+  const gfx::Size view_size = view_->SizeInPixels();
+  video_capturer_->SetResolutionConstraints(view_size, view_size, true);
   video_capturer_->RequestRefreshFrame();
 }
 
@@ -74,30 +74,6 @@ void CefVideoConsumerOSR::OnFrameCaptured(
   // API requires a non-const pointer. So, cast away the const.
   void* const pixels = const_cast<void*>(mapping.memory());
 
-  // Call installPixels() with a |releaseProc| that: 1) notifies the capturer
-  // that this consumer has finished with the frame, and 2) releases the shared
-  // memory mapping.
-  struct FramePinner {
-    // Keeps the shared memory that backs |frame_| mapped.
-    base::ReadOnlySharedMemoryMapping mapping;
-    // Prevents FrameSinkVideoCapturer from recycling the shared memory that
-    // backs |frame_|.
-    viz::mojom::FrameSinkVideoConsumerFrameCallbacksPtr releaser;
-  };
-
-  SkBitmap bitmap;
-  bitmap.installPixels(
-      SkImageInfo::MakeN32(content_rect.width(), content_rect.height(),
-                           kPremul_SkAlphaType),
-      pixels,
-      media::VideoFrame::RowBytes(media::VideoFrame::kARGBPlane,
-                                  info->pixel_format, info->coded_size.width()),
-      [](void* addr, void* context) {
-        delete static_cast<FramePinner*>(context);
-      },
-      new FramePinner{std::move(mapping), std::move(callbacks)});
-  bitmap.setImmutable();
-
   media::VideoFrameMetadata metadata;
   metadata.MergeInternalValuesFrom(info->metadata);
   gfx::Rect damage_rect;
@@ -107,7 +83,7 @@ void CefVideoConsumerOSR::OnFrameCaptured(
     damage_rect = content_rect;
   }
 
-  view_->OnPaint(damage_rect, bitmap);
+  view_->OnPaint(damage_rect, content_rect.size(), pixels);
 }
 
 void CefVideoConsumerOSR::OnStopped() {}

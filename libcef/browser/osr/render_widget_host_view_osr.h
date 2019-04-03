@@ -229,7 +229,9 @@ class CefRenderWidgetHostViewOSR : public content::RenderWidgetHostViewBase,
   void ReleaseResize();
 
   gfx::Size SizeInPixels();
-  void OnPaint(const gfx::Rect& damage_rect, const SkBitmap& bitmap);
+  void OnPaint(const gfx::Rect& damage_rect,
+               const gfx::Size& pixel_size,
+               const void* pixels);
 
   void OnBeginFame(base::TimeTicks frame_time);
 
@@ -384,7 +386,6 @@ class CefRenderWidgetHostViewOSR : public content::RenderWidgetHostViewBase,
 
   CefMotionEventOSR pointer_state_;
   bool forward_touch_to_popup_;
-  viz::FrameSinkId frame_sink_id_;
 
   base::WeakPtrFactory<CefRenderWidgetHostViewOSR> weak_ptr_factory_;
 
