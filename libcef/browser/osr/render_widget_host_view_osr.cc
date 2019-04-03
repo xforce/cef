@@ -264,9 +264,9 @@ CefRenderWidgetHostViewOSR::~CefRenderWidgetHostViewOSR() {
   compositor_.reset(nullptr);
   root_layer_.reset(nullptr);
 
-  DCHECK(parent_host_view_ == nullptr);
-  DCHECK(popup_host_view_ == nullptr);
-  DCHECK(child_host_view_ == nullptr);
+  DCHECK(!parent_host_view_);
+  DCHECK(!popup_host_view_);
+  DCHECK(!child_host_view_);
   DCHECK(guest_host_views_.empty());
 
   if (text_input_manager_)
@@ -810,19 +810,6 @@ CefRenderWidgetHostViewOSR::CreateSyntheticGestureTarget() {
   return std::make_unique<CefSyntheticGestureTargetOSR>(host());
 }
 
-#if !defined(OS_MACOSX)
-viz::ScopedSurfaceIdAllocator
-CefRenderWidgetHostViewOSR::DidUpdateVisualProperties(
-    const cc::RenderFrameMetadata& metadata) {
-  bool force =
-      local_surface_id_allocation_ != metadata.local_surface_id_allocation;
-  base::OnceCallback<void()> allocation_task =
-      base::BindOnce(&CefRenderWidgetHostViewOSR::SynchronizeVisualProperties,
-                     weak_ptr_factory_.GetWeakPtr(), force);
-  return viz::ScopedSurfaceIdAllocator(std::move(allocation_task));
-}
-#endif
-
 void CefRenderWidgetHostViewOSR::SetNeedsBeginFrames(bool enabled) {
   SetFrameRate();
 
@@ -1306,10 +1293,11 @@ void CefRenderWidgetHostViewOSR::SpeakSelection() {}
 #endif
 
 void CefRenderWidgetHostViewOSR::OnPaint(const gfx::Rect& damage_rect,
-                                         const SkBitmap& bitmap) {
+                                         const gfx::Size& pixel_size,
+                                         const void* pixels) {
   TRACE_EVENT0("cef", "CefRenderWidgetHostViewOSR::OnPaint");
 
-  if (bitmap.isNull()) {
+  if (!pixels) {
     return;
   }
 
@@ -1321,17 +1309,15 @@ void CefRenderWidgetHostViewOSR::OnPaint(const gfx::Rect& damage_rect,
   // pending.
   HoldResize();
 
-  gfx::Rect rect_in_bitmap(0, 0, bitmap.width(), bitmap.height());
-  rect_in_bitmap.Intersect(damage_rect);
+  gfx::Rect rect_in_pixels(0, 0, pixel_size.width(), pixel_size.height());
+  rect_in_pixels.Intersect(damage_rect);
 
   CefRenderHandler::RectList rcList;
-  rcList.push_back(CefRect(rect_in_bitmap.x(), rect_in_bitmap.y(),
-                           rect_in_bitmap.width(), rect_in_bitmap.height()));
-
-  uint32_t* pixels = static_cast<decltype(pixels)>(bitmap.getPixels());
+  rcList.push_back(CefRect(rect_in_pixels.x(), rect_in_pixels.y(),
+                           rect_in_pixels.width(), rect_in_pixels.height()));
 
   handler->OnPaint(browser_impl_.get(), IsPopupWidget() ? PET_POPUP : PET_VIEW,
-                   rcList, pixels, bitmap.width(), bitmap.height());
+                   rcList, pixels, pixel_size.width(), pixel_size.height());
 
   ReleaseResize();
 }
@@ -1535,7 +1521,10 @@ void CefRenderWidgetHostViewOSR::OnGuestViewFrameSwapped(
 
 void CefRenderWidgetHostViewOSR::InvalidateInternal(
     const gfx::Rect& bounds_in_pixels) {
-  OnPaint(bounds_in_pixels, host_display_client_->GetBitmap());
+  // TODO(cef): Using |bounds_in_pixels| feels wrong, somehow
+  // I am not even entirely sure this is close to being correct
+  OnPaint(bounds_in_pixels, bounds_in_pixels.size(),
+          host_display_client_->GetPixelMemory());
 }
 
 void CefRenderWidgetHostViewOSR::RequestImeCompositionUpdate(
