@@ -10,64 +10,31 @@
 #include "base/callback.h"
 #include "base/memory/shared_memory.h"
 #include "components/viz/host/host_display_client.h"
-#include "services/viz/privileged/interfaces/compositing/layered_window_updater.mojom.h"
-#include "third_party/skia/include/core/SkBitmap.h"
-#include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/gfx/native_widget_types.h"
 
+class CefLayeredWindowUpdaterOSR;
 class CefRenderWidgetHostViewOSR;
-
-class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
- public:
-  explicit CefLayeredWindowUpdaterOSR(
-      CefRenderWidgetHostViewOSR* view,
-      viz::mojom::LayeredWindowUpdaterRequest request);
-  ~CefLayeredWindowUpdaterOSR() override;
-
-  void SetActive(bool active);
-
-  // viz::mojom::LayeredWindowUpdater implementation.
-  void OnAllocatedSharedMemory(
-      const gfx::Size& pixel_size,
-      mojo::ScopedSharedBufferHandle scoped_buffer_handle) override;
-  void Draw(const gfx::Rect& damage_rect, DrawCallback draw_callback) override;
-
-  SkBitmap GetBitmap();
-
- private:
-  CefRenderWidgetHostViewOSR* view_;
-
-  mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
-  std::unique_ptr<SkCanvas> canvas_;
-  bool active_ = false;
-
-#if !defined(OS_WIN)
-  base::WritableSharedMemoryMapping shared_memory_mapping_;
-#endif
-
-  DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
-};
 
 class CefHostDisplayClientOSR : public viz::HostDisplayClient {
  public:
-  explicit CefHostDisplayClientOSR(CefRenderWidgetHostViewOSR* view,
-                                   gfx::AcceleratedWidget widget);
+  CefHostDisplayClientOSR(CefRenderWidgetHostViewOSR* const view,
+                          gfx::AcceleratedWidget widget);
   ~CefHostDisplayClientOSR() override;
 
   void SetActive(bool active);
-
-  SkBitmap GetBitmap();
+  const void* GetPixelMemory() const;
 
  private:
+  // mojom::DisplayClient implementation.
   void UseProxyOutputDevice(UseProxyOutputDeviceCallback callback) override;
 
   void CreateLayeredWindowUpdater(
       viz::mojom::LayeredWindowUpdaterRequest request) override;
 
-  CefRenderWidgetHostViewOSR* view_;
-
+  CefRenderWidgetHostViewOSR* const view_;
   std::unique_ptr<CefLayeredWindowUpdaterOSR> layered_window_updater_;
   bool active_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(CefHostDisplayClientOSR);
 };
 

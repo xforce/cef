@@ -4,15 +4,16 @@
 
 #include "libcef/browser/osr/host_display_client_osr.h"
 
+#include <utility>
+
 #include "libcef/browser/browser_host_impl.h"
 #include "libcef/browser/osr/render_widget_host_view_osr.h"
-
-#include <utility>
 
 #include "base/memory/shared_memory.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_sizes.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/viz/privileged/interfaces/compositing/layered_window_updater.mojom.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -23,8 +24,38 @@
 #include "skia/ext/skia_utils_win.h"
 #endif
 
+class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
+ public:
+  CefLayeredWindowUpdaterOSR(CefRenderWidgetHostViewOSR* const view,
+                             viz::mojom::LayeredWindowUpdaterRequest request);
+  ~CefLayeredWindowUpdaterOSR() override;
+
+  void SetActive(bool active);
+  const void* GetPixelMemory() const;
+
+  // viz::mojom::LayeredWindowUpdater implementation.
+  void OnAllocatedSharedMemory(
+      const gfx::Size& pixel_size,
+      mojo::ScopedSharedBufferHandle scoped_buffer_handle) override;
+  void Draw(const gfx::Rect& damage_rect, DrawCallback draw_callback) override;
+
+ private:
+  CefRenderWidgetHostViewOSR* const view_;
+  mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
+  std::unique_ptr<SkCanvas> canvas_;
+  bool active_ = false;
+#if !defined(OS_WIN)
+  base::WritableSharedMemoryMapping shared_memory_;
+#else
+  base::SharedMemory shared_memory_;
+#endif
+  gfx::Size pixel_size_;
+
+  DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
+};
+
 CefLayeredWindowUpdaterOSR::CefLayeredWindowUpdaterOSR(
-    CefRenderWidgetHostViewOSR* view,
+    CefRenderWidgetHostViewOSR* const view,
     viz::mojom::LayeredWindowUpdaterRequest request)
     : view_(view), binding_(this, std::move(request)) {}
 
@@ -34,13 +65,13 @@ void CefLayeredWindowUpdaterOSR::SetActive(bool active) {
   active_ = active;
 }
 
+const void* CefLayeredWindowUpdaterOSR::GetPixelMemory() const {
+  return shared_memory_.memory();
+}
+
 void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
     const gfx::Size& pixel_size,
     mojo::ScopedSharedBufferHandle scoped_buffer_handle) {
-  LOG(INFO) << "CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory";
-
-  canvas_.reset();
-
   // Make sure |pixel_size| is sane.
   size_t expected_bytes;
   bool size_result = viz::ResourceSizes::MaybeSizeInBytes(
@@ -55,32 +86,30 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
     LOG(ERROR) << "Shared memory region is invalid";
     return;
   }
-
-  shared_memory_mapping_ = shm.Map();
-  DCHECK(shared_memory_mapping_.IsValid());
-  canvas_ = skia::CreatePlatformCanvasWithPixels(
-      pixel_size.width(), pixel_size.height(), false,
-      static_cast<uint8_t*>(shared_memory_mapping_.memory()),
-      skia::CRASH_ON_FAILURE);
-#else
+  pixel_size_ = pixel_size;
+  shared_memory_ = shm.Map();
+  DCHECK(shared_memory_.IsValid());
+#else   // !defined(OS_WIN)
   base::SharedMemoryHandle shm_handle;
   MojoResult unwrap_result = mojo::UnwrapSharedMemoryHandle(
       std::move(scoped_buffer_handle), &shm_handle, nullptr, nullptr);
   if (unwrap_result != MOJO_RESULT_OK)
     return;
+
+  pixel_size_ = pixel_size;
   base::SharedMemory shm(shm_handle, false);
-  canvas_ = skia::CreatePlatformCanvasWithSharedSection(
-      pixel_size.width(), pixel_size.height(), false, shm.handle().GetHandle(),
-      skia::CRASH_ON_FAILURE);
-#endif
+  shared_memory_ = std::move(shm);
+  shared_memory_.Map(expected_bytes);
+  DHECK(shared_memory_.memory());
+#endif  // !defined(OS_WIN)
 }
 
 void CefLayeredWindowUpdaterOSR::Draw(const gfx::Rect& damage_rect,
                                       DrawCallback draw_callback) {
   if (active_) {
-    const auto bitmap = GetBitmap();
-    if (!bitmap.isNull()) {
-      view_->OnPaint(damage_rect, bitmap);
+    const void* memory = GetPixelMemory();
+    if (memory) {
+      view_->OnPaint(damage_rect, pixel_size_, memory);
     } else {
       LOG(WARNING) << "Failed to read pixels";
     }
@@ -89,19 +118,11 @@ void CefLayeredWindowUpdaterOSR::Draw(const gfx::Rect& damage_rect,
   std::move(draw_callback).Run();
 }
 
-SkBitmap CefLayeredWindowUpdaterOSR::GetBitmap() {
-  SkPixmap pixmap;
-  SkBitmap bitmap;
-  if (canvas_->peekPixels(&pixmap)) {
-    bitmap.installPixels(pixmap);
-  }
-  return bitmap;
-}
-
 CefHostDisplayClientOSR::CefHostDisplayClientOSR(
-    CefRenderWidgetHostViewOSR* view,
+    CefRenderWidgetHostViewOSR* const view,
     gfx::AcceleratedWidget widget)
     : viz::HostDisplayClient(widget), view_(view) {}
+
 CefHostDisplayClientOSR::~CefHostDisplayClientOSR() {}
 
 void CefHostDisplayClientOSR::SetActive(bool active) {
@@ -111,9 +132,9 @@ void CefHostDisplayClientOSR::SetActive(bool active) {
   }
 }
 
-SkBitmap CefHostDisplayClientOSR::GetBitmap() {
-  return layered_window_updater_ ? layered_window_updater_->GetBitmap()
-                                 : SkBitmap{};
+const void* CefHostDisplayClientOSR::GetPixelMemory() const {
+  return layered_window_updater_ ? layered_window_updater_->GetPixelMemory()
+                                 : nullptr;
 }
 
 void CefHostDisplayClientOSR::UseProxyOutputDevice(
