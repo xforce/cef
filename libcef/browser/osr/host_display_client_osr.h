@@ -19,12 +19,12 @@ class CefRenderWidgetHostViewOSR;
 
 class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
  public:
-  explicit CefLayeredWindowUpdaterOSR(
-      CefRenderWidgetHostViewOSR* view,
-      viz::mojom::LayeredWindowUpdaterRequest request);
+  CefLayeredWindowUpdaterOSR(CefRenderWidgetHostViewOSR* view,
+                             viz::mojom::LayeredWindowUpdaterRequest request);
   ~CefLayeredWindowUpdaterOSR() override;
 
   void SetActive(bool active);
+  const void* GetPixelMemory() const;
 
   // viz::mojom::LayeredWindowUpdater implementation.
   void OnAllocatedSharedMemory(
@@ -32,42 +32,41 @@ class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
       mojo::ScopedSharedBufferHandle scoped_buffer_handle) override;
   void Draw(const gfx::Rect& damage_rect, DrawCallback draw_callback) override;
 
-  SkBitmap GetBitmap();
-
  private:
   CefRenderWidgetHostViewOSR* view_;
-
   mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
   std::unique_ptr<SkCanvas> canvas_;
   bool active_ = false;
-
 #if !defined(OS_WIN)
-  base::WritableSharedMemoryMapping shared_memory_mapping_;
+  base::WritableSharedMemoryMapping shared_memory_;
+#else
+  base::SharedMemory shared_memory_;
 #endif
+  gfx::Size pixel_size_;
 
   DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
 };
 
 class CefHostDisplayClientOSR : public viz::HostDisplayClient {
  public:
-  explicit CefHostDisplayClientOSR(CefRenderWidgetHostViewOSR* view,
-                                   gfx::AcceleratedWidget widget);
+  CefHostDisplayClientOSR(CefRenderWidgetHostViewOSR* view,
+                          gfx::AcceleratedWidget widget);
   ~CefHostDisplayClientOSR() override;
 
   void SetActive(bool active);
-
-  SkBitmap GetBitmap();
+  const void* GetPixelMemory() const;
 
  private:
+  // mojom::DisplayClient implementation.
   void UseProxyOutputDevice(UseProxyOutputDeviceCallback callback) override;
 
   void CreateLayeredWindowUpdater(
       viz::mojom::LayeredWindowUpdaterRequest request) override;
 
   CefRenderWidgetHostViewOSR* view_;
-
   std::unique_ptr<CefLayeredWindowUpdaterOSR> layered_window_updater_;
   bool active_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(CefHostDisplayClientOSR);
 };
 
