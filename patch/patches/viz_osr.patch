@@ -172,7 +172,7 @@ index 360cab3eee4c..6834242f23d2 100644
 +  Draw(gfx.mojom.Rect damage_rect) => ();
  };
 diff --git ui/compositor/compositor.h ui/compositor/compositor.h
-index 29784c677f4b..ee2dad4d3932 100644
+index 29784c677f4b..f0f692371f27 100644
 --- ui/compositor/compositor.h
 +++ ui/compositor/compositor.h
 @@ -24,7 +24,9 @@
@@ -191,7 +191,7 @@ index 29784c677f4b..ee2dad4d3932 100644
  
 +class COMPOSITOR_EXPORT CompositorDelegate {
 + public:
-+    virtual std::unique_ptr<viz::HostDisplayClient> CreateHostDisplayClient() = 0;
++  virtual std::unique_ptr<viz::HostDisplayClient> CreateHostDisplayClient() = 0;
 +
 + protected:
 +  virtual ~CompositorDelegate() {}
