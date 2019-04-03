@@ -31,6 +31,7 @@ SoftwareOutputDeviceProxy::SoftwareOutputDeviceProxy(
 
 void SoftwareOutputDeviceProxy::OnSwapBuffers(
     base::OnceClosure swap_ack_callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(swap_ack_callback_.is_null());
 
   // We aren't waiting on DrawAck() and can immediately run the callback.
@@ -134,6 +135,7 @@ void SoftwareOutputDeviceProxy::EndPaint() {
 }
 
 void SoftwareOutputDeviceProxy::DrawAck() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(waiting_on_draw_ack_);
   DCHECK(!swap_ack_callback_.is_null());
 
