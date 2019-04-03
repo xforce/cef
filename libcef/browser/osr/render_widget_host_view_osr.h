@@ -63,8 +63,8 @@ class CursorManager;
 class CefBrowserHostImpl;
 class CefCopyFrameGenerator;
 class CefSoftwareOutputDeviceOSR;
-class CefWebContentsViewOSR;
 class CefVideoConsumerOSR;
+class CefWebContentsViewOSR;
 
 #if defined(USE_X11)
 class CefWindowX11;

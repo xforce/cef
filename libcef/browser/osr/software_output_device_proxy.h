@@ -8,6 +8,7 @@
 #include "services/viz/privileged/interfaces/compositing/layered_window_updater.mojom.h"
 
 namespace viz {
+
 // SoftwareOutputDevice implementation that draws indirectly. An
 // implementation of mojom::LayeredWindowUpdater in the browser process
 // handles the actual drawing. Pixel backing is in SharedMemory so no copying

@@ -13,6 +13,7 @@
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_sizes.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/viz/privileged/interfaces/compositing/layered_window_updater.mojom.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -23,8 +24,38 @@
 #include "skia/ext/skia_utils_win.h"
 #endif
 
+class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
+ public:
+  CefLayeredWindowUpdaterOSR(CefRenderWidgetHostViewOSR* const view,
+                             viz::mojom::LayeredWindowUpdaterRequest request);
+  ~CefLayeredWindowUpdaterOSR() override;
+
+  void SetActive(bool active);
+  const void* GetPixelMemory() const;
+
+  // viz::mojom::LayeredWindowUpdater implementation.
+  void OnAllocatedSharedMemory(
+      const gfx::Size& pixel_size,
+      mojo::ScopedSharedBufferHandle scoped_buffer_handle) override;
+  void Draw(const gfx::Rect& damage_rect, DrawCallback draw_callback) override;
+
+ private:
+  CefRenderWidgetHostViewOSR* const view_;
+  mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
+  std::unique_ptr<SkCanvas> canvas_;
+  bool active_ = false;
+#if !defined(OS_WIN)
+  base::WritableSharedMemoryMapping shared_memory_;
+#else
+  base::SharedMemory shared_memory_;
+#endif
+  gfx::Size pixel_size_;
+
+  DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
+};
+
 CefLayeredWindowUpdaterOSR::CefLayeredWindowUpdaterOSR(
-    CefRenderWidgetHostViewOSR* view,
+    CefRenderWidgetHostViewOSR* const view,
     viz::mojom::LayeredWindowUpdaterRequest request)
     : view_(view), binding_(this, std::move(request)) {}
 
@@ -88,7 +119,7 @@ void CefLayeredWindowUpdaterOSR::Draw(const gfx::Rect& damage_rect,
 }
 
 CefHostDisplayClientOSR::CefHostDisplayClientOSR(
-    CefRenderWidgetHostViewOSR* view,
+    CefRenderWidgetHostViewOSR* const view,
     gfx::AcceleratedWidget widget)
     : viz::HostDisplayClient(widget), view_(view) {}
 

@@ -264,9 +264,9 @@ CefRenderWidgetHostViewOSR::~CefRenderWidgetHostViewOSR() {
   compositor_.reset(nullptr);
   root_layer_.reset(nullptr);
 
-  DCHECK(parent_host_view_ == nullptr);
-  DCHECK(popup_host_view_ == nullptr);
-  DCHECK(child_host_view_ == nullptr);
+  DCHECK(!parent_host_view_);
+  DCHECK(!popup_host_view_);
+  DCHECK(!child_host_view_);
   DCHECK(guest_host_views_.empty());
 
   if (text_input_manager_)

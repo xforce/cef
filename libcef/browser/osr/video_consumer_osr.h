@@ -9,7 +9,7 @@ class CefRenderWidgetHostViewOSR;
 
 class CefVideoConsumerOSR : public viz::mojom::FrameSinkVideoConsumer {
  public:
-  CefVideoConsumerOSR(CefRenderWidgetHostViewOSR* view);
+  explicit CefVideoConsumerOSR(CefRenderWidgetHostViewOSR* view);
   ~CefVideoConsumerOSR() override;
 
   void SetActive(bool active);
@@ -25,7 +25,7 @@ class CefVideoConsumerOSR : public viz::mojom::FrameSinkVideoConsumer {
       viz::mojom::FrameSinkVideoConsumerFrameCallbacksPtr callbacks) override;
   void OnStopped() override;
 
-  CefRenderWidgetHostViewOSR* view_;
+  CefRenderWidgetHostViewOSR* const view_;
   std::unique_ptr<viz::ClientFrameSinkVideoCapturer> video_capturer_;
 
   base::WeakPtrFactory<CefVideoConsumerOSR> weak_ptr_factory_;
