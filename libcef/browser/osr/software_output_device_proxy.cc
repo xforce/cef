@@ -93,8 +93,8 @@ void SoftwareOutputDeviceProxy::Resize(const gfx::Size& viewport_pixel_size,
 
   // Transfer handle ownership to the browser process.
   mojo::ScopedSharedBufferHandle scoped_handle = mojo::WrapSharedMemoryHandle(
-      shm.TakeHandle(), required_bytes,
-      mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite);
+      shm.GetReadOnlyHandle(), required_bytes,
+      mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
 #endif
 
   layered_window_updater_->OnAllocatedSharedMemory(viewport_pixel_size_,
