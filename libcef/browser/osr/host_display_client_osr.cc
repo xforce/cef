@@ -43,7 +43,7 @@ class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
   CefRenderWidgetHostViewOSR* const view_;
   mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
   bool active_ = false;
-  base::WritableSharedMemoryMapping shared_memory_;
+  base::ReadOnlySharedMemoryMapping shared_memory_;
   gfx::Size pixel_size_;
 
   DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
@@ -75,8 +75,8 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
     return;
 
 #if !defined(OS_WIN)
-  base::WritableSharedMemoryRegion shm =
-      mojo::UnwrapWritableSharedMemoryRegion(std::move(scoped_buffer_handle));
+  base::ReadOnlySharedMemoryRegion shm =
+      mojo::UnwrapReadOnlySharedMemoryRegion(std::move(scoped_buffer_handle));
   if (!shm.IsValid()) {
     LOG(ERROR) << "Shared memory region is invalid";
     return;
@@ -88,12 +88,10 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
   if (unwrap_result != MOJO_RESULT_OK)
     return;
 
-  base::WritableSharedMemoryRegion shm =
-      base::WritableSharedMemoryRegion::Deserialize(
-          base::subtle::PlatformSharedMemoryRegion::Take(
-              base::win::ScopedHandle(shm_handle.GetHandle()),
-              base::subtle::PlatformSharedMemoryRegion::Mode::kWritable,
-              shm_handle.GetSize(), shm_handle.GetGUID()));
+  base::ReadOnlySharedMemoryRegion shm =
+      base::ReadOnlySharedMemoryRegion::Deserialize(
+          base::subtle::PlatformSharedMemoryRegion::TakeFromSharedMemoryHandle(shm_handle,
+              base::subtle::PlatformSharedMemoryRegion::Mode::kReadOnly));
 #endif  // !defined(OS_WIN)
   pixel_size_ = pixel_size;
   shared_memory_ = shm.Map();
