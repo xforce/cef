@@ -90,7 +90,8 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
 
   base::ReadOnlySharedMemoryRegion shm =
       base::ReadOnlySharedMemoryRegion::Deserialize(
-          base::subtle::PlatformSharedMemoryRegion::TakeFromSharedMemoryHandle(shm_handle,
+          base::subtle::PlatformSharedMemoryRegion::TakeFromSharedMemoryHandle(
+              shm_handle,
               base::subtle::PlatformSharedMemoryRegion::Mode::kReadOnly));
 #endif  // !defined(OS_WIN)
   pixel_size_ = pixel_size;
