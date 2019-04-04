@@ -42,13 +42,8 @@ class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
  private:
   CefRenderWidgetHostViewOSR* const view_;
   mojo::Binding<viz::mojom::LayeredWindowUpdater> binding_;
-  std::unique_ptr<SkCanvas> canvas_;
   bool active_ = false;
-#if !defined(OS_WIN)
-  base::WritableSharedMemoryMapping shared_memory_;
-#else
-  base::SharedMemory shared_memory_;
-#endif
+  base::ReadOnlySharedMemoryMapping shared_memory_;
   gfx::Size pixel_size_;
 
   DISALLOW_COPY_AND_ASSIGN(CefLayeredWindowUpdaterOSR);
@@ -80,15 +75,12 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
     return;
 
 #if !defined(OS_WIN)
-  base::WritableSharedMemoryRegion shm =
-      mojo::UnwrapWritableSharedMemoryRegion(std::move(scoped_buffer_handle));
+  base::ReadOnlySharedMemoryRegion shm =
+      mojo::UnwrapReadOnlySharedMemoryRegion(std::move(scoped_buffer_handle));
   if (!shm.IsValid()) {
     LOG(ERROR) << "Shared memory region is invalid";
     return;
   }
-  pixel_size_ = pixel_size;
-  shared_memory_ = shm.Map();
-  DCHECK(shared_memory_.IsValid());
 #else   // !defined(OS_WIN)
   base::SharedMemoryHandle shm_handle;
   MojoResult unwrap_result = mojo::UnwrapSharedMemoryHandle(
@@ -96,12 +88,15 @@ void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
   if (unwrap_result != MOJO_RESULT_OK)
     return;
 
-  pixel_size_ = pixel_size;
-  base::SharedMemory shm(shm_handle, false);
-  shared_memory_ = std::move(shm);
-  shared_memory_.Map(expected_bytes);
-  DHECK(shared_memory_.memory());
+  base::ReadOnlySharedMemoryRegion shm =
+      base::ReadOnlySharedMemoryRegion::Deserialize(
+          base::subtle::PlatformSharedMemoryRegion::TakeFromSharedMemoryHandle(
+              shm_handle,
+              base::subtle::PlatformSharedMemoryRegion::Mode::kReadOnly));
 #endif  // !defined(OS_WIN)
+  pixel_size_ = pixel_size;
+  shared_memory_ = shm.Map();
+  DCHECK(shared_memory_.IsValid());
 }
 
 void CefLayeredWindowUpdaterOSR::Draw(const gfx::Rect& damage_rect,
