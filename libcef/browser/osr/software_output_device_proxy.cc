@@ -63,13 +63,13 @@ void SoftwareOutputDeviceProxy::Resize(const gfx::Size& viewport_pixel_size,
   }
 
 #if !defined(OS_WIN)
-  auto shm = mojo::CreateWritableSharedMemoryRegion(required_bytes);
+  auto shm = mojo::CreateReadOnlySharedMemoryRegion(required_bytes);
   if (!shm.IsValid()) {
     DLOG(ERROR) << "Failed to allocate " << required_bytes << " bytes";
     return;
   }
 
-  shm_ = shm.Map();
+  shm_ = std::move(shm.mapping);
   if (!shm_.IsValid()) {
     DLOG(ERROR) << "Failed to map " << required_bytes << " bytes";
     return;
@@ -80,7 +80,7 @@ void SoftwareOutputDeviceProxy::Resize(const gfx::Size& viewport_pixel_size,
       static_cast<uint8_t*>(shm_.memory()), skia::CRASH_ON_FAILURE);
 
   mojo::ScopedSharedBufferHandle scoped_handle =
-      mojo::WrapWritableSharedMemoryRegion(std::move(shm));
+      mojo::WrapReadOnlySharedMemoryRegion(std::move(shm.region));
 #else
   base::SharedMemory shm;
   if (!shm.CreateAnonymous(required_bytes)) {
