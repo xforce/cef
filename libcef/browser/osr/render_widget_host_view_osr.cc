@@ -802,7 +802,6 @@ const viz::FrameSinkId& CefRenderWidgetHostViewOSR::GetFrameSinkId() const {
 }
 
 viz::FrameSinkId CefRenderWidgetHostViewOSR::GetRootFrameSinkId() {
-  NOTREACHED();
   return compositor_->frame_sink_id();
 }
 
@@ -883,7 +882,9 @@ CefRenderWidgetHostViewOSR::CreateHostDisplayClient() {
 bool CefRenderWidgetHostViewOSR::InstallTransparency() {
   if (background_color_ == SK_ColorTRANSPARENT) {
     SetBackgroundColor(background_color_);
-    compositor_->SetBackgroundColor(background_color_);
+    if (compositor_) {
+      compositor_->SetBackgroundColor(background_color_);
+    }
     return true;
   }
   return false;
