@@ -337,6 +337,8 @@ void CefRenderWidgetHostViewOSR::Hide() {
   if (!is_showing_)
     return;
 
+  is_showing_ = false;
+
   if (browser_impl_.get())
     browser_impl_->CancelContextMenu();
 
@@ -345,8 +347,6 @@ void CefRenderWidgetHostViewOSR::Hide() {
 
   GetDelegatedFrameHost()->WasHidden();
   GetDelegatedFrameHost()->DetachFromCompositor();
-
-  is_showing_ = false;
 }
 
 bool CefRenderWidgetHostViewOSR::IsShowing() {
@@ -1361,7 +1361,7 @@ void CefRenderWidgetHostViewOSR::SetFrameRate() {
   frame_rate_threshold_us_ = 1000000 / frame_rate;
 
   if (compositor) {
-    compositor->SetDisplayVSyncParameters(
+    compositor->vsync_manager()->SetDisplayVSyncParameters(
         base::TimeTicks::Now(),
         base::TimeDelta::FromMicroseconds(frame_rate_threshold_us_));
   }
