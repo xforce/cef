@@ -28,19 +28,16 @@ index bdd1e8bde77a..d5ce39a0afea 100644
  
  }  // namespace viz
 diff --git components/viz/host/host_display_client.h components/viz/host/host_display_client.h
-index 7fd5a4a9a6e1..5393e8e1604a 100644
+index af64385aa93f..19809c80182e 100644
 --- components/viz/host/host_display_client.h
 +++ components/viz/host/host_display_client.h
-@@ -30,20 +30,20 @@ class VIZ_HOST_EXPORT HostDisplayClient : public mojom::DisplayClient {
+@@ -30,17 +30,17 @@ class VIZ_HOST_EXPORT HostDisplayClient : public mojom::DisplayClient {
    mojom::DisplayClientPtr GetBoundPtr(
        scoped_refptr<base::SingleThreadTaskRunner> task_runner);
  
 - private:
 + protected:
    // mojom::DisplayClient implementation:
-   void DidSwapAfterSnapshotRequestReceived(
-       const std::vector<ui::LatencyInfo>& latency_info) override;
- 
 +  void UseProxyOutputDevice(UseProxyOutputDeviceCallback callback) override;
 +
  #if defined(OS_MACOSX)
@@ -55,7 +52,7 @@ index 7fd5a4a9a6e1..5393e8e1604a 100644
  
    mojo::Binding<mojom::DisplayClient> binding_;
  #if defined(OS_MACOSX) || defined(OS_WIN)
-diff --git components/viz/host/layered_window_updater_impl.cc components/viz/host/layered_window_updater_impl.cc
+ diff --git components/viz/host/layered_window_updater_impl.cc components/viz/host/layered_window_updater_impl.cc
 index d3a49ed8be8d..38a927b8f734 100644
 --- components/viz/host/layered_window_updater_impl.cc
 +++ components/viz/host/layered_window_updater_impl.cc
@@ -141,13 +138,13 @@ index a339eaa4dc9c..3526e49d33f3 100644
  
    TRACE_EVENT_ASYNC_BEGIN0("viz", "SoftwareOutputDeviceWinProxy::Draw", this);
 diff --git services/viz/privileged/interfaces/compositing/display_private.mojom services/viz/privileged/interfaces/compositing/display_private.mojom
-index b7c138978ae2..f7c6c2dd1f1a 100644
+index 4c29f4ec2cde..eba6284bb8c5 100644
 --- services/viz/privileged/interfaces/compositing/display_private.mojom
 +++ services/viz/privileged/interfaces/compositing/display_private.mojom
-@@ -58,12 +58,14 @@ interface DisplayClient {
-   // component reached the display.
-   DidSwapAfterSnapshotRequestReceived(array<ui.mojom.LatencyInfo> latency_info);
+@@ -58,12 +58,14 @@ interface DisplayPrivate {
+ };
  
+ interface DisplayClient {
 +  [Sync]
 +  UseProxyOutputDevice() => (bool success);
 +
