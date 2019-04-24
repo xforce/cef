@@ -10,22 +10,25 @@
 #include "libcef/browser/context.h"
 #include "libcef/browser/native/menu_runner_linux.h"
 #include "libcef/browser/native/window_delegate_view.h"
-#include "libcef/browser/native/window_x11.h"
 #include "libcef/browser/thread_util.h"
 
 #include "base/no_destructor.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/render_view_host.h"
+#include "third_party/blink/public/mojom/renderer_preferences.mojom.h"
 #include "ui/events/keycodes/dom/dom_key.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
 #include "ui/events/keycodes/keyboard_code_conversion_x.h"
 #include "ui/events/keycodes/keyboard_code_conversion_xkb.h"
 #include "ui/events/keycodes/keysym_to_unicode.h"
 #include "ui/gfx/font_render_params.h"
-#include "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h"
 #include "ui/views/widget/widget.h"
-#include "third_party/blink/public/mojom/renderer_preferences.mojom.h"
+
+#if defined(USE_X11)
+#include "libcef/browser/native/window_x11.h"
+#include "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h"
+#endif
 
 namespace {
 
@@ -48,8 +51,7 @@ CefBrowserPlatformDelegateNativeLinux::CefBrowserPlatformDelegateNativeLinux(
                                        false,
                                        use_external_begin_frame),
       host_window_created_(false),
-      window_widget_(nullptr),
-      window_x11_(nullptr) {}
+      window_widget_(nullptr) {}
 
 void CefBrowserPlatformDelegateNativeLinux::BrowserDestroyed(
     CefBrowserHostImpl* browser) {
@@ -62,7 +64,6 @@ void CefBrowserPlatformDelegateNativeLinux::BrowserDestroyed(
 }
 
 bool CefBrowserPlatformDelegateNativeLinux::CreateHostWindow() {
-  DCHECK(!window_x11_);
   DCHECK(!window_widget_);
 
   if (window_info_.width == 0)
@@ -73,10 +74,13 @@ bool CefBrowserPlatformDelegateNativeLinux::CreateHostWindow() {
   gfx::Rect rect(window_info_.x, window_info_.y, window_info_.width,
                  window_info_.height);
 
+#if defined(USE_X11)
+  DCHECK(!window_x11_);
   // Create a new window object. It will delete itself when the associated X11
   // window is destroyed.
-  window_x11_ = new CefWindowX11(browser_, window_info_.parent_window, rect,
-                                 CefString(&window_info_.window_name).ToString());
+  window_x11_ =
+      new CefWindowX11(browser_, window_info_.parent_window, rect,
+                       CefString(&window_info_.window_name).ToString());
   window_info_.window = window_x11_->xwindow();
 
   host_window_created_ = true;
@@ -93,6 +97,7 @@ bool CefBrowserPlatformDelegateNativeLinux::CreateHostWindow() {
   window_widget_->Show();
 
   window_x11_->Show();
+#endif  // defined(USE_X11)
 
   // As an additional requirement on Linux, we must set the colors for the
   // render widgets in webkit.
@@ -121,8 +126,10 @@ bool CefBrowserPlatformDelegateNativeLinux::CreateHostWindow() {
 }
 
 void CefBrowserPlatformDelegateNativeLinux::CloseHostWindow() {
+#if defined(USE_X11)
   if (window_x11_)
     window_x11_->Close();
+#endif
 }
 
 CefWindowHandle CefBrowserPlatformDelegateNativeLinux::GetHostWindowHandle()
@@ -146,18 +153,21 @@ void CefBrowserPlatformDelegateNativeLinux::SendFocusEvent(bool setFocus) {
     browser_->web_contents()->Focus();
   }
 
+#if defined(USE_X11)
   if (window_x11_) {
     // Give native focus to the DesktopNativeWidgetAura for the root window.
     // Needs to be done via the ::Window so that keyboard focus is assigned
     // correctly.
     window_x11_->Focus();
   }
+#endif  // defined(USE_X11)
 }
 
 void CefBrowserPlatformDelegateNativeLinux::NotifyMoveOrResizeStarted() {
   // Call the parent method to dismiss any existing popups.
   CefBrowserPlatformDelegate::NotifyMoveOrResizeStarted();
 
+#if defined(USE_X11)
   if (!window_x11_)
     return;
 
@@ -175,13 +185,16 @@ void CefBrowserPlatformDelegateNativeLinux::NotifyMoveOrResizeStarted() {
   content::RenderWidgetHostImpl::From(
       browser_->web_contents()->GetRenderViewHost()->GetWidget())
       ->SendScreenRects();
+#endif  // defined(USE_X11)
 }
 
 void CefBrowserPlatformDelegateNativeLinux::SizeTo(int width, int height) {
+#if defined(USE_X11)
   if (window_x11_) {
     window_x11_->SetBounds(
         gfx::Rect(window_x11_->bounds().origin(), gfx::Size(width, height)));
   }
+#endif  // defined(USE_X11)
 }
 
 gfx::Point CefBrowserPlatformDelegateNativeLinux::GetScreenPoint(
@@ -189,6 +202,7 @@ gfx::Point CefBrowserPlatformDelegateNativeLinux::GetScreenPoint(
   if (windowless_handler_)
     return windowless_handler_->GetParentScreenPoint(view);
 
+#if defined(USE_X11)
   if (!window_x11_)
     return view;
 
@@ -198,6 +212,8 @@ gfx::Point CefBrowserPlatformDelegateNativeLinux::GetScreenPoint(
   const gfx::Rect& bounds_in_screen = window_x11_->GetBoundsInScreen();
   return gfx::Point(bounds_in_screen.x() + view.x(),
                     bounds_in_screen.y() + view.y());
+#endif  // defined(USE_X11)
+  return gfx::Point();
 }
 
 void CefBrowserPlatformDelegateNativeLinux::ViewText(const std::string& text) {
@@ -236,8 +252,8 @@ bool CefBrowserPlatformDelegateNativeLinux::HandleKeyboardEvent(
   return false;
 }
 
-void CefBrowserPlatformDelegateNativeLinux::HandleExternalProtocol(
-    const GURL& url) {}
+// static
+void CefBrowserPlatformDelegate::HandleExternalProtocol(const GURL& url) {}
 
 void CefBrowserPlatformDelegateNativeLinux::TranslateKeyEvent(
     content::NativeWebKeyboardEvent& result,
@@ -260,6 +276,7 @@ void CefBrowserPlatformDelegateNativeLinux::TranslateKeyEvent(
       NOTREACHED();
   }
 
+#if defined(USE_X11)
   // Populate DOM values that will be passed to JavaScript handlers via
   // KeyboardEvent.
   result.dom_code = static_cast<int>(
@@ -275,6 +292,7 @@ void CefBrowserPlatformDelegateNativeLinux::TranslateKeyEvent(
 
   result.SetModifiers(result.GetModifiers() |
                       TranslateModifiers(key_event.modifiers));
+#endif  // defined(USE_X11)
 }
 
 void CefBrowserPlatformDelegateNativeLinux::TranslateClickEvent(
@@ -363,7 +381,8 @@ CefEventHandle CefBrowserPlatformDelegateNativeLinux::GetEventHandle(
     const content::NativeWebKeyboardEvent& event) const {
   if (!event.os_event)
     return NULL;
-  return const_cast<CefEventHandle>(event.os_event->native_event());
+  return const_cast<CefEventHandle>(
+      static_cast<CefEventHandle>(event.os_event->native_event()));
 }
 
 std::unique_ptr<CefMenuRunner>
