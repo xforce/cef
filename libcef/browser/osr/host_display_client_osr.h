@@ -23,6 +23,7 @@ class CefHostDisplayClientOSR : public viz::HostDisplayClient {
 
   void SetActive(bool active);
   const void* GetPixelMemory() const;
+  gfx::Size GetPixelSize() const;
 
  private:
   // mojom::DisplayClient implementation.
