@@ -21,6 +21,7 @@
 #include "components/net_log/chrome_net_log.h"
 #include "components/net_log/net_export_file_writer.h"
 #include "components/prefs/pref_service.h"
+#include "content/browser/startup_helper.h"
 #include "content/public/common/content_switches.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/cpp/shared_url_loader_factory.h"
@@ -41,13 +42,8 @@ void ChromeBrowserProcessStub::Initialize() {
   DCHECK(!context_initialized_);
   DCHECK(!shutdown_);
 
-  const CefSettings& settings = CefContext::Get()->settings();
-  const base::FilePath& cache_path =
-      base::FilePath(CefString(&settings.cache_path));
-
-  // Used for very early NetworkService initialization.
-  local_state_ = browser_prefs::CreatePrefService(
-      nullptr, cache_path, !!settings.persist_user_preferences);
+  // Initialize this early before any code tries to check feature flags.
+  content::SetUpFieldTrialsAndFeatureList();
 
   initialized_ = true;
 }
@@ -156,6 +152,15 @@ ProfileManager* ChromeBrowserProcessStub::profile_manager() {
 
 PrefService* ChromeBrowserProcessStub::local_state() {
   DCHECK(initialized_);
+  if (!local_state_) {
+    const CefSettings& settings = CefContext::Get()->settings();
+    const base::FilePath& cache_path =
+        base::FilePath(CefString(&settings.cache_path));
+
+    // Used for very early NetworkService initialization.
+    local_state_ = browser_prefs::CreatePrefService(
+        nullptr, cache_path, !!settings.persist_user_preferences);
+  }
   return local_state_.get();
 }
 
