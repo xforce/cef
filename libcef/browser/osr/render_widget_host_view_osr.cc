@@ -933,7 +933,7 @@ void CefRenderWidgetHostViewOSR::Invalidate(
     return;
   }
 
-  InvalidateInternal(gfx::Rect(GetCompositorViewportPixelSize()));
+  InvalidateInternal(gfx::Rect(host_display_client_->GetPixelSize()));
 }
 
 void CefRenderWidgetHostViewOSR::SendExternalBeginFrame() {
