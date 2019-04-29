@@ -934,8 +934,7 @@ void CefRenderWidgetHostViewOSR::Invalidate(
       popup_host_view_->Invalidate(type);
     return;
   }
-
-  InvalidateInternal(gfx::Rect(host_display_client_->GetPixelSize()));
+  InvalidateInternal(gfx::Rect(SizeInPixels()));
 }
 
 void CefRenderWidgetHostViewOSR::SendExternalBeginFrame() {
@@ -1524,8 +1523,12 @@ void CefRenderWidgetHostViewOSR::OnGuestViewFrameSwapped(
 
 void CefRenderWidgetHostViewOSR::InvalidateInternal(
     const gfx::Rect& bounds_in_pixels) {
-  OnPaint(bounds_in_pixels, host_display_client_->GetPixelSize(),
-          host_display_client_->GetPixelMemory());
+  if (video_consumer_) {
+    video_consumer_->SizeChanged();
+  } else {
+    OnPaint(bounds_in_pixels, host_display_client_->GetPixelSize(),
+            host_display_client_->GetPixelMemory());
+  }
 }
 
 void CefRenderWidgetHostViewOSR::RequestImeCompositionUpdate(
