@@ -1360,7 +1360,7 @@ void CefRenderWidgetHostViewOSR::SetFrameRate() {
   frame_rate_threshold_us_ = 1000000 / frame_rate;
 
   if (compositor) {
-    compositor->vsync_manager()->SetDisplayVSyncParameters(
+    compositor->vsync_manager()->UpdateVSyncParameters(
         base::TimeTicks::Now(),
         base::TimeDelta::FromMicroseconds(frame_rate_threshold_us_));
   }
