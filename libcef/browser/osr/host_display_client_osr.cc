@@ -32,6 +32,7 @@ class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
 
   void SetActive(bool active);
   const void* GetPixelMemory() const;
+  gfx::Size GetPixelSize() const;
 
   // viz::mojom::LayeredWindowUpdater implementation.
   void OnAllocatedSharedMemory(
@@ -62,6 +63,10 @@ void CefLayeredWindowUpdaterOSR::SetActive(bool active) {
 
 const void* CefLayeredWindowUpdaterOSR::GetPixelMemory() const {
   return shared_memory_.memory();
+}
+
+gfx::Size CefLayeredWindowUpdaterOSR::GetPixelSize() const {
+  return pixel_size_;
 }
 
 void CefLayeredWindowUpdaterOSR::OnAllocatedSharedMemory(
@@ -130,6 +135,11 @@ void CefHostDisplayClientOSR::SetActive(bool active) {
 const void* CefHostDisplayClientOSR::GetPixelMemory() const {
   return layered_window_updater_ ? layered_window_updater_->GetPixelMemory()
                                  : nullptr;
+}
+
+gfx::Size CefHostDisplayClientOSR::GetPixelSize() const {
+  return layered_window_updater_ ? layered_window_updater_->GetPixelSize()
+                                 : gfx::Size{};
 }
 
 void CefHostDisplayClientOSR::UseProxyOutputDevice(

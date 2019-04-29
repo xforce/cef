@@ -934,7 +934,7 @@ void CefRenderWidgetHostViewOSR::Invalidate(
     return;
   }
 
-  InvalidateInternal(gfx::Rect(GetCompositorViewportPixelSize()));
+  InvalidateInternal(gfx::Rect(host_display_client_->GetPixelSize()));
 }
 
 void CefRenderWidgetHostViewOSR::SendExternalBeginFrame() {
@@ -1523,9 +1523,7 @@ void CefRenderWidgetHostViewOSR::OnGuestViewFrameSwapped(
 
 void CefRenderWidgetHostViewOSR::InvalidateInternal(
     const gfx::Rect& bounds_in_pixels) {
-  // TODO(cef): Using |bounds_in_pixels| feels wrong, somehow
-  // I am not even entirely sure this is close to being correct
-  OnPaint(bounds_in_pixels, bounds_in_pixels.size(),
+  OnPaint(bounds_in_pixels, host_display_client_->GetPixelSize(),
           host_display_client_->GetPixelMemory());
 }
 
