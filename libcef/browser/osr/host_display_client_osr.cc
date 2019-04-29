@@ -138,7 +138,8 @@ const void* CefHostDisplayClientOSR::GetPixelMemory() const {
 }
 
 gfx::Size CefHostDisplayClientOSR::GetPixelSize() const {
-  return layered_window_updater_ ? layered_window_updater_->GetPixelSize() : gfx::Size{};
+  return layered_window_updater_ ? layered_window_updater_->GetPixelSize()
+                                 : gfx::Size{};
 }
 
 void CefHostDisplayClientOSR::UseProxyOutputDevice(
