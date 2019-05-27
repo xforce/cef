@@ -16,6 +16,9 @@
 #include "base/command_line.h"
 #include "chrome/browser/net/chrome_net_log_helper.h"
 #include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/notifications/notification_platform_bridge.h"
+#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/system_notification_helper.h"
 #include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "components/net_log/chrome_net_log.h"
@@ -193,14 +196,16 @@ ChromeBrowserProcessStub::extension_event_router_forwarder() {
 }
 
 NotificationUIManager* ChromeBrowserProcessStub::notification_ui_manager() {
-  NOTREACHED();
-  return NULL;
+  if (!created_notification_ui_manager_)
+    CreateNotificationUIManager();
+  return notification_ui_manager_.get();
 }
 
 NotificationPlatformBridge*
 ChromeBrowserProcessStub::notification_platform_bridge() {
-  NOTREACHED();
-  return NULL;
+  if (!created_notification_bridge_)
+    CreateNotificationPlatformBridge();
+  return notification_bridge_.get();
 }
 
 policy::ChromeBrowserPolicyConnector*
@@ -394,4 +399,16 @@ prefs::InProcessPrefServiceFactory*
 ChromeBrowserProcessStub::pref_service_factory() const {
   NOTREACHED();
   return NULL;
+}
+
+void ChromeBrowserProcessStub::CreateNotificationPlatformBridge() {
+  DCHECK(!notification_bridge_);
+  notification_bridge_ = NotificationPlatformBridge::Create();
+  created_notification_bridge_ = true;
+}
+
+void ChromeBrowserProcessStub::CreateNotificationUIManager() {
+  DCHECK(!notification_ui_manager_);
+  notification_ui_manager_ = NotificationUIManager::Create();
+  created_notification_ui_manager_ = !!notification_ui_manager_;
 }
