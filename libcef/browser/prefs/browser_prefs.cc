@@ -21,6 +21,7 @@
 #include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/plugins/plugin_info_host_impl.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
 #include "chrome/browser/renderer_host/pepper/device_id_fetcher.h"
@@ -217,6 +218,7 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
         command_line->GetSwitchValueASCII(switches::kLang);
     DCHECK(!locale.empty());
     renderer_prefs::RegisterProfilePrefs(registry.get(), locale);
+    PlatformNotificationServiceImpl::RegisterProfilePrefs(registry.get());
 
     // Print preferences.
     // Based on ProfileImpl::RegisterProfilePrefs.

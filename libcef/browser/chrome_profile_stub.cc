@@ -13,6 +13,7 @@ ChromeProfileStub::ChromeProfileStub() {}
 ChromeProfileStub::~ChromeProfileStub() {}
 
 scoped_refptr<base::SequencedTaskRunner> ChromeProfileStub::GetIOTaskRunner() {
+  // TODO(alexander): Implement this
   NOTREACHED();
   return scoped_refptr<base::SequencedTaskRunner>();
 }

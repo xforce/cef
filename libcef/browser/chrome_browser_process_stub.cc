@@ -29,6 +29,8 @@
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/cpp/shared_url_loader_factory.h"
 
+#include "ui/message_center/message_center.h"
+
 ChromeBrowserProcessStub::ChromeBrowserProcessStub()
     : initialized_(false),
       context_initialized_(false),
@@ -47,6 +49,13 @@ void ChromeBrowserProcessStub::Initialize() {
 
   // Initialize this early before any code tries to check feature flags.
   content::SetUpFieldTrialsAndFeatureList();
+
+  message_center::MessageCenter::Initialize();
+  // Set the system notification source display name ("Google Chrome" or
+  // "Chromium").
+  if (message_center::MessageCenter::Get()) {
+    message_center::MessageCenter::Get()->SetSystemNotificationAppName(L"Meow");
+  }
 
   initialized_ = true;
 }
@@ -240,6 +249,7 @@ void ChromeBrowserProcessStub::CreateDevToolsAutoOpener() {
 }
 
 bool ChromeBrowserProcessStub::IsShuttingDown() {
+  // TODO(alexander): Implement this
   NOTREACHED();
   return false;
 }
