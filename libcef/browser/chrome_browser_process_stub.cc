@@ -249,9 +249,7 @@ void ChromeBrowserProcessStub::CreateDevToolsAutoOpener() {
 }
 
 bool ChromeBrowserProcessStub::IsShuttingDown() {
-  // TODO(alexander): Implement this
-  NOTREACHED();
-  return false;
+  return shutdown_;
 }
 
 printing::PrintJobManager* ChromeBrowserProcessStub::print_job_manager() {
