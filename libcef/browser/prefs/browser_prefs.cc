@@ -37,6 +37,7 @@
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/google/core/browser/google_url_tracker.h"
+#include "components/history/core/common/pref_names.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/language/core/browser/language_prefs.h"
 #include "components/language/core/browser/pref_names.h"
@@ -219,6 +220,16 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     DCHECK(!locale.empty());
     renderer_prefs::RegisterProfilePrefs(registry.get(), locale);
     PlatformNotificationServiceImpl::RegisterProfilePrefs(registry.get());
+
+    // Some stuff
+    // Based on Profile::RegisterProfilePrefs
+      registry->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
+  registry->RegisterStringPref(prefs::kSessionExitType, std::string());
+  registry->RegisterInt64Pref(prefs::kSiteEngagementLastUpdateTime, 0,
+                              PrefRegistry::LOSSY_PREF);
+  registry->RegisterBooleanPref(prefs::kSSLErrorOverrideAllowed, true);
+  registry->RegisterBooleanPref(prefs::kDisableExtensions, false);
+    registry->RegisterBooleanPref(prefs::kSavingBrowserHistoryDisabled, false);
 
     // Print preferences.
     // Based on ProfileImpl::RegisterProfilePrefs.
