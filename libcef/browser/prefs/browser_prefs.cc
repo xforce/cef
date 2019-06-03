@@ -24,6 +24,7 @@
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/plugins/plugin_info_host_impl.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
+#include "chrome/browser/profiles/profile_info_cache.h"
 #include "chrome/browser/renderer_host/pepper/device_id_fetcher.h"
 #include "chrome/browser/ssl/ssl_config_service_manager.h"
 #include "chrome/browser/supervised_user/supervised_user_pref_store.h"
@@ -199,6 +200,9 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     registry->RegisterDictionaryPref("test.dict");
   }
 
+  // Required preferences for notifications.
+  ProfileInfoCache::RegisterPrefs(registry.get());
+
   if (profile) {
     // Call RegisterProfilePrefs() for all services listed by
     // EnsureBrowserContextKeyedServiceFactoriesBuilt().
@@ -221,14 +225,13 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     renderer_prefs::RegisterProfilePrefs(registry.get(), locale);
     PlatformNotificationServiceImpl::RegisterProfilePrefs(registry.get());
 
-    // Some stuff
-    // Based on Profile::RegisterProfilePrefs
-      registry->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
-  registry->RegisterStringPref(prefs::kSessionExitType, std::string());
-  registry->RegisterInt64Pref(prefs::kSiteEngagementLastUpdateTime, 0,
-                              PrefRegistry::LOSSY_PREF);
-  registry->RegisterBooleanPref(prefs::kSSLErrorOverrideAllowed, true);
-  registry->RegisterBooleanPref(prefs::kDisableExtensions, false);
+    // Based on Profile::RegisterProfilePrefs.
+    registry->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
+    registry->RegisterStringPref(prefs::kSessionExitType, std::string());
+    registry->RegisterInt64Pref(prefs::kSiteEngagementLastUpdateTime, 0,
+                                PrefRegistry::LOSSY_PREF);
+    registry->RegisterBooleanPref(prefs::kSSLErrorOverrideAllowed, true);
+    registry->RegisterBooleanPref(prefs::kDisableExtensions, false);
     registry->RegisterBooleanPref(prefs::kSavingBrowserHistoryDisabled, false);
 
     // Print preferences.

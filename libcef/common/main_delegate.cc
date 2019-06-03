@@ -42,6 +42,7 @@
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_features.h"
+#include "ui/message_center/public/cpp/features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "extensions/common/constants.h"
@@ -581,6 +582,7 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
                                       disable_features_str);
     }
 
+    enable_features.push_back(message_center::kNewStyleNotifications.name);
     enable_features.push_back(features::kNativeNotifications.name);
 
     if (!enable_features.empty()) {
