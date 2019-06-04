@@ -217,6 +217,7 @@ if (is_win) {
   # *_switches.cc duplication otherwise causes linker errors.
   static_library("chrome_elf_set") {
     sources = [
+      "libcef/common/cef_install_modes.cc",
       "libcef/common/crash_reporter_client.cc",
       "libcef/common/crash_reporter_client.h",
 
@@ -489,6 +490,7 @@ static_library("libcef_static") {
     "libcef/browser/zip_reader_impl.cc",
     "libcef/browser/zip_reader_impl.h",
     "libcef/common/base_impl.cc",
+    "libcef/common/cef_install_modes.cc",
     "libcef/common/cef_message_generator.cc",
     "libcef/common/cef_message_generator.h",
     "libcef/common/cef_messages.cc",
