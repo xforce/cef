@@ -141,26 +141,30 @@ const install_static::InstallConstants* GetCefInstallModes() {
       } else if (name_str == "base_app_name") {
         std::wstring w_str;
         base::UTF8ToWide(val_str.c_str(), val_str.size(), &w_str);
-        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t));
+        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t) + 1);
         memcpy(data, w_str.data(), w_str.size() * sizeof(wchar_t));
+        data[w_str.size()] = 0;
         install_mode.base_app_name = data;
       } else if (name_str == "base_app_id") {
         std::wstring w_str;
         base::UTF8ToWide(val_str.c_str(), val_str.size(), &w_str);
-        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t));
+        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t) + 1);
         memcpy(data, w_str.data(), w_str.size() * sizeof(wchar_t));
+        data[w_str.size()] = 0;
         install_mode.base_app_id = data;
       } else if (name_str == "prog_id_prefix") {
         std::wstring w_str;
         base::UTF8ToWide(val_str.c_str(), val_str.size(), &w_str);
-        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t));
+        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t) + 1);
         memcpy(data, w_str.data(), w_str.size() * sizeof(wchar_t));
+        data[w_str.size()] = 0;
         install_mode.prog_id_prefix = data;
       } else if (name_str == "prog_id_description") {
         std::wstring w_str;
         base::UTF8ToWide(val_str.c_str(), val_str.size(), &w_str);
-        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t));
+        wchar_t* data = (wchar_t*)malloc(w_str.size() * sizeof(wchar_t) + 1);
         memcpy(data, w_str.data(), w_str.size() * sizeof(wchar_t));
+        data[w_str.size()] = 0;
         install_mode.prog_id_description = data;
       }
     }
@@ -169,4 +173,101 @@ const install_static::InstallConstants* GetCefInstallModes() {
   fclose(fp);
 
   return &install_mode;
+}
+
+struct ProductInfo {
+  base::string16 app_description;
+  base::string16 publisher_name;
+  base::string16 shortcut_name;
+  base::string16 long_app_description;
+};
+
+ProductInfo& ReadProductInfo() {
+  static bool already_read = false;
+  static ProductInfo product_info;
+  if (already_read) {
+    return product_info;
+  }
+  already_read = true;
+  PathString config_path = GetProductConfigPath();
+  if (config_path.empty())
+    return product_info;
+
+#if defined(OS_WIN)
+  FILE* fp = _wfopen(config_path.c_str(), L"r");
+#else
+  FILE* fp = fopen(config_path.c_str(), "r");
+#endif
+  if (!fp)
+    return product_info;
+
+  char line[1000];
+
+  enum section {
+    kNoSection,
+    kConfigSection,
+  } current_section = kNoSection;
+
+  while (fgets(line, sizeof(line) - 1, fp) != NULL) {
+    std::string str = line;
+    base::TrimString(str, base::kWhitespaceASCII, &str);
+    if (str.empty() || str[0] == '#')
+      continue;
+
+    if (str == "[Config]") {
+      current_section = kConfigSection;
+      continue;
+    } else if (str[0] == '[') {
+      current_section = kNoSection;
+      continue;
+    }
+
+    if (current_section == kNoSection)
+      continue;
+
+    size_t div = str.find('=');
+    if (div == std::string::npos)
+      continue;
+
+    std::string name_str = str.substr(0, div);
+    base::TrimString(name_str, base::kWhitespaceASCII, &name_str);
+    std::string val_str = str.substr(div + 1);
+    base::TrimString(val_str, base::kWhitespaceASCII, &val_str);
+    if (name_str.empty())
+      continue;
+
+    if (current_section == kConfigSection) {
+      if (name_str == "app_description") {
+        base::UTF8ToWide(val_str.c_str(), val_str.size(),
+                         &product_info.app_description);
+      } else if (name_str == "publisher_name") {
+        base::UTF8ToWide(val_str.c_str(), val_str.size(),
+                         &product_info.publisher_name);
+      } else if (name_str == "shortcut_name") {
+        base::UTF8ToWide(val_str.c_str(), val_str.size(),
+                         &product_info.shortcut_name);
+      } else if (name_str == "long_app_description") {
+        base::UTF8ToWide(val_str.c_str(), val_str.size(),
+                         &product_info.long_app_description);
+      }
+    }
+  }
+
+  return product_info;
+}
+
+base::string16 CefGetAppDescription() {
+  return ReadProductInfo().app_description;
+}
+
+base::string16 CefGetPublisherName() {
+  return ReadProductInfo().publisher_name;
+}
+
+base::string16 CefGetShortcutName() {
+  return ReadProductInfo().shortcut_name;
+}
+
+base::string16 CefGetLongAppDescription() {
+  return ReadProductInfo().long_app_description;
 }
