@@ -3,6 +3,7 @@
 #include "base/callback.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_permission_context.h"
+#include "chrome/browser/notifications/platform_notification_service_factory.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -36,8 +37,8 @@ void CefNotificationHandler::OnClose(Profile* profile,
     return;
   }
   // If we programatically closed this notification, don't dispatch any event.
-  if (PlatformNotificationServiceImpl::GetInstance()->WasClosedProgrammatically(
-          notification_id)) {
+  if (PlatformNotificationServiceFactory::GetForProfile(profile)
+          ->WasClosedProgrammatically(notification_id)) {
     std::move(completed_closure).Run();
     return;
   }
@@ -120,8 +121,8 @@ void CefNotificationHandler::OnClickCompleted(
     case content::PersistentNotificationStatus::kPermissionMissing:
       // There was a failure that's out of the developer's control. The user now
       // observes a stuck notification, so let's close it for them.
-      PlatformNotificationServiceImpl::GetInstance()
-          ->ClosePersistentNotification(profile, notification_id);
+      PlatformNotificationServiceFactory::GetForProfile(profile)
+          ->ClosePersistentNotification(notification_id);
       break;
   }
 
@@ -143,8 +144,8 @@ void CefNotificationHandler::DidDispatchClickEvent(
     // TODO(cef): Call into user code here
 
     // Close the |notification_id| as the user has explicitly acknowledged it.
-    PlatformNotificationServiceImpl::GetInstance()->CloseNotification(
-        profile, notification_id);
+    PlatformNotificationServiceFactory::GetForProfile(profile)
+        ->CloseNotification(notification_id);
   }
 
   std::move(completed_closure).Run();
