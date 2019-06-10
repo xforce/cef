@@ -53,9 +53,9 @@ void ChromeBrowserProcessStub::Initialize() {
   message_center::MessageCenter::Initialize();
   // Set the system notification source display name ("Google Chrome" or
   // "Chromium").
-  if (message_center::MessageCenter::Get()) {
-    message_center::MessageCenter::Get()->SetSystemNotificationAppName(L"Meow");
-  }
+  // if (message_center::MessageCenter::Get()) {
+  //   message_center::MessageCenter::Get()->SetSystemNotificationAppName(L"Meow");
+  // }
 
   initialized_ = true;
 }
