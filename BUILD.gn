@@ -490,7 +490,6 @@ static_library("libcef_static") {
     "libcef/browser/zip_reader_impl.cc",
     "libcef/browser/zip_reader_impl.h",
     "libcef/common/base_impl.cc",
-    "libcef/common/cef_install_modes.cc",
     "libcef/common/cef_message_generator.cc",
     "libcef/common/cef_message_generator.h",
     "libcef/common/cef_messages.cc",
@@ -757,6 +756,7 @@ static_library("libcef_static") {
       "libcef/browser/osr/browser_platform_delegate_osr_win.cc",
       "libcef/browser/osr/browser_platform_delegate_osr_win.h",
       "libcef/browser/osr/render_widget_host_view_osr_win.cc",
+      "libcef/common/cef_install_modes.cc",
 
       # Part of //chrome/utility.
       "//chrome/utility/printing_handler.cc",
