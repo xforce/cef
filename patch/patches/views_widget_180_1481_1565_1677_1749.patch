@@ -121,6 +121,46 @@ index 07d4351d0a8a..4ad78ab76a7c 100644
  #if defined(OS_MACOSX)
    // Set the view's active state (i.e., tint state of controls).
    virtual void SetActive(bool active) = 0;
+diff --git ui/base/x/x11_window.cc ui/base/x/x11_window.cc
+index 7df0a3a8ed26..d92dcb1ce527 100644
+--- ui/base/x/x11_window.cc
++++ ui/base/x/x11_window.cc
+@@ -190,8 +190,14 @@ void XWindow::Init(const Configuration& config) {
+   attribute_mask |= CWBorderPixel;
+   swa.border_pixel = 0;
+ 
++  gfx::AcceleratedWidget parent_widget = config.parent_widget;
++  if (parent_widget == gfx::kNullAcceleratedWidget)
++    parent_widget = x_root_window_;
++  // else
++  //   has_external_parent_ = true;
++
+   bounds_in_pixels_ = SanitizeBounds(config.bounds);
+-  xwindow_ = XCreateWindow(xdisplay_, x_root_window_, bounds_in_pixels_.x(),
++  xwindow_ = XCreateWindow(xdisplay_, parent_widget, bounds_in_pixels_.x(),
+                            bounds_in_pixels_.y(), bounds_in_pixels_.width(),
+                            bounds_in_pixels_.height(),
+                            0,  // border width
+diff --git ui/base/x/x11_window.h ui/base/x/x11_window.h
+index 97d8273414fa..b8784d044c61 100644
+--- ui/base/x/x11_window.h
++++ ui/base/x/x11_window.h
+@@ -20,6 +20,7 @@
+ #include "ui/gfx/geometry/rect.h"
+ #include "ui/gfx/geometry/size.h"
+ #include "ui/gfx/geometry/size_f.h"
++#include "ui/gfx/native_widget_types.h"
+ #include "ui/gfx/x/x11.h"
+ #include "ui/gfx/x/x11_types.h"
+ 
+@@ -86,6 +87,7 @@ class COMPONENT_EXPORT(UI_BASE_X) XWindow {
+     std::string wm_class_name;
+     std::string wm_class_class;
+     std::string wm_role_name;
++    gfx::AcceleratedWidget parent_widget;
+   };
+ 
+   explicit XWindow(Delegate* delegate);
 diff --git ui/views/widget/desktop_aura/desktop_screen_win.cc ui/views/widget/desktop_aura/desktop_screen_win.cc
 index 70553b153c44..ecd99bc78373 100644
 --- ui/views/widget/desktop_aura/desktop_screen_win.cc
@@ -193,6 +233,18 @@ index 335db0db49bb..7f60402ed086 100644
    // Owned by TooltipController, but we need to forward events to it so we keep
    // a reference.
    corewm::TooltipWin* tooltip_;
+diff --git ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc
+index b03a5bc9d509..fee8ad259c6d 100644
+--- ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc
++++ ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc
+@@ -139,6 +139,7 @@ ui::XWindow::Configuration ConvertInitParamsToX11WindowConfig(
+   config.wm_class_name = params.wm_class_name;
+   config.wm_class_class = params.wm_class_class;
+   config.wm_role_name = params.wm_role_name;
++  config.parent_widget = params.parent_widget;
+ 
+   return config;
+ }
 diff --git ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h
 index e32726ad4616..fca4a4fb8ca8 100644
 --- ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h
