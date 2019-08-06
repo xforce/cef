@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=aec5a0e97d40a742c521e9ed46486767cb72a98a$
+// $hash=0c949d0e4f8a7c680d0fb244322250840392bd92$
 //
 
 #ifndef CEF_INCLUDE_CAPI_VIEWS_CEF_WINDOW_CAPI_H_
@@ -113,13 +113,15 @@ typedef struct _cef_window_t {
   ///
   // Set the Window to be on top of other Windows in the Windowing system.
   ///
-  void(CEF_CALLBACK* set_always_on_top)(struct _cef_window_t* self, int on_top);
+  void(CEF_CALLBACK* set_zorder_level)(struct _cef_window_t* self,
+                                       cef_z_order_level_t order);
 
   ///
   // Returns whether the Window has been set to be on top of other Windows in
   // the Windowing system.
   ///
-  int(CEF_CALLBACK* is_always_on_top)(struct _cef_window_t* self);
+  cef_z_order_level_t(CEF_CALLBACK* get_zorder_level)(
+      struct _cef_window_t* self);
 
   ///
   // Maximize the Window.

@@ -137,14 +137,14 @@ class ProxyURLLoaderFactory
   // Create a proxy object on the UI thread.
   static void CreateProxy(
       content::BrowserContext* browser_context,
-      network::mojom::URLLoaderFactoryRequest* factory_request,
+      mojo::PendingReceiver<network::mojom::URLLoaderFactory> *factory_receiver,
       network::mojom::TrustedURLLoaderHeaderClientPtrInfo* header_client,
       std::unique_ptr<InterceptedRequestHandler> request_handler);
 
   // Create a proxy object on the IO thread.
   static ProxyURLLoaderFactory* CreateProxy(
       content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
-      network::mojom::URLLoaderFactoryRequest* factory_request,
+      mojo::PendingReceiver<network::mojom::URLLoaderFactory> *factory_receiver,
       std::unique_ptr<InterceptedRequestHandler> request_handler);
 
   // mojom::URLLoaderFactory methods:

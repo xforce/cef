@@ -1,5 +1,5 @@
 diff --git BUILD.gn BUILD.gn
-index 42f20931a..2a14a60e7 100644
+index 91a2ccbaf..609b63126 100644
 --- BUILD.gn
 +++ BUILD.gn
 @@ -199,6 +199,10 @@ jumbo_component("pdfium") {
@@ -14,10 +14,10 @@ index 42f20931a..2a14a60e7 100644
  
  # Targets below this are only visible within this file (and to the
 diff --git fpdfsdk/fpdf_view.cpp fpdfsdk/fpdf_view.cpp
-index 63374d2e9..7e9c32146 100644
+index 10a84675c..f1dd69696 100644
 --- fpdfsdk/fpdf_view.cpp
 +++ fpdfsdk/fpdf_view.cpp
-@@ -39,6 +39,7 @@
+@@ -42,6 +42,7 @@
  #include "fpdfsdk/cpdfsdk_helpers.h"
  #include "fpdfsdk/cpdfsdk_pageview.h"
  #include "fpdfsdk/ipdfsdk_pauseadapter.h"
@@ -25,11 +25,3 @@ index 63374d2e9..7e9c32146 100644
  #include "fxjs/ijs_runtime.h"
  #include "public/fpdf_formfill.h"
  #include "third_party/base/ptr_util.h"
-@@ -184,6 +185,7 @@ FPDF_EXPORT void FPDF_CALLCONV FPDF_DestroyLibrary() {
- 
-   CPDF_ModuleMgr::Destroy();
-   CFX_GEModule::Destroy();
-+  FXJS_Release();
- 
-   IJS_Runtime::Destroy();
- 

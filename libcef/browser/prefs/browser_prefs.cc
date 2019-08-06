@@ -74,6 +74,9 @@ std::string GetAcceptLanguageList(Profile* profile) {
   return std::string();
 }
 
+// Deprecated 6/2019
+const char kMediaCacheSize[] = "browser.media_cache_size";
+
 }  // namespace
 
 const char kUserPrefsFileName[] = "UserPrefs.json";
@@ -240,7 +243,7 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     // Based on ProfileImpl::RegisterProfilePrefs.
     registry->RegisterFilePathPref(prefs::kDiskCacheDir, cache_path);
     registry->RegisterIntegerPref(prefs::kDiskCacheSize, 0);
-    registry->RegisterIntegerPref(prefs::kMediaCacheSize, 0);
+    registry->RegisterIntegerPref(kMediaCacheSize, 0);
 
     // Spell checking preferences.
     // Modify defaults from SpellcheckServiceFactory::RegisterProfilePrefs.

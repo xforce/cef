@@ -179,7 +179,8 @@ void CefBrowserPlatformDelegateNativeLinux::NotifyMoveOrResizeStarted() {
   // Explicitly set the screen bounds so that WindowTreeHost::*Screen()
   // methods return the correct results.
   const gfx::Rect& bounds = window_x11_->GetBoundsInScreen();
-  tree_host->set_screen_bounds(bounds);
+  // TODO(alexander): This is wrong!!!???
+  // tree_host->SetBoundsInPixels(bounds);
 
   // Send updated screen rectangle information to the renderer process so that
   // popups are displayed in the correct location.

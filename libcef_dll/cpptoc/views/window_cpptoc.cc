@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e7530e230047a16346c63340acf5afe795fe4d7a$
+// $hash=e5a79ed52a67062d8df1954e8c6b2aef007721b6$
 //
 
 #include "libcef_dll/cpptoc/views/window_cpptoc.h"
@@ -182,8 +182,8 @@ void CEF_CALLBACK window_bring_to_top(struct _cef_window_t* self) {
   CefWindowCppToC::Get(self)->BringToTop();
 }
 
-void CEF_CALLBACK window_set_always_on_top(struct _cef_window_t* self,
-                                           int on_top) {
+void CEF_CALLBACK window_set_zorder_level(struct _cef_window_t* self,
+                                          cef_z_order_level_t order) {
   shutdown_checker::AssertNotShutdown();
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
@@ -193,22 +193,23 @@ void CEF_CALLBACK window_set_always_on_top(struct _cef_window_t* self,
     return;
 
   // Execute
-  CefWindowCppToC::Get(self)->SetAlwaysOnTop(on_top ? true : false);
+  CefWindowCppToC::Get(self)->SetZOrderLevel(order);
 }
 
-int CEF_CALLBACK window_is_always_on_top(struct _cef_window_t* self) {
+cef_z_order_level_t CEF_CALLBACK
+window_get_zorder_level(struct _cef_window_t* self) {
   shutdown_checker::AssertNotShutdown();
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
   if (!self)
-    return 0;
+    return kNormal;
 
   // Execute
-  bool _retval = CefWindowCppToC::Get(self)->IsAlwaysOnTop();
+  cef_z_order_level_t _retval = CefWindowCppToC::Get(self)->GetZOrderLevel();
 
-  // Return type: bool
+  // Return type: simple
   return _retval;
 }
 
@@ -1783,8 +1784,8 @@ CefWindowCppToC::CefWindowCppToC() {
   GetStruct()->deactivate = window_deactivate;
   GetStruct()->is_active = window_is_active;
   GetStruct()->bring_to_top = window_bring_to_top;
-  GetStruct()->set_always_on_top = window_set_always_on_top;
-  GetStruct()->is_always_on_top = window_is_always_on_top;
+  GetStruct()->set_zorder_level = window_set_zorder_level;
+  GetStruct()->get_zorder_level = window_get_zorder_level;
   GetStruct()->maximize = window_maximize;
   GetStruct()->minimize = window_minimize;
   GetStruct()->restore = window_restore;

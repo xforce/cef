@@ -241,7 +241,7 @@ void RootWindowViews::OnViewsWindowCreated(CefRefPtr<ViewsWindow> window) {
   CEF_REQUIRE_UI_THREAD();
   DCHECK(!window_);
   window_ = window;
-  window_->SetAlwaysOnTop(always_on_top_);
+  window_->SetZOrderLevel(always_on_top_ ? kNormal : kFloatingUIElement);
 
   if (!pending_extensions_.empty()) {
     window_->OnExtensionsChanged(pending_extensions_);

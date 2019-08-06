@@ -659,7 +659,7 @@ static_library("libcef_static") {
     "//components/proxy_config",
     "//components/safe_browsing/db:test_database_manager",
     "//components/services/pdf_compositor/public/cpp:factory",
-    "//components/services/pdf_compositor/public/interfaces",
+    "//components/services/pdf_compositor/public/mojom",
     "//components/tracing",
     "//components/update_client",
     "//components/url_formatter",
@@ -1065,7 +1065,7 @@ source_set("cef_content_browser_overlay_manifest") {
     "//base",
     "//components/services/heap_profiling/public/mojom",
     "//extensions/buildflags",
-    "//extensions/common:mojo",
+    "//extensions/common:mojom",
     "//extensions/common/api:mojom",
     "//services/service_manager/public/cpp",
     "//third_party/blink/public/common",
@@ -1104,7 +1104,7 @@ source_set("cef_content_renderer_overlay_manifest") {
     "//components/services/heap_profiling/public/mojom",
     "//components/subresource_filter/content/mojom",
     "//extensions/buildflags",
-    "//extensions/common:mojo",
+    "//extensions/common:mojom",
     "//services/service_manager/public/cpp",
     "//third_party/blink/public/common",
   ]
@@ -1150,7 +1150,6 @@ source_set("builtin_service_manifests") {
     "//components/startup_metric_utils/common:interfaces",
     "//extensions/buildflags",
     "//printing/buildflags",
-    "//services/proxy_resolver/public/cpp:manifest",
     "//services/service_manager/public/cpp",
   ]
 }
@@ -2032,12 +2031,9 @@ if (is_mac) {
               gypi_paths2.shared_sources_browser +
               gypi_paths2.shared_sources_common +
               gypi_paths2.shared_sources_renderer +
-              gypi_paths2.shared_sources_resources +
               gypi_paths2.cefclient_sources_browser +
               gypi_paths2.cefclient_sources_common +
-              gypi_paths2.cefclient_sources_renderer +
-              gypi_paths2.cefclient_sources_resources +
-              gypi_paths2.cefclient_sources_resources_extensions_set_page_color
+              gypi_paths2.cefclient_sources_renderer
 
     deps = [
       ":libcef",
@@ -2188,7 +2184,6 @@ if (is_mac) {
               gypi_paths2.shared_sources_browser +
               gypi_paths2.shared_sources_common +
               gypi_paths2.shared_sources_renderer +
-              gypi_paths2.shared_sources_resources +
               gypi_paths2.ceftests_sources_common +
               gypi_paths2.ceftests_sources_views
 

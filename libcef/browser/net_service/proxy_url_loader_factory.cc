@@ -644,8 +644,8 @@ void InterceptedRequest::InterceptResponseReceived(
           network::cors::header_names::kAccessControlAllowOrigin, origin));
     }
 
-    if (request_.fetch_credentials_mode ==
-        network::mojom::FetchCredentialsMode::kInclude) {
+    if (request_.credentials_mode ==
+        network::mojom::CredentialsMode::kInclude) {
       head.headers->AddHeader(MakeHeader(
           network::cors::header_names::kAccessControlAllowCredentials, "true"));
     }
@@ -1085,15 +1085,15 @@ void ProxyURLLoaderFactory::SetDisconnectCallback(
 // static
 void ProxyURLLoaderFactory::CreateProxy(
     content::BrowserContext* browser_context,
-    network::mojom::URLLoaderFactoryRequest* factory_request,
+    mojo::PendingReceiver<network::mojom::URLLoaderFactory>* factory_receiver,
     network::mojom::TrustedURLLoaderHeaderClientPtrInfo* header_client,
     std::unique_ptr<InterceptedRequestHandler> request_handler) {
   CEF_REQUIRE_UIT();
   DCHECK(request_handler);
 
-  auto proxied_request = std::move(*factory_request);
+  auto proxied_request = std::move(*factory_receiver);
   network::mojom::URLLoaderFactoryPtrInfo target_factory_info;
-  *factory_request = mojo::MakeRequest(&target_factory_info);
+  *factory_receiver = mojo::MakeRequest(&target_factory_info);
 
   network::mojom::TrustedURLLoaderHeaderClientRequest header_client_request;
   if (header_client)
@@ -1114,14 +1114,14 @@ void ProxyURLLoaderFactory::CreateProxy(
 // static
 ProxyURLLoaderFactory* ProxyURLLoaderFactory::CreateProxy(
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
-    network::mojom::URLLoaderFactoryRequest* factory_request,
+    mojo::PendingReceiver<network::mojom::URLLoaderFactory>* factory_receiver,
     std::unique_ptr<InterceptedRequestHandler> request_handler) {
   CEF_REQUIRE_IOT();
   DCHECK(request_handler);
 
-  auto proxied_request = std::move(*factory_request);
+  auto proxied_request = std::move(*factory_receiver);
   network::mojom::URLLoaderFactoryPtrInfo target_factory_info;
-  *factory_request = mojo::MakeRequest(&target_factory_info);
+  *factory_receiver = mojo::MakeRequest(&target_factory_info);
 
   auto proxy = new ProxyURLLoaderFactory(std::move(proxied_request),
                                          std::move(target_factory_info),

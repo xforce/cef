@@ -20,6 +20,11 @@ class ChromeProfileStub : public Profile {
 
  protected:
   // Profile methods.
+   // Returns the path of the directory where this context's data is stored.
+  base::FilePath GetPath() override;
+  base::FilePath GetPath() const override;
+  bool IsOffTheRecord() override;
+  bool IsOffTheRecord() const override;
   scoped_refptr<base::SequencedTaskRunner> GetIOTaskRunner() override;
   std::string GetProfileUserName() const override;
   ProfileType GetProfileType() const override;
@@ -33,14 +38,13 @@ class ChromeProfileStub : public Profile {
   bool IsLegacySupervised() const override;
   ExtensionSpecialStoragePolicy* GetExtensionSpecialStoragePolicy() override;
   PrefService* GetOffTheRecordPrefs() override;
-  base::OnceCallback<net::CookieStore*()> GetExtensionsCookieStoreGetter()
-      override;
   bool IsSameProfile(Profile* profile) override;
   base::Time GetStartTime() const override;
   base::FilePath last_selected_directory() override;
   void set_last_selected_directory(const base::FilePath& path) override;
   GURL GetHomePage() override;
   bool WasCreatedByVersionOrLater(const std::string& version) override;
+  bool IsIndependentOffTheRecordProfile() override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
 

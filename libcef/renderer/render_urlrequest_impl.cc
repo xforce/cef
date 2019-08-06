@@ -50,7 +50,7 @@ class CefWebURLLoaderClient : public blink::WebURLLoaderClient {
       int64_t total_encoded_body_length,
       int64_t total_decoded_body_length,
       bool should_report_corb_blocking,
-      const std::vector<network::cors::PreflightTimingInfo>&) override;
+      const blink::WebVector<network::cors::PreflightTimingInfo>&) override;
   void DidFail(const WebURLError&,
                int64_t total_encoded_data_length,
                int64_t total_encoded_body_length,
@@ -379,7 +379,7 @@ void CefWebURLLoaderClient::DidFinishLoading(
     int64_t total_encoded_body_length,
     int64_t total_decoded_body_length,
     bool should_report_corb_blocking,
-    const std::vector<network::cors::PreflightTimingInfo>&) {
+    const blink::WebVector<network::cors::PreflightTimingInfo>&) {
   context_->OnComplete();
 }
 

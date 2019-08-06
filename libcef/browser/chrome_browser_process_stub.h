@@ -38,20 +38,17 @@ class ChromeBrowserProcessStub : public BrowserProcess {
   void Shutdown();
 
   // BrowserProcess implementation.
-  void ResourceDispatcherHostCreated() override;
   void EndSession() override;
   void FlushLocalStateAndReply(base::OnceClosure reply) override;
   metrics_services_manager::MetricsServicesManager* GetMetricsServicesManager()
       override;
   metrics::MetricsService* metrics_service() override;
   rappor::RapporServiceImpl* rappor_service() override;
-  IOThread* io_thread() override;
   SystemNetworkContextManager* system_network_context_manager() override;
   network::NetworkQualityTracker* network_quality_tracker() override;
   WatchDogThread* watchdog_thread() override;
   ProfileManager* profile_manager() override;
   PrefService* local_state() override;
-  net::URLRequestContextGetter* system_request_context() override;
   scoped_refptr<network::SharedURLLoaderFactory> shared_url_loader_factory()
       override;
   variations::VariationsService* variations_service() override;
@@ -92,7 +89,6 @@ class ChromeBrowserProcessStub : public BrowserProcess {
   void StartAutoupdateTimer() override;
 #endif
 
-  net_log::ChromeNetLog* net_log() override;
   component_updater::ComponentUpdateService* component_updater() override;
   component_updater::SupervisedUserWhitelistInstaller*
   supervised_user_whitelist_installer() override;
@@ -116,7 +112,6 @@ class ChromeBrowserProcessStub : public BrowserProcess {
   std::unique_ptr<printing::PrintJobManager> print_job_manager_;
   std::unique_ptr<ChromeProfileManagerStub> profile_manager_;
   scoped_refptr<extensions::EventRouterForwarder> event_router_forwarder_;
-  std::unique_ptr<net_log::ChromeNetLog> net_log_;
   scoped_refptr<printing::PrintPreviewDialogController>
       print_preview_dialog_controller_;
   std::unique_ptr<printing::BackgroundPrintingManager>

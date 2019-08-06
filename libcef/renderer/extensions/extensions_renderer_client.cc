@@ -121,6 +121,13 @@ void CefExtensionsRendererClient::OnExtensionUnloaded(
   resource_request_policy_->OnExtensionUnloaded(extension_id);
 }
 
+bool CefExtensionsRendererClient::ExtensionAPIEnabledForServiceWorkerScript(
+    const GURL& scope,
+    const GURL& script_url) const {
+  // TODO(alexander): Implement this properly
+  return false;
+}
+
 void CefExtensionsRendererClient::RenderThreadStarted() {
   content::RenderThread* thread = content::RenderThread::Get();
 

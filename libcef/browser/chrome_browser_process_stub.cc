@@ -104,10 +104,6 @@ void ChromeBrowserProcessStub::Shutdown() {
   shutdown_ = true;
 }
 
-void ChromeBrowserProcessStub::ResourceDispatcherHostCreated() {
-  NOTREACHED();
-}
-
 void ChromeBrowserProcessStub::EndSession() {
   NOTREACHED();
 }
@@ -130,10 +126,6 @@ metrics::MetricsService* ChromeBrowserProcessStub::metrics_service() {
 
 rappor::RapporServiceImpl* ChromeBrowserProcessStub::rappor_service() {
   // Called from PluginInfoHostImpl::ReportMetrics.
-  return NULL;
-}
-
-IOThread* ChromeBrowserProcessStub::io_thread() {
   return NULL;
 }
 
@@ -171,12 +163,6 @@ PrefService* ChromeBrowserProcessStub::local_state() {
         nullptr, cache_path, !!settings.persist_user_preferences);
   }
   return local_state_.get();
-}
-
-net::URLRequestContextGetter*
-ChromeBrowserProcessStub::system_request_context() {
-  NOTREACHED();
-  return NULL;
 }
 
 scoped_refptr<network::SharedURLLoaderFactory>
@@ -342,23 +328,6 @@ StartupData* ChromeBrowserProcessStub::startup_data() {
 #if (defined(OS_WIN) || defined(OS_LINUX)) && !defined(OS_CHROMEOS)
 void ChromeBrowserProcessStub::StartAutoupdateTimer() {}
 #endif
-
-net_log::ChromeNetLog* ChromeBrowserProcessStub::net_log() {
-  DCHECK(initialized_);
-  if (!net_log_) {
-    const base::CommandLine& command_line =
-        *base::CommandLine::ForCurrentProcess();
-    net_log_ = std::make_unique<net_log::ChromeNetLog>();
-    if (command_line.HasSwitch(network::switches::kLogNetLog)) {
-      net_log_->StartWritingToFile(
-          command_line.GetSwitchValuePath(network::switches::kLogNetLog),
-          net::GetNetCaptureModeFromCommandLine(command_line,
-                                                network::switches::kLogNetLog),
-          command_line.GetCommandLineString(), std::string());
-    }
-  }
-  return net_log_.get();
-}
 
 component_updater::ComponentUpdateService*
 ChromeBrowserProcessStub::component_updater() {

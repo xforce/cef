@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=ea36ac4ed19e6b848009f86e8c6405179e73a5f5$
+// $hash=884f406e59e97301b42826588b515557509b91db$
 //
 
 #include "libcef_dll/ctocpp/views/window_ctocpp.h"
@@ -174,33 +174,34 @@ NO_SANITIZE("cfi-icall") void CefWindowCToCpp::BringToTop() {
   _struct->bring_to_top(_struct);
 }
 
-NO_SANITIZE("cfi-icall") void CefWindowCToCpp::SetAlwaysOnTop(bool on_top) {
+NO_SANITIZE("cfi-icall")
+void CefWindowCToCpp::SetZOrderLevel(cef_z_order_level_t order) {
   shutdown_checker::AssertNotShutdown();
 
   cef_window_t* _struct = GetStruct();
-  if (CEF_MEMBER_MISSING(_struct, set_always_on_top))
+  if (CEF_MEMBER_MISSING(_struct, set_zorder_level))
     return;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
-  _struct->set_always_on_top(_struct, on_top);
+  _struct->set_zorder_level(_struct, order);
 }
 
-NO_SANITIZE("cfi-icall") bool CefWindowCToCpp::IsAlwaysOnTop() {
+NO_SANITIZE("cfi-icall") cef_z_order_level_t CefWindowCToCpp::GetZOrderLevel() {
   shutdown_checker::AssertNotShutdown();
 
   cef_window_t* _struct = GetStruct();
-  if (CEF_MEMBER_MISSING(_struct, is_always_on_top))
-    return false;
+  if (CEF_MEMBER_MISSING(_struct, get_zorder_level))
+    return kNormal;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
-  int _retval = _struct->is_always_on_top(_struct);
+  cef_z_order_level_t _retval = _struct->get_zorder_level(_struct);
 
-  // Return type: bool
-  return _retval ? true : false;
+  // Return type: simple
+  return _retval;
 }
 
 NO_SANITIZE("cfi-icall") void CefWindowCToCpp::Maximize() {

@@ -224,10 +224,10 @@ void ViewsWindow::SetFullscreen(bool fullscreen) {
   }
 }
 
-void ViewsWindow::SetAlwaysOnTop(bool on_top) {
+void ViewsWindow::SetZOrderLevel(cef_z_order_level_t order) {
   CEF_REQUIRE_UI_THREAD();
   if (window_) {
-    window_->SetAlwaysOnTop(on_top);
+    window_->SetZOrderLevel(order);
   }
 }
 

@@ -18,7 +18,6 @@
 #include "content/public/utility/utility_thread.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/network/url_request_context_builder_mojo.h"
-#include "services/proxy_resolver/proxy_resolver_service.h"  // nogncheck
 #include "services/proxy_resolver/public/mojom/proxy_resolver.mojom.h"  // nogncheck
 #include "services/service_manager/public/cpp/binder_registry.h"
 
@@ -33,14 +32,6 @@ void RunServiceAsyncThenTerminateProcess(
       std::move(service),
       base::BindOnce([] { content::UtilityThread::Get()->ReleaseProcess(); }));
 }
-
-#if !defined(OS_ANDROID)
-std::unique_ptr<service_manager::Service> CreateProxyResolverService(
-    service_manager::mojom::ServiceRequest request) {
-  return std::make_unique<proxy_resolver::ProxyResolverService>(
-      std::move(request));
-}
-#endif
 
 using ServiceFactory =
     base::OnceCallback<std::unique_ptr<service_manager::Service>()>;
@@ -111,11 +102,6 @@ CefContentUtilityClient::MaybeCreateMainThreadService(
 bool CefContentUtilityClient::HandleServiceRequest(
     const std::string& service_name,
     service_manager::mojom::ServiceRequest request) {
-  if (service_name == proxy_resolver::mojom::kProxyResolverServiceName) {
-    RunServiceOnIOThread(
-        base::BindOnce(&CreateProxyResolverService, std::move(request)));
-    return true;
-  }
   auto service = MaybeCreateMainThreadService(service_name, std::move(request));
   if (service) {
     RunServiceAsyncThenTerminateProcess(std::move(service));

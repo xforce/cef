@@ -112,7 +112,7 @@ class ViewsWindow : public CefBrowserViewDelegate,
   void SetTitle(const std::string& title);
   void SetFavicon(CefRefPtr<CefImage> image);
   void SetFullscreen(bool fullscreen);
-  void SetAlwaysOnTop(bool on_top);
+  void SetZOrderLevel(cef_z_order_level_t order);
   void SetLoadingState(bool isLoading, bool canGoBack, bool canGoForward);
   void SetDraggableRegions(const std::vector<CefDraggableRegion>& regions);
   void TakeFocus(bool next);

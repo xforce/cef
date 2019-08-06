@@ -12,6 +12,22 @@ ChromeProfileStub::ChromeProfileStub() {}
 
 ChromeProfileStub::~ChromeProfileStub() {}
 
+base::FilePath ChromeProfileStub::GetPath() {
+  return {};
+}
+
+base::FilePath ChromeProfileStub::GetPath() const {
+  return {};
+}
+
+bool ChromeProfileStub::IsOffTheRecord() {
+  return false;
+}
+
+bool ChromeProfileStub::IsOffTheRecord() const {
+  return false;
+}
+
 scoped_refptr<base::SequencedTaskRunner> ChromeProfileStub::GetIOTaskRunner() {
   NOTREACHED();
   return scoped_refptr<base::SequencedTaskRunner>();
@@ -70,12 +86,6 @@ PrefService* ChromeProfileStub::GetOffTheRecordPrefs() {
   return NULL;
 }
 
-base::OnceCallback<net::CookieStore*()>
-ChromeProfileStub::GetExtensionsCookieStoreGetter() {
-  NOTREACHED();
-  return base::OnceCallback<net::CookieStore*()>();
-}
-
 bool ChromeProfileStub::IsSameProfile(Profile* profile) {
   NOTREACHED();
   return false;
@@ -103,6 +113,10 @@ GURL ChromeProfileStub::GetHomePage() {
 
 bool ChromeProfileStub::WasCreatedByVersionOrLater(const std::string& version) {
   NOTREACHED();
+  return false;
+}
+
+bool ChromeProfileStub::IsIndependentOffTheRecordProfile() {
   return false;
 }
 

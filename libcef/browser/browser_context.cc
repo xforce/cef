@@ -406,13 +406,6 @@ net::URLRequestContextGetter* CefBrowserContext::CreateMediaRequestContext() {
   return GetRequestContext();
 }
 
-net::URLRequestContextGetter*
-CefBrowserContext::CreateMediaRequestContextForStoragePartition(
-    const base::FilePath& partition_path,
-    bool in_memory) {
-  return nullptr;
-}
-
 void CefBrowserContext::SetCorsOriginAccessListForOrigin(
     const url::Origin& source_origin,
     std::vector<network::mojom::CorsOriginPatternPtr> allow_patterns,
@@ -507,15 +500,6 @@ net::URLRequestContextGetter* CefBrowserContext::CreateRequestContext(
     content::ProtocolHandlerMap* protocol_handlers,
     content::URLRequestInterceptorScopedVector request_interceptors) {
   NOTREACHED() << "NetworkService is required";
-  return nullptr;
-}
-
-net::URLRequestContextGetter*
-CefBrowserContext::CreateRequestContextForStoragePartition(
-    const base::FilePath& partition_path,
-    bool in_memory,
-    content::ProtocolHandlerMap* protocol_handlers,
-    content::URLRequestInterceptorScopedVector request_interceptors) {
   return nullptr;
 }
 

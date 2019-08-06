@@ -116,7 +116,6 @@
 #include "net/ssl/ssl_cert_request_info.h"
 #include "ppapi/host/ppapi_host.h"
 #include "services/network/public/cpp/network_switches.h"
-#include "services/proxy_resolver/proxy_resolver_service.h"
 #include "services/proxy_resolver/public/mojom/proxy_resolver.mojom.h"
 #include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/mojom/connector.mojom.h"
@@ -723,12 +722,6 @@ void CefContentBrowserClient::RunServiceInstance(
         std::make_unique<printing::PrintingService>(std::move(*receiver)));
     return;
   }
-  if (service_name == proxy_resolver::mojom::kProxyResolverServiceName) {
-    service_manager::Service::RunAsyncUntilTermination(
-        std::make_unique<proxy_resolver::ProxyResolverService>(
-            std::move(*receiver)));
-    return;
-  }
 }
 
 void CefContentBrowserClient::RunServiceInstanceOnIOThread(
@@ -1022,7 +1015,7 @@ void CefContentBrowserClient::AllowCertificateError(
   }
 }
 
-void CefContentBrowserClient::SelectClientCertificate(
+base::OnceClosure CefContentBrowserClient::SelectClientCertificate(
     content::WebContents* web_contents,
     net::SSLCertRequestInfo* cert_request_info,
     net::ClientCertIdentityList client_certs,
@@ -1040,7 +1033,7 @@ void CefContentBrowserClient::SelectClientCertificate(
 
   if (!handler.get()) {
     delegate->ContinueWithCertificate(nullptr, nullptr);
-    return;
+     return base::OnceClosure();
   }
 
   CefRequestHandler::X509CertificateList certs;
@@ -1060,6 +1053,7 @@ void CefContentBrowserClient::SelectClientCertificate(
   if (!proceed && !certs.empty()) {
     callbackImpl->Select(certs[0]);
   }
+  return base::OnceClosure();
 }
 
 bool CefContentBrowserClient::CanCreateWindow(
@@ -1154,7 +1148,7 @@ CefContentBrowserClient::CreateThrottlesForNavigation(
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>
 CefContentBrowserClient::CreateURLLoaderThrottles(
     const network::ResourceRequest& request,
-    content::ResourceContext* resource_context,
+    content::BrowserContext* resource_context,
     const base::RepeatingCallback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data,
     int frame_tree_node_id) {
@@ -1162,8 +1156,7 @@ CefContentBrowserClient::CreateURLLoaderThrottles(
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
   // Used to substitute View ID for PDF contents when using the PDF plugin.
-  result.push_back(std::make_unique<PluginResponseInterceptorURLLoaderThrottle>(
-      resource_context, request.resource_type, frame_tree_node_id));
+  result.push_back(std::make_unique<PluginResponseInterceptorURLLoaderThrottle>(resource_context, request.resource_type, frame_tree_node_id));
 
   return result;
 }
@@ -1308,7 +1301,7 @@ bool CefContentBrowserClient::WillCreateURLLoaderFactory(
     bool is_navigation,
     bool is_download,
     const url::Origin& request_initiator,
-    network::mojom::URLLoaderFactoryRequest* factory_request,
+    mojo::PendingReceiver<network::mojom::URLLoaderFactory>* factory_receiver,
     network::mojom::TrustedURLLoaderHeaderClientPtrInfo* header_client,
     bool* bypass_redirect_checks) {
   auto request_handler = net_service::CreateInterceptedRequestHandler(
@@ -1316,7 +1309,7 @@ bool CefContentBrowserClient::WillCreateURLLoaderFactory(
       request_initiator);
 
   net_service::ProxyURLLoaderFactory::CreateProxy(
-      browser_context, factory_request, header_client,
+      browser_context, factory_receiver, header_client,
       std::move(request_handler));
   return true;
 }
@@ -1364,50 +1357,37 @@ CefContentBrowserClient::GetNetworkContextsParentDirectory() {
 }
 
 bool CefContentBrowserClient::HandleExternalProtocol(
-    const GURL& url,
-    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
-    int child_id,
-    content::NavigationUIData* navigation_data,
-    bool is_main_frame,
-    ui::PageTransition page_transition,
-    bool has_user_gesture,
-    network::mojom::URLLoaderFactoryRequest* factory_request,
-    network::mojom::URLLoaderFactory*& out_factory) {
-  // Call the other HandleExternalProtocol variant.
-  return false;
-}
-
-bool CefContentBrowserClient::HandleExternalProtocol(
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     int frame_tree_node_id,
     content::NavigationUIData* navigation_data,
-    const network::ResourceRequest& request,
+    const network::ResourceRequest& resource_request,
     network::mojom::URLLoaderFactoryRequest* factory_request,
-    network::mojom::URLLoaderFactory*& out_factory) {
+    network::mojom::URLLoaderFactoryPtr* out_factory) {
+  mojo::PendingReceiver<network::mojom::URLLoaderFactory> request = mojo::MakeRequest(out_factory);
   // CefBrowserPlatformDelegate::HandleExternalProtocol may be called if
   // nothing handles the request.
   auto request_handler = net_service::CreateInterceptedRequestHandler(
-      web_contents_getter, frame_tree_node_id, request);
-  out_factory = net_service::ProxyURLLoaderFactory::CreateProxy(
-      web_contents_getter, factory_request, std::move(request_handler));
+      web_contents_getter, frame_tree_node_id, resource_request);
+  net_service::ProxyURLLoaderFactory::CreateProxy(
+      web_contents_getter, &request, std::move(request_handler));
   return true;
 }
 
-std::string CefContentBrowserClient::GetProduct() const {
+std::string CefContentBrowserClient::GetProduct() {
   // Match the logic in chrome_content_browser_client.cc GetProduct().
   return ::GetProduct();
 }
 
-std::string CefContentBrowserClient::GetChromeProduct() const {
+std::string CefContentBrowserClient::GetChromeProduct() {
   return version_info::GetProductNameAndVersionForUserAgent();
 }
 
-std::string CefContentBrowserClient::GetUserAgent() const {
+std::string CefContentBrowserClient::GetUserAgent() {
   // Match the logic in chrome_content_browser_client.cc GetUserAgent().
   return ::GetUserAgent();
 }
 
-blink::UserAgentMetadata CefContentBrowserClient::GetUserAgentMetadata() const {
+blink::UserAgentMetadata CefContentBrowserClient::GetUserAgentMetadata() {
   blink::UserAgentMetadata metadata;
 
   metadata.brand = version_info::GetProductName();
