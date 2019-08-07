@@ -75,7 +75,7 @@
 #include "components/services/heap_profiling/heap_profiling_service.h"
 #include "components/services/heap_profiling/public/mojom/constants.mojom.h"
 #include "components/services/pdf_compositor/public/cpp/pdf_compositor_service_factory.h"
-#include "components/services/pdf_compositor/public/interfaces/pdf_compositor.mojom.h"
+#include "components/services/pdf_compositor/public/mojom/pdf_compositor.mojom.h"
 #include "components/version_info/version_info.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -1033,7 +1033,7 @@ base::OnceClosure CefContentBrowserClient::SelectClientCertificate(
 
   if (!handler.get()) {
     delegate->ContinueWithCertificate(nullptr, nullptr);
-     return base::OnceClosure();
+    return base::OnceClosure();
   }
 
   CefRequestHandler::X509CertificateList certs;
@@ -1152,11 +1152,12 @@ CefContentBrowserClient::CreateURLLoaderThrottles(
     const base::RepeatingCallback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data,
     int frame_tree_node_id) {
-  CEF_REQUIRE_IOT();
+  // CEF_REQUIRE_IOT();
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
   // Used to substitute View ID for PDF contents when using the PDF plugin.
-  result.push_back(std::make_unique<PluginResponseInterceptorURLLoaderThrottle>(resource_context, request.resource_type, frame_tree_node_id));
+  result.push_back(std::make_unique<PluginResponseInterceptorURLLoaderThrottle>(
+      resource_context, request.resource_type, frame_tree_node_id));
 
   return result;
 }
@@ -1363,13 +1364,14 @@ bool CefContentBrowserClient::HandleExternalProtocol(
     const network::ResourceRequest& resource_request,
     network::mojom::URLLoaderFactoryRequest* factory_request,
     network::mojom::URLLoaderFactoryPtr* out_factory) {
-  mojo::PendingReceiver<network::mojom::URLLoaderFactory> request = mojo::MakeRequest(out_factory);
+  mojo::PendingReceiver<network::mojom::URLLoaderFactory> request =
+      mojo::MakeRequest(out_factory);
   // CefBrowserPlatformDelegate::HandleExternalProtocol may be called if
   // nothing handles the request.
   auto request_handler = net_service::CreateInterceptedRequestHandler(
       web_contents_getter, frame_tree_node_id, resource_request);
-  net_service::ProxyURLLoaderFactory::CreateProxy(
-      web_contents_getter, &request, std::move(request_handler));
+  net_service::ProxyURLLoaderFactory::CreateProxy(web_contents_getter, &request,
+                                                  std::move(request_handler));
   return true;
 }
 

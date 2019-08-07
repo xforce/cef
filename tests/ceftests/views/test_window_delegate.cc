@@ -38,7 +38,7 @@ void TestWindowDelegate::OnWindowCreated(CefRefPtr<CefWindow> window) {
   EXPECT_FALSE(window->IsDrawn());
 
   EXPECT_FALSE(window->IsActive());
-  EXPECT_FALSE(window->IsAlwaysOnTop());
+  EXPECT_EQ(window->GetZOrderLevel(), kNormal);
   EXPECT_FALSE(window->IsMaximized());
   EXPECT_FALSE(window->IsMinimized());
   EXPECT_FALSE(window->IsFullscreen());

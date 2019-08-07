@@ -167,6 +167,11 @@ int CefBrowserMainParts::PreCreateThreads() {
   return 0;
 }
 
+void CefBrowserMainParts::PostCreateThreads() {
+  for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
+    chrome_extra_parts_[i]->PostCreateThreads();
+}
+
 void CefBrowserMainParts::PreMainMessageLoopRun() {
 #if defined(USE_AURA)
   display::Screen::SetScreenInstance(views::CreateDesktopScreen());

@@ -11,7 +11,7 @@
 #include "chrome/services/printing/printing_service.h"
 #include "chrome/services/printing/public/mojom/constants.mojom.h"
 #include "components/services/pdf_compositor/public/cpp/pdf_compositor_service_factory.h"
-#include "components/services/pdf_compositor/public/interfaces/pdf_compositor.mojom.h"
+#include "components/services/pdf_compositor/public/mojom/pdf_compositor.mojom.h"
 #include "content/public/child/child_thread.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
@@ -31,23 +31,6 @@ void RunServiceAsyncThenTerminateProcess(
   service_manager::Service::RunAsyncUntilTermination(
       std::move(service),
       base::BindOnce([] { content::UtilityThread::Get()->ReleaseProcess(); }));
-}
-
-using ServiceFactory =
-    base::OnceCallback<std::unique_ptr<service_manager::Service>()>;
-void RunServiceOnIOThread(ServiceFactory factory) {
-  base::OnceClosure terminate_process = base::BindOnce(
-      base::IgnoreResult(&base::SequencedTaskRunner::PostTask),
-      base::SequencedTaskRunnerHandle::Get(), FROM_HERE,
-      base::BindOnce([] { content::UtilityThread::Get()->ReleaseProcess(); }));
-  content::ChildThread::Get()->GetIOTaskRunner()->PostTask(
-      FROM_HERE,
-      base::BindOnce(
-          [](ServiceFactory factory, base::OnceClosure terminate_process) {
-            service_manager::Service::RunAsyncUntilTermination(
-                std::move(factory).Run(), std::move(terminate_process));
-          },
-          std::move(factory), std::move(terminate_process)));
 }
 
 }  // namespace

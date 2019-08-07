@@ -41,9 +41,10 @@ void ChromeBrowserProcessStub::Initialize() {
   DCHECK(!initialized_);
   DCHECK(!context_initialized_);
   DCHECK(!shutdown_);
+  DCHECK(!field_trial_list_);
 
   // Initialize this early before any code tries to check feature flags.
-  content::SetUpFieldTrialsAndFeatureList();
+  field_trial_list_ = content::SetUpFieldTrialsAndFeatureList();
 
   initialized_ = true;
 }
