@@ -28,6 +28,11 @@ void TestWindowDelegate::RunTest(CefRefPtr<CefWaitableEvent> event,
 }
 
 void TestWindowDelegate::OnWindowCreated(CefRefPtr<CefWindow> window) {
+  CefPostTask(TID_UI, base::Bind(&TestWindowDelegate::OnWindowCreatedInternal,
+                                 this, window));
+}
+
+void TestWindowDelegate::OnWindowCreatedInternal(CefRefPtr<CefWindow> window) {
   EXPECT_FALSE(window_);
   window_ = window;
 
@@ -54,7 +59,7 @@ void TestWindowDelegate::OnWindowCreated(CefRefPtr<CefWindow> window) {
 
   // Size will come from GetPreferredSize() on initial Window creation.
   EXPECT_TRUE(got_get_preferred_size_);
-  CefRect client_bounds = window->GetClientAreaBoundsInScreen();
+  CefRect client_bounds = window->GetBounds();
   if (config_.frameless) {
     EXPECT_EQ(config_.window_size, client_bounds.width);
     EXPECT_EQ(config_.window_size, client_bounds.height);

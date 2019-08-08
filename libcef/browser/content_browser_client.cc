@@ -1309,8 +1309,13 @@ bool CefContentBrowserClient::WillCreateURLLoaderFactory(
       browser_context, frame, render_process_id, is_navigation, is_download,
       request_initiator);
 
+  auto proxied_receiver = std::move(*factory_receiver);
+  network::mojom::URLLoaderFactoryPtrInfo target_factory_info;
+  *factory_receiver = mojo::MakeRequest(&target_factory_info);
+
   net_service::ProxyURLLoaderFactory::CreateProxy(
-      browser_context, factory_receiver, header_client,
+      browser_context, std::move(proxied_receiver),
+      std::move(target_factory_info), header_client,
       std::move(request_handler));
   return true;
 }
@@ -1358,20 +1363,52 @@ CefContentBrowserClient::GetNetworkContextsParentDirectory() {
 }
 
 bool CefContentBrowserClient::HandleExternalProtocol(
+    const GURL& url,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    int child_id,
+    content::NavigationUIData* navigation_data,
+    bool is_main_frame,
+    ui::PageTransition page_transition,
+    bool has_user_gesture,
+    network::mojom::URLLoaderFactoryPtr* out_factory) {
+  // Call the other HandleExternalProtocol variant.
+  return false;
+}
+
+bool CefContentBrowserClient::HandleExternalProtocol(
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     int frame_tree_node_id,
     content::NavigationUIData* navigation_data,
     const network::ResourceRequest& resource_request,
     network::mojom::URLLoaderFactoryRequest* factory_request,
     network::mojom::URLLoaderFactoryPtr* out_factory) {
-  mojo::PendingReceiver<network::mojom::URLLoaderFactory> request =
-      mojo::MakeRequest(out_factory);
+  auto request = mojo::MakeRequest(out_factory);
   // CefBrowserPlatformDelegate::HandleExternalProtocol may be called if
   // nothing handles the request.
-  auto request_handler = net_service::CreateInterceptedRequestHandler(
-      web_contents_getter, frame_tree_node_id, resource_request);
-  net_service::ProxyURLLoaderFactory::CreateProxy(web_contents_getter, &request,
-                                                  std::move(request_handler));
+  if (CEF_CURRENTLY_ON_IOT()) {
+    auto request_handler = net_service::CreateInterceptedRequestHandler(
+        web_contents_getter, frame_tree_node_id, resource_request);
+    net_service::ProxyURLLoaderFactory::CreateProxy(
+        web_contents_getter, std::move(request), std::move(request_handler));
+  } else {
+    auto request_handler = net_service::CreateInterceptedRequestHandler(
+        web_contents_getter, frame_tree_node_id, resource_request);
+    CEF_POST_TASK(CEF_IOT,
+                  base::BindOnce(
+                      [](network::mojom::URLLoaderFactoryRequest request,
+                         std::unique_ptr<net_service::InterceptedRequestHandler>
+                             request_handler,
+                         content::ResourceRequestInfo::WebContentsGetter
+                             web_contents_getter) {
+                        // Manages its own lifetime.
+
+                        net_service::ProxyURLLoaderFactory::CreateProxy(
+                            web_contents_getter, std::move(request),
+                            std::move(request_handler));
+                      },
+                      std::move(request), std::move(request_handler),
+                      std::move(web_contents_getter)));
+  }
   return true;
 }
 

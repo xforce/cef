@@ -188,6 +188,15 @@ class CefContentBrowserClient : public content::ContentBrowserClient {
       const base::FilePath& relative_partition_path) override;
   std::vector<base::FilePath> GetNetworkContextsParentDirectory() override;
   bool HandleExternalProtocol(
+      const GURL& url,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      int child_id,
+      content::NavigationUIData* navigation_data,
+      bool is_main_frame,
+      ui::PageTransition page_transition,
+      bool has_user_gesture,
+      network::mojom::URLLoaderFactoryPtr* out_factory) override;
+  bool HandleExternalProtocol(
       content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
       int frame_tree_node_id,
       content::NavigationUIData* navigation_data,

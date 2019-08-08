@@ -143,7 +143,6 @@ void LoadCookies(content::BrowserContext* browser_context,
                  const AllowCookieCallback& allow_cookie_callback,
                  DoneCookieCallback done_callback) {
   CEF_REQUIRE_IOT();
-
   if ((request.load_flags & net::LOAD_DO_NOT_SEND_COOKIES) ||
       !request.allow_credentials) {
     // Continue immediately without loading cookies.

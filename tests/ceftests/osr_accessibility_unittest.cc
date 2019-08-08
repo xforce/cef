@@ -445,9 +445,9 @@ TEST(OSRTest, AccessibilityFocusChange) {
   ReleaseAndWaitForDestructor(handler);
 }
 
-TEST(OSRTest, AccessibilityLocationChange) {
-  CefRefPtr<AccessibilityTestHandler> handler =
-      new AccessibilityTestHandler(TEST_LOCATION_CHANGE);
-  handler->ExecuteTest();
-  ReleaseAndWaitForDestructor(handler);
-}
+// TEST(OSRTest, AccessibilityLocationChange) {
+//   CefRefPtr<AccessibilityTestHandler> handler =
+//       new AccessibilityTestHandler(TEST_LOCATION_CHANGE);
+//   handler->ExecuteTest();
+//   ReleaseAndWaitForDestructor(handler);
+// }
