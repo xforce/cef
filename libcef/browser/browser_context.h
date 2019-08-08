@@ -130,6 +130,7 @@ class CefBrowserContext : public ChromeProfileStub,
       std::vector<network::mojom::CorsOriginPatternPtr> allow_patterns,
       std::vector<network::mojom::CorsOriginPatternPtr> block_patterns,
       base::OnceClosure closure) override;
+  base::FilePath GetPath() override;
   base::FilePath GetPath() const override;
   std::unique_ptr<content::ZoomLevelDelegate> CreateZoomLevelDelegate(
       const base::FilePath& partition_path) override;

@@ -426,6 +426,10 @@ CefBrowserContext::GetURLLoaderFactory() {
       ->GetURLLoaderFactoryForBrowserProcess();
 }
 
+base::FilePath CefBrowserContext::GetPath() {
+  return cache_path_;
+}
+
 base::FilePath CefBrowserContext::GetPath() const {
   return cache_path_;
 }

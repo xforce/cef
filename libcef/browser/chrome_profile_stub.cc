@@ -13,10 +13,12 @@ ChromeProfileStub::ChromeProfileStub() {}
 ChromeProfileStub::~ChromeProfileStub() {}
 
 base::FilePath ChromeProfileStub::GetPath() {
+  NOTREACHED();
   return {};
 }
 
 base::FilePath ChromeProfileStub::GetPath() const {
+  NOTREACHED();
   return {};
 }
 
