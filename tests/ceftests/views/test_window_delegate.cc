@@ -28,11 +28,6 @@ void TestWindowDelegate::RunTest(CefRefPtr<CefWaitableEvent> event,
 }
 
 void TestWindowDelegate::OnWindowCreated(CefRefPtr<CefWindow> window) {
-  CefPostTask(TID_UI, base::Bind(&TestWindowDelegate::OnWindowCreatedInternal,
-                                 this, window));
-}
-
-void TestWindowDelegate::OnWindowCreatedInternal(CefRefPtr<CefWindow> window) {
   EXPECT_FALSE(window_);
   window_ = window;
 

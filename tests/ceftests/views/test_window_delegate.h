@@ -53,7 +53,6 @@ class TestWindowDelegate : public CefWindowDelegate {
 
   void OnCloseWindow();
   void OnTimeoutWindow();
-  void OnWindowCreatedInternal(CefRefPtr<CefWindow> window);
 
   CefRefPtr<CefWaitableEvent> event_;
   Config config_;
