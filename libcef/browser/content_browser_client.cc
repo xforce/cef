@@ -889,8 +889,7 @@ void CefContentBrowserClient::AdjustUtilityServiceProcessCommandLine(
   // On Mac, the video-capture and audio services require a CFRunLoop, provided
   // by a UI message loop, to run AVFoundation and CoreAudio code.
   // See https://crbug.com/834581
-  if (identity.name() == video_capture::mojom::kServiceName ||
-      identity.name() == audio::mojom::kServiceName)
+  if (identity.name() == audio::mojom::kServiceName)
     command_line->AppendSwitch(switches::kMessageLoopTypeUi);
 #endif
 }

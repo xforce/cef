@@ -1800,14 +1800,6 @@ if (is_mac) {
     ]
   }
 
-  mac_xib_bundle_data("cefclient_xibs") {
-    sources = [
-      "tests/cefclient/resources/mac/English.lproj/MainMenu.xib",
-    ]
-
-    output_path = "{{bundle_resources_dir}}/English.lproj"
-  }
-
   cef_app("cefclient") {
     helper_info_plist = "tests/cefclient/resources/mac/helper-Info.plist"
     helper_sources = gypi_paths2.includes_mac +
@@ -1838,7 +1830,6 @@ if (is_mac) {
       ":cefclient_resources_bundle_data",
       ":cefclient_resources_bundle_data_extensions_set_page_color",
       ":cefclient_resources_bundle_data_english",
-      ":cefclient_xibs",
     ]
     libs = [
       "AppKit.framework",
@@ -1874,14 +1865,6 @@ if (is_mac) {
     ]
   }
 
-  mac_xib_bundle_data("cefsimple_xibs") {
-    sources = [
-      "tests/cefsimple/mac/English.lproj/MainMenu.xib",
-    ]
-
-    output_path = "{{bundle_resources_dir}}/English.lproj"
-  }
-
   cef_app("cefsimple") {
     helper_info_plist = "tests/cefsimple/mac/helper-Info.plist"
     helper_sources = gypi_paths2.includes_mac +
@@ -1903,7 +1886,6 @@ if (is_mac) {
     deps = [
       ":cefsimple_resources_bundle_data",
       ":cefsimple_resources_bundle_data_english",
-      ":cefsimple_xibs",
     ]
     defines = [
       "CEF_USE_SANDBOX",
@@ -1935,14 +1917,6 @@ if (is_mac) {
     ]
   }
 
-  mac_xib_bundle_data("ceftests_xibs") {
-    sources = [
-      "tests/ceftests/resources/mac/English.lproj/MainMenu.xib",
-    ]
-
-    output_path = "{{bundle_resources_dir}}/English.lproj"
-  }
-
   cef_app("ceftests") {
     testonly = true
 
@@ -1971,7 +1945,6 @@ if (is_mac) {
     deps = [
       ":ceftests_resources_bundle_data",
       ":ceftests_resources_bundle_data_english",
-      ":ceftests_xibs",
       "//testing/gtest",
     ]
     libs = [
