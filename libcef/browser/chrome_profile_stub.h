@@ -20,9 +20,6 @@ class ChromeProfileStub : public Profile {
 
  protected:
   // Profile methods.
-   // Returns the path of the directory where this context's data is stored.
-  base::FilePath GetPath() override;
-  base::FilePath GetPath() const override;
   bool IsOffTheRecord() override;
   bool IsOffTheRecord() const override;
   scoped_refptr<base::SequencedTaskRunner> GetIOTaskRunner() override;

@@ -12,16 +12,6 @@ ChromeProfileStub::ChromeProfileStub() {}
 
 ChromeProfileStub::~ChromeProfileStub() {}
 
-base::FilePath ChromeProfileStub::GetPath() {
-  NOTREACHED();
-  return {};
-}
-
-base::FilePath ChromeProfileStub::GetPath() const {
-  NOTREACHED();
-  return {};
-}
-
 bool ChromeProfileStub::IsOffTheRecord() {
   return false;
 }
