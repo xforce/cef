@@ -18,7 +18,8 @@
 #include "content/public/utility/utility_thread.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/network/url_request_context_builder_mojo.h"
-#include "services/proxy_resolver/public/mojom/proxy_resolver.mojom.h"  // nogncheck
+#include "services/proxy_resolver/proxy_resolver_factory_impl.h"  // nogncheck
+#include "services/proxy_resolver/public/mojom/proxy_resolver.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 #if defined(OS_WIN)
@@ -67,6 +68,16 @@ bool CefContentUtilityClient::OnMessageReceived(const IPC::Message& message) {
 #endif
 
   return handled;
+}
+
+void CefContentUtilityClient::RunIOThreadService(
+    mojo::GenericPendingReceiver* receiver) {
+  if (auto factory_receiver =
+          receiver->As<proxy_resolver::mojom::ProxyResolverFactory>()) {
+    static base::NoDestructor<proxy_resolver::ProxyResolverFactoryImpl> factory(
+        std::move(factory_receiver));
+    return;
+  }
 }
 
 std::unique_ptr<service_manager::Service>
