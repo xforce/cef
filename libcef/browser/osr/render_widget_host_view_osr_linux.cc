@@ -111,6 +111,20 @@ int ToCursorID(ui::CursorType type) {
       return XC_left_ptr;
     case ui::CursorType::kGrabbing:
       return XC_left_ptr;
+    case ui::CursorType::kMiddlePanningVertical:
+      return XC_left_ptr;
+    case ui::CursorType::kMiddlePanningHorizontal:
+      return XC_left_ptr;
+    case ui::CursorType::kDndNone:
+      return XC_left_ptr;
+    case ui::CursorType::kDndMove:
+      return XC_left_ptr;
+    case ui::CursorType::kDndCopy:
+      return XC_left_ptr;
+    case ui::CursorType::kDndLink:
+      return XC_left_ptr;
+    case ui::CursorType::kNull:
+      return XC_left_ptr;
     case ui::CursorType::kCustom:
     case ui::CursorType::kNone:
       break;

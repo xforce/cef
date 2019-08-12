@@ -132,17 +132,18 @@ LPCWSTR ToCursorID(ui::CursorType type) {
     case ui::CursorType::kNull:
       return IDC_NO;
     case ui::CursorType::kMiddlePanningVertical:
-      return IDC_NO;
+      return MAKEINTRESOURCE(IDC_PAN_MIDDLE_VERTICAL);
     case ui::CursorType::kMiddlePanningHorizontal:
-      return IDC_NO;
+      return MAKEINTRESOURCE(IDC_PAN_MIDDLE_HORIZONTAL);
+    // TODO(cef): Find better cursors for these things
     case ui::CursorType::kDndNone:
-      return IDC_NO;
+      return IDC_ARROW;
     case ui::CursorType::kDndMove:
-      return IDC_NO;
+      return IDC_ARROW;
     case ui::CursorType::kDndCopy:
-      return IDC_NO;
+      return IDC_ARROW;
     case ui::CursorType::kDndLink:
-      return IDC_NO;
+      return IDC_ARROW;
     case ui::CursorType::kCustom:
       break;
   }

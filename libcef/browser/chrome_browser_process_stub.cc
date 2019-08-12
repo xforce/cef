@@ -102,6 +102,8 @@ void ChromeBrowserProcessStub::Shutdown() {
 
   background_printing_manager_.reset();
 
+  field_trial_list_.reset();
+
   shutdown_ = true;
 }
 
