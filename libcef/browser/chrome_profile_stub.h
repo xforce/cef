@@ -48,6 +48,8 @@ class ChromeProfileStub : public Profile {
   void SetCreationTimeForTesting(base::Time creation_time) override;
 
  private:
+  scoped_refptr<base::SequencedTaskRunner> io_task_runner_meow_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeProfileStub);
 };
 

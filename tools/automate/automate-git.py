@@ -1579,6 +1579,8 @@ if not options.nobuild and (chromium_checkout_changed or \
     target += ' ' + options.testtarget
   if platform == 'linux':
     target += ' chrome_sandbox'
+  if platform == 'windows':
+    target += ' notification_helper'
 
   # Make a CEF Debug build.
   if not options.nodebugbuild:

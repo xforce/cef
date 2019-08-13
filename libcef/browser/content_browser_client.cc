@@ -51,6 +51,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/notifications/platform_notification_service_factory.h"
+#include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/plugins/plugin_info_host_impl.h"
 #include "chrome/browser/plugins/plugin_response_interceptor_url_loader_throttle.h"
 #include "chrome/browser/plugins/plugin_utils.h"
@@ -983,6 +985,14 @@ base::OnceClosure CefContentBrowserClient::SelectClientCertificate(
     callbackImpl->Select(certs[0]);
   }
   return base::OnceClosure();
+}
+
+content::PlatformNotificationService*
+CefContentBrowserClient::GetPlatformNotificationService(
+  content::BrowserContext* browser_context) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  Profile* profile = Profile::FromBrowserContext(browser_context);
+  return PlatformNotificationServiceFactory::GetForProfile(profile);
 }
 
 bool CefContentBrowserClient::CanCreateWindow(

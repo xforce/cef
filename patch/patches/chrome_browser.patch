@@ -10,6 +10,15 @@ index 6f768f7848a3..363718020f94 100644
  import("//chrome/browser/buildflags.gni")
  import("//chrome/common/features.gni")
  import("//components/captive_portal/core/features.gni")
+@@ -74,6 +75,8 @@ proto_library("ntp_background_proto") {
+ # require many files from it. This makes linking more efficient.
+ jumbo_static_library("browser") {
+   sources = [
++    "//cef/libcef/browser/notifications/cef_notification_handler.cc",
++    "//cef/libcef/browser/notifications/cef_notification_handler.h",
+     "about_flags.cc",
+     "about_flags.h",
+     "accessibility/accessibility_labels_service.cc",
 @@ -1958,6 +1959,7 @@ jumbo_static_library("browser") {
      "//base/util/values:values_util",
      "//build:branding_buildflags",

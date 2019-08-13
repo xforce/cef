@@ -22,9 +22,11 @@
 #include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/plugins/plugin_info_host_impl.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
 #include "chrome/browser/printing/print_preview_sticky_settings.h"
+#include "chrome/browser/profiles/profile_info_cache.h"
 #include "chrome/browser/renderer_host/pepper/device_id_fetcher.h"
 #include "chrome/browser/ssl/ssl_config_service_manager.h"
 #include "chrome/browser/themes/theme_service.h"
@@ -37,6 +39,7 @@
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
+#include "components/history/core/common/pref_names.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/language/core/browser/language_prefs.h"
 #include "components/language/core/browser/pref_names.h"
@@ -215,6 +218,9 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     registry->RegisterDictionaryPref("test.dict");
   }
 
+  // Required preferences for notifications.
+  ProfileInfoCache::RegisterPrefs(registry.get());
+
   if (profile) {
     // Call RegisterProfilePrefs() for all services listed by
     // EnsureBrowserContextKeyedServiceFactoriesBuilt().
@@ -235,6 +241,16 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
         command_line->GetSwitchValueASCII(switches::kLang);
     DCHECK(!locale.empty());
     renderer_prefs::RegisterProfilePrefs(registry.get(), locale);
+    PlatformNotificationServiceImpl::RegisterProfilePrefs(registry.get());
+
+    // Based on Profile::RegisterProfilePrefs.
+    registry->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
+    registry->RegisterStringPref(prefs::kSessionExitType, std::string());
+    registry->RegisterInt64Pref(prefs::kSiteEngagementLastUpdateTime, 0,
+                                PrefRegistry::LOSSY_PREF);
+    registry->RegisterBooleanPref(prefs::kSSLErrorOverrideAllowed, true);
+    registry->RegisterBooleanPref(prefs::kDisableExtensions, false);
+    registry->RegisterBooleanPref(prefs::kSavingBrowserHistoryDisabled, false);
 
     // Print preferences.
     // Based on ProfileImpl::RegisterProfilePrefs.

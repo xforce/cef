@@ -5,10 +5,18 @@
 
 #include "libcef/browser/chrome_profile_stub.h"
 
+#include "base/task/post_task.h"
 #include "content/public/browser/resource_context.h"
 #include "net/url_request/url_request_context.h"
 
-ChromeProfileStub::ChromeProfileStub() {}
+ChromeProfileStub::ChromeProfileStub() {
+  // Get sequenced task runner for making sure that file operations are
+  // executed in expected order (what was previously assured by the FILE
+  // thread).
+  io_task_runner_meow_ = base::CreateSequencedTaskRunner(
+      {base::MayBlock(), base::ThreadPool(),
+       base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+}
 
 ChromeProfileStub::~ChromeProfileStub() {}
 
@@ -21,8 +29,7 @@ bool ChromeProfileStub::IsOffTheRecord() const {
 }
 
 scoped_refptr<base::SequencedTaskRunner> ChromeProfileStub::GetIOTaskRunner() {
-  NOTREACHED();
-  return scoped_refptr<base::SequencedTaskRunner>();
+  return io_task_runner_meow_;
 }
 
 std::string ChromeProfileStub::GetProfileUserName() const {
