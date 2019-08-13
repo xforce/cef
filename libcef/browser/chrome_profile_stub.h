@@ -46,6 +46,8 @@ class ChromeProfileStub : public Profile {
   ExitType GetLastSessionExitType() override;
 
  private:
+  scoped_refptr<base::SequencedTaskRunner> io_task_runner_meow_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeProfileStub);
 };
 

@@ -105,6 +105,9 @@ class ChromeBrowserProcessStub : public BrowserProcess {
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
 
  private:
+  void CreateNotificationPlatformBridge();
+  void CreateNotificationUIManager();
+
   bool initialized_;
   bool context_initialized_;
   bool shutdown_;
@@ -122,6 +125,10 @@ class ChromeBrowserProcessStub : public BrowserProcess {
   std::unique_ptr<policy::ChromeBrowserPolicyConnector>
       browser_policy_connector_;
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
+  bool created_notification_ui_manager_ = false;
+  std::unique_ptr<NotificationUIManager> notification_ui_manager_;
+  bool created_notification_bridge_ = false;
+  std::unique_ptr<NotificationPlatformBridge> notification_bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserProcessStub);
 };

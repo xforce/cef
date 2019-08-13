@@ -52,4 +52,5 @@ Thumbs.db
 # CEF generated files
 /include/cef_config.h
 /include/cef_version.h
-.ccls-cache/
+/.ccls-cache/
+/.vscode/

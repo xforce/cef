@@ -10,7 +10,16 @@ index c00a09a5ec2b..5596693cc879 100644
  import("//chrome/common/features.gni")
  import("//components/feature_engagement/features.gni")
  import("//components/feed/features.gni")
-@@ -1889,6 +1890,7 @@ jumbo_split_static_library("browser") {
+@@ -83,6 +84,8 @@ jumbo_split_static_library("browser") {
+   }
+ 
+   sources = [
++    "//cef/libcef/browser/notifications/cef_notification_handler.cc",
++    "//cef/libcef/browser/notifications/cef_notification_handler.h",
+     "about_flags.cc",
+     "about_flags.h",
+     "accessibility/accessibility_labels_service.cc",
+@@ -1889,6 +1892,7 @@ jumbo_split_static_library("browser") {
      "//base/util/values:values_util",
      "//build:branding_buildflags",
      "//cc",
@@ -18,7 +27,7 @@ index c00a09a5ec2b..5596693cc879 100644
      "//chrome:extra_resources",
      "//chrome:resources",
      "//chrome:strings",
-@@ -2192,6 +2194,10 @@ jumbo_split_static_library("browser") {
+@@ -2192,6 +2196,10 @@ jumbo_split_static_library("browser") {
      ]
    }
  

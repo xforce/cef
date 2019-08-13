@@ -14,6 +14,9 @@
 
 #include "base/command_line.h"
 #include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/notifications/notification_platform_bridge.h"
+#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/system_notification_helper.h"
 #include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/printing/background_printing_manager.h"
 #include "chrome/browser/printing/print_job_manager.h"
@@ -26,6 +29,8 @@
 #include "net/log/net_log_capture_mode.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/cpp/shared_url_loader_factory.h"
+
+#include "ui/message_center/message_center.h"
 
 ChromeBrowserProcessStub::ChromeBrowserProcessStub()
     : initialized_(false),
@@ -45,6 +50,13 @@ void ChromeBrowserProcessStub::Initialize() {
 
   // Initialize this early before any code tries to check feature flags.
   field_trial_list_ = content::SetUpFieldTrialsAndFeatureList();
+
+  message_center::MessageCenter::Initialize();
+  // Set the system notification source display name ("Google Chrome" or
+  // "Chromium").
+  // if (message_center::MessageCenter::Get()) {
+  //   message_center::MessageCenter::Get()->SetSystemNotificationAppName(L"Meow");
+  // }
 
   initialized_ = true;
 }
@@ -191,14 +203,16 @@ ChromeBrowserProcessStub::extension_event_router_forwarder() {
 }
 
 NotificationUIManager* ChromeBrowserProcessStub::notification_ui_manager() {
-  NOTREACHED();
-  return NULL;
+  if (!created_notification_ui_manager_)
+    CreateNotificationUIManager();
+  return notification_ui_manager_.get();
 }
 
 NotificationPlatformBridge*
 ChromeBrowserProcessStub::notification_platform_bridge() {
-  NOTREACHED();
-  return NULL;
+  if (!created_notification_bridge_)
+    CreateNotificationPlatformBridge();
+  return notification_bridge_.get();
 }
 
 policy::ChromeBrowserPolicyConnector*
@@ -233,8 +247,7 @@ void ChromeBrowserProcessStub::CreateDevToolsAutoOpener() {
 }
 
 bool ChromeBrowserProcessStub::IsShuttingDown() {
-  NOTREACHED();
-  return false;
+  return shutdown_;
 }
 
 printing::PrintJobManager* ChromeBrowserProcessStub::print_job_manager() {
@@ -387,4 +400,16 @@ prefs::InProcessPrefServiceFactory*
 ChromeBrowserProcessStub::pref_service_factory() const {
   NOTREACHED();
   return NULL;
+}
+
+void ChromeBrowserProcessStub::CreateNotificationPlatformBridge() {
+  DCHECK(!notification_bridge_);
+  notification_bridge_ = NotificationPlatformBridge::Create();
+  created_notification_bridge_ = true;
+}
+
+void ChromeBrowserProcessStub::CreateNotificationUIManager() {
+  DCHECK(!notification_ui_manager_);
+  notification_ui_manager_ = NotificationUIManager::Create();
+  created_notification_ui_manager_ = !!notification_ui_manager_;
 }

@@ -41,6 +41,7 @@
 #include "content/public/browser/browser_task_traits.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_manager.h"
+#include "content/public/browser/permission_controller_delegate.h"
 #include "content/public/browser/storage_partition.h"
 #include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/process_manager.h"
@@ -480,9 +481,66 @@ content::SSLHostStateDelegate* CefBrowserContext::GetSSLHostStateDelegate() {
   return ssl_host_state_delegate_.get();
 }
 
+class CefPermissionControllerDelegate
+    : public content::PermissionControllerDelegate {
+ public:
+  virtual ~CefPermissionControllerDelegate() = default;
+
+  int RequestPermission(
+      content::PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      bool user_gesture,
+      base::OnceCallback<void(blink::mojom::PermissionStatus)> callback)
+      override {
+    std::move(callback).Run(blink::mojom::PermissionStatus::GRANTED);
+    return 0;
+  }
+  int RequestPermissions(
+      const std::vector<content::PermissionType>& permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      bool user_gesture,
+      base::OnceCallback<
+          void(const std::vector<blink::mojom::PermissionStatus>&)> callback)
+      override {
+    std::vector<blink::mojom::PermissionStatus> result;
+    for (auto&& n : permission) {
+      (void)(n);
+      result.push_back(blink::mojom::PermissionStatus::GRANTED);
+    }
+    std::move(callback).Run(result);
+    return 0;
+  }
+  blink::mojom::PermissionStatus GetPermissionStatus(
+      content::PermissionType permission,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) override {
+    return blink::mojom::PermissionStatus::GRANTED;
+  }
+  blink::mojom::PermissionStatus GetPermissionStatusForFrame(
+      content::PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin) override {
+    return blink::mojom::PermissionStatus::GRANTED;
+  }
+  void ResetPermission(content::PermissionType permission,
+                       const GURL& requesting_origin,
+                       const GURL& embedding_origin) override {}
+  int SubscribePermissionStatusChange(
+      content::PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      base::RepeatingCallback<void(blink::mojom::PermissionStatus)> callback) override {
+    callback.Run(blink::mojom::PermissionStatus::GRANTED);
+    return 0;
+  }
+  void UnsubscribePermissionStatusChange(int subscription_id) override {}
+};
+
 content::PermissionControllerDelegate*
 CefBrowserContext::GetPermissionControllerDelegate() {
-  return nullptr;
+  return new CefPermissionControllerDelegate;
 }
 
 content::BackgroundFetchDelegate*
