@@ -486,6 +486,7 @@ class InterceptedRequestHandlerWrapper : public InterceptedRequestHandler {
                         network::ResourceRequest* request,
                         base::OnceClosure callback) {
     CEF_REQUIRE_IOT();
+
     // We need to load/save cookies ourselves for custom-handled requests, or
     // if we're using a cookie filter.
     auto allow_cookie_callback =
