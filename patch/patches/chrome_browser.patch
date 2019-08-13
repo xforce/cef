@@ -1,5 +1,5 @@
 diff --git chrome/browser/BUILD.gn chrome/browser/BUILD.gn
-index d3c018287325..07c26487986a 100644
+index d3c018287325..e7b9c7edfbed 100644
 --- chrome/browser/BUILD.gn
 +++ chrome/browser/BUILD.gn
 @@ -9,6 +9,7 @@ import("//build/config/features.gni")
@@ -10,7 +10,16 @@ index d3c018287325..07c26487986a 100644
  import("//chrome/common/features.gni")
  import("//components/feature_engagement/features.gni")
  import("//components/feed/features.gni")
-@@ -1880,6 +1881,7 @@ jumbo_static_library("browser") {
+@@ -74,6 +75,8 @@ proto_library("ntp_background_proto") {
+ # require many files from it. This makes linking more efficient.
+ jumbo_static_library("browser") {
+   sources = [
++    "//cef/libcef/browser/notifications/cef_notification_handler.cc",
++    "//cef/libcef/browser/notifications/cef_notification_handler.h",
+     "about_flags.cc",
+     "about_flags.h",
+     "accessibility/accessibility_labels_service.cc",
+@@ -1880,6 +1883,7 @@ jumbo_static_library("browser") {
      "//base/util/values:values_util",
      "//build:branding_buildflags",
      "//cc",
@@ -18,7 +27,7 @@ index d3c018287325..07c26487986a 100644
      "//chrome:extra_resources",
      "//chrome:resources",
      "//chrome:strings",
-@@ -2182,6 +2184,10 @@ jumbo_static_library("browser") {
+@@ -2182,6 +2186,10 @@ jumbo_static_library("browser") {
      ]
    }
  

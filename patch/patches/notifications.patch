@@ -1,0 +1,29 @@
+diff --git chrome/browser/notifications/notification_display_service_impl.cc chrome/browser/notifications/notification_display_service_impl.cc
+index 46f516b5f2d3..7409fb08963a 100644
+--- chrome/browser/notifications/notification_display_service_impl.cc
++++ chrome/browser/notifications/notification_display_service_impl.cc
+@@ -12,6 +12,7 @@
+ #include "base/metrics/histogram_macros.h"
+ #include "build/build_config.h"
+ #include "build/buildflag.h"
++#include "cef/libcef/browser/notifications/cef_notification_handler.h"
+ #include "chrome/browser/browser_process.h"
+ #include "chrome/browser/notifications/non_persistent_notification_handler.h"
+ #include "chrome/browser/notifications/notification_display_service_factory.h"
+@@ -116,11 +117,12 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
+       bridge_(GetNativeNotificationPlatformBridge()) {
+   // TODO(peter): Move these to the NotificationDisplayServiceFactory.
+   if (profile_) {
+-    AddNotificationHandler(
+-        NotificationHandler::Type::WEB_NON_PERSISTENT,
+-        std::make_unique<NonPersistentNotificationHandler>());
++    AddNotificationHandler(NotificationHandler::Type::WEB_NON_PERSISTENT,
++                       std::make_unique<CefNotificationHandler>(
++                           NotificationHandler::Type::WEB_NON_PERSISTENT));
+     AddNotificationHandler(NotificationHandler::Type::WEB_PERSISTENT,
+-                           std::make_unique<PersistentNotificationHandler>());
++                       std::make_unique<CefNotificationHandler>(
++                           NotificationHandler::Type::WEB_PERSISTENT));
+ 
+ #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+     AddNotificationHandler(
