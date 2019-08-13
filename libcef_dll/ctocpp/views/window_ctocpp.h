@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=bd7b0cd94d68e920184ffa6ddc98a426cd7448ed$
+// $hash=1e04ddcff8f7d50d52e1d21c0d20c9b246ff8b67$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_VIEWS_WINDOW_CTOCPP_H_
@@ -43,8 +43,8 @@ class CefWindowCToCpp
   void Deactivate() OVERRIDE;
   bool IsActive() OVERRIDE;
   void BringToTop() OVERRIDE;
-  void SetZOrderLevel(cef_z_order_level_t order) OVERRIDE;
-  cef_z_order_level_t GetZOrderLevel() OVERRIDE;
+  void SetAlwaysOnTop(bool on_top) OVERRIDE;
+  bool IsAlwaysOnTop() OVERRIDE;
   void Maximize() OVERRIDE;
   void Minimize() OVERRIDE;
   void Restore() OVERRIDE;

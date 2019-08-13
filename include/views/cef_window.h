@@ -120,14 +120,14 @@ class CefWindow : public CefPanel {
   // Set the Window to be on top of other Windows in the Windowing system.
   ///
   /*--cef()--*/
-  virtual void SetZOrderLevel(cef_z_order_level_t order) = 0;
+  virtual void SetAlwaysOnTop(bool on_top) = 0;
 
   ///
   // Returns whether the Window has been set to be on top of other Windows in
   // the Windowing system.
   ///
-  /*--cef(default_retval=kNormal)--*/
-  virtual cef_z_order_level_t GetZOrderLevel() = 0;
+  /*--cef()--*/
+  virtual bool IsAlwaysOnTop() = 0;
 
   ///
   // Maximize the Window.

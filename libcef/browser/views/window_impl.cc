@@ -176,19 +176,19 @@ void CefWindowImpl::BringToTop() {
     widget_->StackAtTop();
 }
 
-void CefWindowImpl::SetZOrderLevel(cef_z_order_level_t order) {
+void CefWindowImpl::SetAlwaysOnTop(bool on_top) {
   CEF_REQUIRE_VALID_RETURN_VOID();
   if (widget_ 
-    && static_cast<ui::ZOrderLevel>(order) != widget_->GetZOrderLevel()) {
-    widget_->SetZOrderLevel(static_cast<ui::ZOrderLevel>(order));
+    && on_top != (widget_->GetZOrderLevel() == ui::ZOrderLevel::kFloatingWindow)) {
+    widget_->SetZOrderLevel(on_top ? ui::ZOrderLevel::kFloatingWindow : ui::ZOrderLevel::kNormal);
   }
 }
 
-cef_z_order_level_t CefWindowImpl::GetZOrderLevel() {
-  CEF_REQUIRE_VALID_RETURN(cef_z_order_level_t::kNormal);
+bool CefWindowImpl::IsAlwaysOnTop() {
+  CEF_REQUIRE_VALID_RETURN(false);
   if (widget_)
-    return static_cast<cef_z_order_level_t>(widget_->GetZOrderLevel());
-  return cef_z_order_level_t::kNormal;
+    return widget_->GetZOrderLevel() == ui::ZOrderLevel::kFloatingWindow;
+  return false;
 }
 
 void CefWindowImpl::Maximize() {

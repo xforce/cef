@@ -43,8 +43,8 @@ class CefWindowImpl
   void Deactivate() override;
   bool IsActive() override;
   void BringToTop() override;
-  void SetZOrderLevel(cef_z_order_level_t order) override;
-  cef_z_order_level_t GetZOrderLevel() override;
+  void SetAlwaysOnTop(bool on_top) override;
+  bool IsAlwaysOnTop() override;
   void Maximize() override;
   void Minimize() override;
   void Restore() override;
