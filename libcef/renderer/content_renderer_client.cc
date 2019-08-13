@@ -263,7 +263,7 @@ void CefContentRendererClient::WebKitInitialized() {
   CefV8IsolateCreated();
 
   // TODO(cef): Enable these once the implementation supports it.
-  blink::WebRuntimeFeatures::EnableNotifications(false);
+  // blink::WebRuntimeFeatures::EnableNotifications(false);
 
   const CefContentClient::SchemeInfoList* schemes =
       CefContentClient::Get()->GetCustomSchemes();

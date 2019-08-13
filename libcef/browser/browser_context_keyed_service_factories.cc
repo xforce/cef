@@ -10,6 +10,7 @@
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/prefs/prefs_tab_helper.h"
+#include "chrome/browser/history/history_service_factory.h"
 #include "extensions/browser/api/alarms/alarm_manager.h"
 #include "extensions/browser/api/storage/storage_frontend.h"
 #include "extensions/browser/renderer_startup_helper.h"
@@ -22,6 +23,7 @@ void EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   PrefsTabHelper::GetServiceInstance();
   SpellcheckServiceFactory::GetInstance();
   ThemeServiceFactory::GetInstance();
+  HistoryServiceFactory::GetInstance();
 
   if (extensions::ExtensionsEnabled()) {
     extensions::AlarmManager::GetFactoryInstance();

@@ -35,6 +35,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/chrome_features.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/viz/common/features.h"
 #include "content/browser/browser_process_sub_thread.h"
@@ -585,6 +586,7 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
     }
 
     std::vector<std::string> disable_features;
+    std::vector<std::string> enable_features;
 
     if (network::features::kOutOfBlinkCors.default_state ==
         base::FEATURE_ENABLED_BY_DEFAULT) {
@@ -610,6 +612,21 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
       }
       command_line->AppendSwitchASCII(switches::kDisableFeatures,
                                       disable_features_str);
+    }
+
+    enable_features.push_back(features::kNativeNotifications.name);
+
+    if (!enable_features.empty()) {
+      DCHECK(!base::FeatureList::GetInstance());
+      std::string enable_features_str =
+          command_line->GetSwitchValueASCII(switches::kEnableFeatures);
+      for (auto feature_str : enable_features) {
+        if (!enable_features_str.empty())
+          enable_features_str += ",";
+        enable_features_str += feature_str;
+      }
+      command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                      enable_features_str);
     }
   }
 
