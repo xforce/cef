@@ -1,0 +1,67 @@
+diff --git chrome/installer/util/install_util.cc chrome/installer/util/install_util.cc
+index b46c91c66c24..35ef881ce453 100644
+--- chrome/installer/util/install_util.cc
++++ chrome/installer/util/install_util.cc
+@@ -41,6 +41,12 @@
+ #include "chrome/installer/util/util_constants.h"
+ #include "chrome/installer/util/work_item_list.h"
+ 
++#include "cef/libcef/features/features.h"
++
++#if BUILDFLAG(ENABLE_CEF)
++#include "cef/libcef/common/cef_install_modes.h"
++#endif
++
+ using base::win::RegKey;
+ using installer::ProductState;
+ 
+@@ -654,19 +660,31 @@ base::string16 InstallUtil::GetDisplayName() {
+ 
+ // static
+ base::string16 InstallUtil::GetAppDescription() {
+-  return installer::GetLocalizedString(IDS_SHORTCUT_TOOLTIP_BASE);
++  const auto app_description = CefGetAppDescription();
++  if (app_description.empty()) {
++    return installer::GetLocalizedString(IDS_SHORTCUT_TOOLTIP_BASE);
++  }
++  return app_description;
+ }
+ 
+ // static
+ base::string16 InstallUtil::GetPublisherName() {
+-  return installer::GetLocalizedString(IDS_ABOUT_VERSION_COMPANY_NAME_BASE);
++  const auto publisher_name = CefGetPublisherName();
++  if (publisher_name.empty()) {
++    return installer::GetLocalizedString(IDS_ABOUT_VERSION_COMPANY_NAME_BASE);
++  }
++  return publisher_name;
+ }
+ 
+ // static
+ base::string16 InstallUtil::GetShortcutName() {
+-  // IDS_PRODUCT_NAME is automatically mapped to the mode-specific shortcut
+-  // name; see MODE_SPECIFIC_STRINGS in prebuild/create_string_rc.py.
+-  return installer::GetLocalizedString(IDS_PRODUCT_NAME_BASE);
++  const auto shortcut_name = CefGetShortcutName();
++  if (shortcut_name.empty()) {
++    // IDS_PRODUCT_NAME is automatically mapped to the mode-specific shortcut
++    // name; see MODE_SPECIFIC_STRINGS in prebuild/create_string_rc.py.
++    return installer::GetLocalizedString(IDS_PRODUCT_NAME_BASE);
++  }
++  return shortcut_name;
+ }
+ 
+ // static
+@@ -683,7 +701,11 @@ base::string16 InstallUtil::GetChromeAppsShortcutDirName() {
+ 
+ // static
+ base::string16 InstallUtil::GetLongAppDescription() {
+-  return installer::GetLocalizedString(IDS_PRODUCT_DESCRIPTION_BASE);
++  const auto long_app_description = CefGetLongAppDescription();
++  if (long_app_description.empty()) {
++    return installer::GetLocalizedString(IDS_PRODUCT_DESCRIPTION_BASE);
++  }
++  return long_app_description;
+ }
+ 
+ InstallUtil::ProgramCompare::ProgramCompare(const base::FilePath& path_to_match)

@@ -805,6 +805,7 @@ if platform == 'windows':
   libcef_dll_pdb = '%s.pdb' % libcef_dll
   # yapf: disable
   binaries = [
+      {'path': 'notification_helper.exe'},
       {'path': 'chrome_elf.dll'},
       {'path': libcef_dll},
       {'path': 'libEGL.dll'},

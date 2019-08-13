@@ -34,6 +34,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/chrome_features.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/viz/common/features.h"
 #include "content/browser/browser_process_sub_thread.h"
@@ -41,6 +42,7 @@
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_features.h"
+#include "ui/message_center/public/cpp/features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "extensions/common/constants.h"
@@ -556,6 +558,7 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
     }
 
     std::vector<std::string> disable_features;
+    std::vector<std::string> enable_features;
 
     if (settings.windowless_rendering_enabled) {
       // Disable VizDisplayCompositor when OSR is enabled until
@@ -577,6 +580,22 @@ bool CefMainDelegate::BasicStartupComplete(int* exit_code) {
       }
       command_line->AppendSwitchASCII(switches::kDisableFeatures,
                                       disable_features_str);
+    }
+
+    enable_features.push_back(message_center::kNewStyleNotifications.name);
+    enable_features.push_back(features::kNativeNotifications.name);
+
+    if (!enable_features.empty()) {
+      DCHECK(!base::FeatureList::GetInstance());
+      std::string enable_features_str =
+          command_line->GetSwitchValueASCII(switches::kEnableFeatures);
+      for (auto feature_str : enable_features) {
+        if (!enable_features_str.empty())
+          enable_features_str += ",";
+        enable_features_str += feature_str;
+      }
+      command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                      enable_features_str);
     }
   }
 
