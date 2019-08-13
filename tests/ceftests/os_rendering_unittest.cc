@@ -831,8 +831,10 @@ class OSRTestHandler : public RoutingTestHandler,
             EXPECT_EQ(1, dirtyRects[0].y);
 #endif
             if (ExpectComputedPopupSize()) {
-              EXPECT_EQ(expanded_select_rect.width, dirtyRects[0].width + GetScaledInt(2));
-              EXPECT_EQ(expanded_select_rect.height, dirtyRects[0].height + GetScaledInt(2));
+              EXPECT_EQ(expanded_select_rect.width,
+                        dirtyRects[0].width + GetScaledInt(2));
+              EXPECT_EQ(expanded_select_rect.height,
+                        dirtyRects[0].height + GetScaledInt(2));
             } else {
               EXPECT_GT(dirtyRects[0].width, kExpandedSelectRect.width);
               EXPECT_GT(dirtyRects[0].height, kExpandedSelectRect.height);

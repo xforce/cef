@@ -94,7 +94,7 @@ void SoftwareOutputDeviceProxy::Resize(const gfx::Size& viewport_pixel_size,
       region.GetPlatformHandle(), skia::CRASH_ON_FAILURE);
 #endif
 
-   // Transfer region ownership to the browser process.
+  // Transfer region ownership to the browser process.
   layered_window_updater_->OnAllocatedSharedMemory(viewport_pixel_size_,
                                                    std::move(region));
 }

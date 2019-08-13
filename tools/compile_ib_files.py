@@ -8,22 +8,22 @@ import os
 import re
 import subprocess
 import sys
+
+
 def main():
   parser = argparse.ArgumentParser(
       description='A script to compile xib and storyboard.',
       fromfile_prefix_chars='@')
-  parser.add_argument('-o', '--output', required=True,
-                      help='Path to output bundle.')
-  parser.add_argument('-i', '--input', required=True,
-                      help='Path to input xib or storyboard.')
-  parser.add_argument('--developer_dir', required=False,
-                      help='Path to Xcode.')
+  parser.add_argument(
+      '-o', '--output', required=True, help='Path to output bundle.')
+  parser.add_argument(
+      '-i', '--input', required=True, help='Path to input xib or storyboard.')
+  parser.add_argument('--developer_dir', required=False, help='Path to Xcode.')
   args, unknown_args = parser.parse_known_args()
   if args.developer_dir:
     os.environ['DEVELOPER_DIR'] = args.developer_dir
   ibtool_args = [
-      'xcrun', 'ibtool',
-      '--errors', '--warnings', '--notices',
+      'xcrun', 'ibtool', '--errors', '--warnings', '--notices',
       '--output-format', 'human-readable-text'
   ]
   ibtool_args += unknown_args
@@ -49,6 +49,7 @@ def main():
         current_section_header = None
       print(line)
   return 0
+
+
 if __name__ == '__main__':
   sys.exit(main())
-

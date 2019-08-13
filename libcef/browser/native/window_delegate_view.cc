@@ -50,7 +50,8 @@ void CefWindowDelegateView::Init(gfx::AcceleratedWidget parent_widget,
   // CefBrowserHostImpl::PlatformSetFocus.
   params.activatable = views::Widget::InitParams::ACTIVATABLE_YES;
 
-  params.z_order = always_on_top_ ? ui::ZOrderLevel::kFloatingWindow : ui::ZOrderLevel::kNormal;
+  params.z_order = always_on_top_ ? ui::ZOrderLevel::kFloatingWindow
+                                  : ui::ZOrderLevel::kNormal;
 
   // Results in a call to InitContent().
   widget->Init(params);

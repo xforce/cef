@@ -2442,18 +2442,21 @@ void CefBrowserHostImpl::RequestMediaAccessPermission(
       base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(switches::kEnableMediaStream)) {
     // Cancel the request.
-    std::move(callback).Run(devices, blink::mojom::MediaStreamRequestResult::PERMISSION_DENIED,
-                            std::unique_ptr<content::MediaStreamUI>());
+    std::move(callback).Run(
+        devices, blink::mojom::MediaStreamRequestResult::PERMISSION_DENIED,
+        std::unique_ptr<content::MediaStreamUI>());
     return;
   }
 
   // Based on chrome/browser/media/media_stream_devices_controller.cc
   bool microphone_requested =
-      (request.audio_type ==  blink::mojom::MediaStreamType::DEVICE_AUDIO_CAPTURE);
-  bool webcam_requested =
-      (request.video_type == blink::mojom::MediaStreamType::DEVICE_VIDEO_CAPTURE);
+      (request.audio_type ==
+       blink::mojom::MediaStreamType::DEVICE_AUDIO_CAPTURE);
+  bool webcam_requested = (request.video_type ==
+                           blink::mojom::MediaStreamType::DEVICE_VIDEO_CAPTURE);
   bool screen_requested =
-      (request.video_type == blink::mojom::MediaStreamType::GUM_DESKTOP_VIDEO_CAPTURE);
+      (request.video_type ==
+       blink::mojom::MediaStreamType::GUM_DESKTOP_VIDEO_CAPTURE);
   if (microphone_requested || webcam_requested || screen_requested) {
     // Pick the desired device or fall back to the first available of the
     // given type.
@@ -2475,9 +2478,9 @@ void CefBrowserHostImpl::RequestMediaAccessPermission(
         media_id =
             content::DesktopMediaID::Parse(request.requested_video_device_id);
       }
-      devices.push_back(
-          blink::MediaStreamDevice(blink::mojom::MediaStreamType::GUM_DESKTOP_VIDEO_CAPTURE,
-                                   media_id.ToString(), "Screen"));
+      devices.push_back(blink::MediaStreamDevice(
+          blink::mojom::MediaStreamType::GUM_DESKTOP_VIDEO_CAPTURE,
+          media_id.ToString(), "Screen"));
     }
   }
 

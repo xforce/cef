@@ -211,7 +211,8 @@ struct PopulateAxNodeAttributes {
       case ax::mojom::IntAttribute::kAriaCellColumnSpan:
       case ax::mojom::IntAttribute::kAriaCellRowSpan:
       case ax::mojom::IntAttribute::kImageAnnotationStatus: {
-        // TODO(cef): Implement support for Image Annotation Status, kAriaCellColumnSpan and kAriaCellRowSpan
+        // TODO(cef): Implement support for Image Annotation Status,
+        // kAriaCellColumnSpan and kAriaCellRowSpan
       } break;
     }
   }

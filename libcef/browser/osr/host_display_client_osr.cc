@@ -35,9 +35,8 @@ class CefLayeredWindowUpdaterOSR : public viz::mojom::LayeredWindowUpdater {
   gfx::Size GetPixelSize() const;
 
   // viz::mojom::LayeredWindowUpdater implementation.
-  void OnAllocatedSharedMemory(
-      const gfx::Size& pixel_size,
-      base::UnsafeSharedMemoryRegion region) override;
+  void OnAllocatedSharedMemory(const gfx::Size& pixel_size,
+                               base::UnsafeSharedMemoryRegion region) override;
   void Draw(const gfx::Rect& damage_rect, DrawCallback draw_callback) override;
 
  private:

@@ -84,7 +84,8 @@ CEF_EXPORT void cef_trace_event_begin(const char* /* category */,
     if (arg1_name == NULL && arg2_name == NULL) {
       TRACE_EVENT_BEGIN_WITH_FLAGS0(kCategory, name, TRACE_EVENT_FLAG_COPY);
     } else if (arg2_name == NULL) {
-      TRACE_EVENT_BEGIN_WITH_FLAGS1(kCategory, name, TRACE_EVENT_FLAG_COPY, arg1_name, arg1_val);
+      TRACE_EVENT_BEGIN_WITH_FLAGS1(kCategory, name, TRACE_EVENT_FLAG_COPY,
+                                    arg1_name, arg1_val);
     } else {
       TRACE_EVENT_COPY_BEGIN2(kCategory, name, arg1_name, arg1_val, arg2_name,
                               arg2_val);
@@ -116,7 +117,8 @@ CEF_EXPORT void cef_trace_event_end(const char* /* category */,
     if (arg1_name == NULL && arg2_name == NULL) {
       TRACE_EVENT_END_WITH_FLAGS0(kCategory, name, TRACE_EVENT_FLAG_COPY);
     } else if (arg2_name == NULL) {
-      TRACE_EVENT_END_WITH_FLAGS1(kCategory, name, TRACE_EVENT_FLAG_COPY, arg1_name, arg1_val);
+      TRACE_EVENT_END_WITH_FLAGS1(kCategory, name, TRACE_EVENT_FLAG_COPY,
+                                  arg1_name, arg1_val);
     } else {
       TRACE_EVENT_COPY_END2(kCategory, name, arg1_name, arg1_val, arg2_name,
                             arg2_val);

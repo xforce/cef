@@ -143,7 +143,7 @@ void CefPrintingMessageFilter::OnGetDefaultPrintSettings(
       PrinterQuery::GetSettingsAskParam::DEFAULTS, 0, false, DEFAULT_MARGINS,
       false, false,
       base::BindOnce(&CefPrintingMessageFilter::OnGetDefaultPrintSettingsReply,
-                 this, std::move(printer_query), reply_msg));
+                     this, std::move(printer_query), reply_msg));
 }
 
 void CefPrintingMessageFilter::OnGetDefaultPrintSettingsReply(
@@ -184,7 +184,7 @@ void CefPrintingMessageFilter::OnScriptedPrint(
       params.has_selection, params.margin_type, params.is_scripted,
       params.is_modifiable,
       base::BindOnce(&CefPrintingMessageFilter::OnScriptedPrintReply, this,
-                 std::move(printer_query), reply_msg));
+                     std::move(printer_query), reply_msg));
 }
 
 void CefPrintingMessageFilter::OnScriptedPrintReply(
@@ -224,8 +224,8 @@ void CefPrintingMessageFilter::OnUpdatePrintSettings(int document_cookie,
   }
   printer_query->SetSettings(
       std::move(job_settings),
-      base::BindOnce(&CefPrintingMessageFilter::OnUpdatePrintSettingsReply, this,
-                 std::move(printer_query), reply_msg));
+      base::BindOnce(&CefPrintingMessageFilter::OnUpdatePrintSettingsReply,
+                     this, std::move(printer_query), reply_msg));
 }
 
 void CefPrintingMessageFilter::OnUpdatePrintSettingsReply(

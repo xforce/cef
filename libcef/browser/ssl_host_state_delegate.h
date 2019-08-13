@@ -60,10 +60,9 @@ class CefSSLHostStateDelegate : public content::SSLHostStateDelegate {
   void HostRanInsecureContent(const std::string& host,
                               int child_id,
                               InsecureContentType content_type) override;
-  bool DidHostRunInsecureContent(
-      const std::string& host,
-      int child_id,
-      InsecureContentType content_type) override;
+  bool DidHostRunInsecureContent(const std::string& host,
+                                 int child_id,
+                                 InsecureContentType content_type) override;
   void RevokeUserAllowExceptions(const std::string& host) override;
   bool HasAllowException(const std::string& host) override;
 

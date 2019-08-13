@@ -49,8 +49,9 @@ class CefPrintingMessageFilter : public content::BrowserMessageFilter {
 
   // Get the default print setting.
   void OnGetDefaultPrintSettings(IPC::Message* reply_msg);
-  void OnGetDefaultPrintSettingsReply(std::unique_ptr<PrinterQuery> printer_query,
-                                      IPC::Message* reply_msg);
+  void OnGetDefaultPrintSettingsReply(
+      std::unique_ptr<PrinterQuery> printer_query,
+      IPC::Message* reply_msg);
 
   // The renderer host have to show to the user the print dialog and returns
   // the selected print settings. The task is handled by the print worker

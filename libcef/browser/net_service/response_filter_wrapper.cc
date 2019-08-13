@@ -73,8 +73,8 @@ bool ResponseFilterWrapper::CreateOutputHandle(
     return false;
   }
 
-  forwarder_ = std::make_unique<mojo::DataPipeProducer>(
-      std::move(forwarding_handle));
+  forwarder_ =
+      std::make_unique<mojo::DataPipeProducer>(std::move(forwarding_handle));
 
   source_watcher_.Watch(
       source_handle_.get(),
@@ -214,9 +214,8 @@ void ResponseFilterWrapper::Write(std::unique_ptr<std::string> data) {
 
   base::StringPiece string_piece(*data);
   forwarder_->Write(std::make_unique<mojo::StringDataSource>(
-                    string_piece,
-                    mojo::StringDataSource::AsyncWritingMode::
-                        STRING_STAYS_VALID_UNTIL_COMPLETION),
+                        string_piece, mojo::StringDataSource::AsyncWritingMode::
+                                          STRING_STAYS_VALID_UNTIL_COMPLETION),
                     base::BindOnce(&ResponseFilterWrapper::OnWriteComplete,
                                    base::Unretained(this), std::move(data)));
 }
