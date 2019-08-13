@@ -520,6 +520,8 @@ static_library("libcef_static") {
     "libcef/common/process_message_impl.h",
     "libcef/common/request_impl.cc",
     "libcef/common/request_impl.h",
+    "libcef/common/resource_bundle_delegate.cc",
+    "libcef/common/resource_bundle_delegate.h",
     "libcef/common/resource_bundle_impl.cc",
     "libcef/common/resource_bundle_impl.h",
     "libcef/common/response_impl.cc",
