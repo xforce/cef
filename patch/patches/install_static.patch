@@ -1,0 +1,69 @@
+diff --git chrome/install_static/BUILD.gn chrome/install_static/BUILD.gn
+index a9d691e523e9..1205cf11f8a7 100644
+--- chrome/install_static/BUILD.gn
++++ chrome/install_static/BUILD.gn
+@@ -5,6 +5,8 @@
+ import("//build/config/chrome_build.gni")
+ import("//testing/test.gni")
+ 
++import("//cef/libcef/features/features.gni")
++
+ assert(is_win)
+ 
+ # This file only contains utility functions which must only depend on kernel32.
+@@ -49,13 +51,19 @@ static_library("install_static_util") {
+       "chromium_install_modes.h",
+     ]
+   }
+-
+   libs = [ "kernel32.lib" ]
+ 
+   configs += [
+     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
+     "//build/config/compiler:no_size_t_to_int_warning",
+   ]
++  configs += [ "//cef/libcef/features:config" ]
++  deps += [ "//cef/libcef/features" ]
++
++  if (enable_cef) {
++    deps += [ "//cef:chrome_elf_set" ]
++    include_dirs = [ "//cef" ]
++  }
+ }
+ 
+ # A source set for use by the module in a process that creates the process-wide
+diff --git chrome/install_static/product_install_details.cc chrome/install_static/product_install_details.cc
+index 2d14cbc1524a..15a0cee92f2d 100644
+--- chrome/install_static/product_install_details.cc
++++ chrome/install_static/product_install_details.cc
+@@ -8,11 +8,17 @@
+ 
+ #include <algorithm>
+ 
++#include "build/buildflag.h"
+ #include "chrome/chrome_elf/nt_registry/nt_registry.h"
+ #include "chrome/install_static/install_details.h"
+ #include "chrome/install_static/install_modes.h"
+ #include "chrome/install_static/install_util.h"
+ 
++#include "cef/libcef/features/features.h"
++#if BUILDFLAG(ENABLE_CEF)
++#include "cef/libcef/common/cef_install_modes.h"
++#endif
++
+ namespace install_static {
+ 
+ namespace {
+@@ -28,6 +34,12 @@ std::wstring GetCurrentProcessExePath() {
+ }
+ 
+ const InstallConstants* FindInstallMode(const std::wstring& suffix) {
++#if BUILDFLAG(ENABLE_CEF)
++  auto cef_install_mode = GetCefInstallModes();
++  if (cef_install_mode) {
++    return cef_install_mode;
++  }
++#endif
+   // Search for a mode with the matching suffix.
+   for (int i = 0; i < NUM_INSTALL_MODES; ++i) {
+     const InstallConstants& mode = kInstallModes[i];

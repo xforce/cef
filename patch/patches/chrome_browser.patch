@@ -10,6 +10,15 @@ index d730660c086f..2cdc16923c2d 100644
  import("//chrome/common/features.gni")
  import("//components/feature_engagement/features.gni")
  import("//components/feed/features.gni")
+@@ -83,6 +84,8 @@ jumbo_split_static_library("browser") {
+   }
+ 
+   sources = [
++    "//cef/libcef/browser/notifications/cef_notification_handler.cc",
++    "//cef/libcef/browser/notifications/cef_notification_handler.h",
+     "about_flags.cc",
+     "about_flags.h",
+     "accessibility/accessibility_labels_service.cc",
 @@ -1938,6 +1939,7 @@ jumbo_split_static_library("browser") {
      "//base/util/values:values_util",
      "//build:branding_buildflags",
