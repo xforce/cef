@@ -2,7 +2,7 @@
 
 #include "libcef/common/content_client.h"
 
-base::FilePath ResourceBundleDelegate::GetPathForResourcePack(
+base::FilePath CefResourceBundleDelegate::GetPathForResourcePack(
     const base::FilePath& pack_path,
     ui::ScaleFactor scale_factor) {
   // Only allow the cef pack file to load.
@@ -12,7 +12,7 @@ base::FilePath ResourceBundleDelegate::GetPathForResourcePack(
   return base::FilePath();
 }
 
-base::FilePath ResourceBundleDelegate::GetPathForLocalePack(
+base::FilePath CefResourceBundleDelegate::GetPathForLocalePack(
     const base::FilePath& pack_path,
     const std::string& locale) {
   if (!content_client_->pack_loading_disabled())
@@ -20,23 +20,23 @@ base::FilePath ResourceBundleDelegate::GetPathForLocalePack(
   return base::FilePath();
 }
 
-gfx::Image ResourceBundleDelegate::GetImageNamed(int resource_id) {
+gfx::Image CefResourceBundleDelegate::GetImageNamed(int resource_id) {
   return gfx::Image();
 }
 
-gfx::Image ResourceBundleDelegate::GetNativeImageNamed(int resource_id) {
+gfx::Image CefResourceBundleDelegate::GetNativeImageNamed(int resource_id) {
   return gfx::Image();
 }
 
-base::RefCountedStaticMemory* ResourceBundleDelegate::LoadDataResourceBytes(
+base::RefCountedStaticMemory* CefResourceBundleDelegate::LoadDataResourceBytes(
     int resource_id,
     ui::ScaleFactor scale_factor) {
   return NULL;
 }
 
-bool ResourceBundleDelegate::GetRawDataResource(int resource_id,
-                                                ui::ScaleFactor scale_factor,
-                                                base::StringPiece* value) {
+bool CefResourceBundleDelegate::GetRawDataResource(int resource_id,
+                                                   ui::ScaleFactor scale_factor,
+                                                   base::StringPiece* value) {
   if (content_client_->application().get()) {
     CefRefPtr<CefResourceBundleHandler> handler =
         content_client_->application()->GetResourceBundleHandler();
@@ -58,8 +58,8 @@ bool ResourceBundleDelegate::GetRawDataResource(int resource_id,
   return (content_client_->pack_loading_disabled() || !value->empty());
 }
 
-bool ResourceBundleDelegate::GetLocalizedString(int message_id,
-                                                base::string16* value) {
+bool CefResourceBundleDelegate::GetLocalizedString(int message_id,
+                                                   base::string16* value) {
   if (content_client_->application().get()) {
     CefRefPtr<CefResourceBundleHandler> handler =
         content_client_->application()->GetResourceBundleHandler();

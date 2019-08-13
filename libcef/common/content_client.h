@@ -108,7 +108,7 @@ class CefContentClient : public content::ContentClient {
       content::PepperPluginInfo::PPP_InitializeModuleFunc initialize_module,
       content::PepperPluginInfo::PPP_ShutdownModuleFunc shutdown_module);
 
-  ResourceBundleDelegate* GetResourceBundleDelegate() {
+  CefResourceBundleDelegate* GetCefResourceBundleDelegate() {
     return &resource_bundle_delegate_;
   }
 
@@ -121,7 +121,7 @@ class CefContentClient : public content::ContentClient {
   SchemeInfoList scheme_info_list_;
   bool scheme_info_list_locked_;
 
-  ResourceBundleDelegate resource_bundle_delegate_;
+  CefResourceBundleDelegate resource_bundle_delegate_;
 };
 
 #endif  // CEF_LIBCEF_COMMON_CONTENT_CLIENT_H_

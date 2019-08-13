@@ -11,9 +11,9 @@
 
 class CefContentClient;
 
-class ResourceBundleDelegate : public ui::ResourceBundle::Delegate {
+class CefResourceBundleDelegate : public ui::ResourceBundle::Delegate {
  public:
-  ResourceBundleDelegate(CefContentClient* content_client)
+  CefResourceBundleDelegate(CefContentClient* content_client)
       : content_client_(content_client) {}
 
  private:
