@@ -1151,7 +1151,7 @@ CefContentBrowserClient::CreateURLLoaderThrottles(
     const base::RepeatingCallback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data,
     int frame_tree_node_id) {
-  // CEF_REQUIRE_IOT();
+  CEF_REQUIRE_IOT();
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
   // Used to substitute View ID for PDF contents when using the PDF plugin.
