@@ -125,6 +125,110 @@ if (is_mac) {
   import("//build/mac/tweak_info_plist.gni")
   import("//build/util/version.gni")
   import("//media/cdm/library_cdm/cdm_paths.gni")
+  import("//build/config/mac/base_rules.gni")
+
+  # Template to compile .xib and .storyboard files.
+  #
+  # Arguments
+  #
+  #     sources:
+  #         list of string, sources to compile
+  #
+  #     ibtool_flags:
+  #         (optional) list of string, additional flags to pass to the ibtool
+  template("compile_ib_files") {
+    action_foreach(target_name) {
+      forward_variables_from(invoker,
+                            [
+                              "testonly",
+                              "visibility",
+                            ])
+      assert(defined(invoker.sources),
+            "sources must be specified for $target_name")
+      assert(defined(invoker.output_extension),
+            "output_extension must be specified for $target_name")
+
+      ibtool_flags = []
+      if (defined(invoker.ibtool_flags)) {
+        ibtool_flags = invoker.ibtool_flags
+      }
+
+      _output_extension = invoker.output_extension
+
+      script = "//cef/tools/compile_ib_files.py"
+      sources = invoker.sources
+      outputs = [
+        "$target_gen_dir/$target_name/{{source_name_part}}.$_output_extension",
+      ]
+      args = [
+        "--input",
+        "{{source}}",
+        "--output",
+        rebase_path(
+            "$target_gen_dir/$target_name/{{source_name_part}}.$_output_extension",
+            root_build_dir),
+      ]
+      if (!use_system_xcode) {
+        args += [
+          "--developer_dir",
+          hermetic_xcode_path,
+        ]
+      }
+      args += ibtool_flags
+    }
+  }
+
+  # Template to compile and package Mac XIB files as bundle data.
+  #
+  # Arguments
+  #
+  #     sources:
+  #         list of string, sources to comiple
+  #
+  #     output_path:
+  #         (optional) string, the path to use for the outputs list in the
+  #         bundle_data step. If unspecified, defaults to bundle_resources_dir.
+  template("mac_xib_bundle_data") {
+    _target_name = target_name
+    _compile_target_name = _target_name + "_compile_ibtool"
+
+    compile_ib_files(_compile_target_name) {
+      forward_variables_from(invoker, [ "testonly" ])
+      visibility = [ ":$_target_name" ]
+      sources = invoker.sources
+      output_extension = "nib"
+      ibtool_flags = [
+        "--minimum-deployment-target",
+        mac_deployment_target,
+
+        # TODO(rsesek): Enable this once all the bots are on Xcode 7+.
+        # "--target-device",
+        # "mac",
+      ]
+    }
+
+    bundle_data(_target_name) {
+      forward_variables_from(invoker,
+                            [
+                              "testonly",
+                              "visibility",
+                            ])
+
+      public_deps = [
+        ":$_compile_target_name",
+      ]
+      sources = get_target_outputs(":$_compile_target_name")
+
+      _output_path = "{{bundle_resources_dir}}"
+      if (defined(invoker.output_path)) {
+        _output_path = invoker.output_path
+      }
+
+      outputs = [
+        "$_output_path/{{source_file_part}}",
+      ]
+    }
+  }
 }
 if (is_win) {
   import("//build/config/win/console_app.gni")
@@ -1836,6 +1940,14 @@ if (is_mac) {
     ]
   }
 
+  mac_xib_bundle_data("cefclient_xibs") {
+    sources = [
+      "tests/cefclient/resources/mac/English.lproj/MainMenu.xib",
+    ]
+
+    output_path = "{{bundle_resources_dir}}/English.lproj"
+  }
+
   cef_app("cefclient") {
     helper_info_plist = "tests/cefclient/resources/mac/helper-Info.plist"
     helper_sources = gypi_paths2.includes_mac +
@@ -1866,6 +1978,7 @@ if (is_mac) {
       ":cefclient_resources_bundle_data",
       ":cefclient_resources_bundle_data_extensions_set_page_color",
       ":cefclient_resources_bundle_data_english",
+      ":cefclient_xibs",
     ]
     libs = [
       "AppKit.framework",
@@ -1900,6 +2013,13 @@ if (is_mac) {
       "{{bundle_resources_dir}}/English.lproj/{{source_file_part}}",
     ]
   }
+  
+  mac_xib_bundle_data("cefsimple_xibs") {
+    sources = [
+      "tests/cefsimple/mac/English.lproj/MainMenu.xib",
+    ]
+    output_path = "{{bundle_resources_dir}}/English.lproj"
+  }
 
   cef_app("cefsimple") {
     helper_info_plist = "tests/cefsimple/mac/helper-Info.plist"
@@ -1922,6 +2042,7 @@ if (is_mac) {
     deps = [
       ":cefsimple_resources_bundle_data",
       ":cefsimple_resources_bundle_data_english",
+      ":cefsimple_xibs",
     ]
     defines = [
       "CEF_USE_SANDBOX",
@@ -1953,6 +2074,13 @@ if (is_mac) {
     ]
   }
 
+  mac_xib_bundle_data("ceftests_xibs") {
+    sources = [
+      "tests/ceftests/resources/mac/English.lproj/MainMenu.xib",
+    ]
+    output_path = "{{bundle_resources_dir}}/English.lproj"
+  }
+
   cef_app("ceftests") {
     testonly = true
 
@@ -1981,6 +2109,7 @@ if (is_mac) {
     deps = [
       ":ceftests_resources_bundle_data",
       ":ceftests_resources_bundle_data_english",
+      ":ceftests_xibs",
       "//testing/gtest",
     ]
     libs = [
