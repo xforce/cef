@@ -1,0 +1,180 @@
+diff --git chrome/browser/notifications/platform_notification_service_impl.cc chrome/browser/notifications/platform_notification_service_impl.cc
+index 12ee1e4be1d3..2d9c73830a2d 100644
+--- chrome/browser/notifications/platform_notification_service_impl.cc
++++ chrome/browser/notifications/platform_notification_service_impl.cc
+@@ -408,6 +408,7 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
+ 
+   optional_fields.settings_button_handler =
+       message_center::SettingsButtonHandler::INLINE;
++  optional_fields.context_message = notification_data.context_message;
+ 
+   // TODO(peter): Handle different screen densities instead of always using the
+   // 1x bitmap - crbug.com/585815.
+@@ -419,7 +420,12 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
+       message_center::NotifierId(origin), optional_fields,
+       nullptr /* delegate */);
+ 
+-  notification.set_context_message(DisplayNameForContextMessage(origin));
++  const auto display_name_for_context_message =
++      DisplayNameForContextMessage(origin);
++  if (!display_name_for_context_message.empty()) {
++    notification.set_context_message(display_name_for_context_message);
++  }
++
+   notification.set_vibration_pattern(notification_data.vibration_pattern);
+   notification.set_timestamp(notification_data.timestamp);
+   notification.set_renotify(notification_data.renotify);
+diff --git content/browser/notifications/notification_database_conversions.cc content/browser/notifications/notification_database_conversions.cc
+index e53145547a2e..bec53e05e184 100644
+--- content/browser/notifications/notification_database_conversions.cc
++++ content/browser/notifications/notification_database_conversions.cc
+@@ -118,6 +118,7 @@ bool DeserializeNotificationDatabaseData(const std::string& input,
+   notification_data->lang = payload.lang();
+   notification_data->body = base::UTF8ToUTF16(payload.body());
+   notification_data->tag = payload.tag();
++  notification_data->context_message = base::UTF8ToUTF16(payload.context_message());
+   notification_data->image = GURL(payload.image());
+   notification_data->icon = GURL(payload.icon());
+   notification_data->badge = GURL(payload.badge());
+diff --git content/browser/notifications/notification_database_data.proto content/browser/notifications/notification_database_data.proto
+index 21f448cd024a..63e0042d2230 100644
+--- content/browser/notifications/notification_database_data.proto
++++ content/browser/notifications/notification_database_data.proto
+@@ -68,6 +68,7 @@ message NotificationDatabaseDataProto {
+     optional string lang = 3;
+     optional string body = 4;
+     optional string tag = 5;
++    optional string context_message = 25;
+     optional string image = 15;
+     optional string icon = 6;
+     optional string badge = 14;
+diff --git third_party/blink/common/notifications/notification_mojom_traits.cc third_party/blink/common/notifications/notification_mojom_traits.cc
+index 917d87c2f101..a5e048001af6 100644
+--- third_party/blink/common/notifications/notification_mojom_traits.cc
++++ third_party/blink/common/notifications/notification_mojom_traits.cc
+@@ -104,6 +104,7 @@ bool StructTraits<blink::mojom::NotificationDataDataView,
+       !notification_data.ReadLang(&platform_notification_data->lang) ||
+       !notification_data.ReadBody(&platform_notification_data->body) ||
+       !notification_data.ReadTag(&platform_notification_data->tag) ||
++      !notification_data.ReadContextMessage(&platform_notification_data->context_message) ||
+       !notification_data.ReadImage(&platform_notification_data->image) ||
+       !notification_data.ReadIcon(&platform_notification_data->icon) ||
+       !notification_data.ReadBadge(&platform_notification_data->badge) ||
+diff --git third_party/blink/public/common/notifications/notification_mojom_traits.h third_party/blink/public/common/notifications/notification_mojom_traits.h
+index 6c269f28c4bd..8223adb86ab2 100644
+--- third_party/blink/public/common/notifications/notification_mojom_traits.h
++++ third_party/blink/public/common/notifications/notification_mojom_traits.h
+@@ -88,6 +88,10 @@ struct BLINK_COMMON_EXPORT StructTraits<blink::mojom::NotificationDataDataView,
+     return data.tag;
+   }
+ 
++  static const base::string16& context_message(const blink::PlatformNotificationData& data) {
++    return data.context_message;
++  }
++
+   static const GURL& image(const blink::PlatformNotificationData& data) {
+     return data.image;
+   }
+diff --git third_party/blink/public/common/notifications/platform_notification_data.h third_party/blink/public/common/notifications/platform_notification_data.h
+index b39b0c95767d..b65dc23b6f84 100644
+--- third_party/blink/public/common/notifications/platform_notification_data.h
++++ third_party/blink/public/common/notifications/platform_notification_data.h
+@@ -73,6 +73,8 @@ struct BLINK_COMMON_EXPORT PlatformNotificationData {
+   // tag will replace the first displayed notification.
+   std::string tag;
+ 
++  base::string16 context_message;
++
+   // URL of the image contents of the notification. May be empty if no url was
+   // specified.
+   GURL image;
+diff --git third_party/blink/public/mojom/notifications/notification.mojom third_party/blink/public/mojom/notifications/notification.mojom
+index b4d00ecc1d7e..596f4840b87e 100644
+--- third_party/blink/public/mojom/notifications/notification.mojom
++++ third_party/blink/public/mojom/notifications/notification.mojom
+@@ -62,6 +62,8 @@ struct NotificationData {
+   // tag will replace the first displayed notification.
+   string tag;
+ 
++  mojo_base.mojom.String16 context_message;
++
+   // URL of the image contents of the notification. May be empty if no url was
+   // specified.
+   url.mojom.Url image;
+diff --git third_party/blink/renderer/modules/notifications/notification.cc third_party/blink/renderer/modules/notifications/notification.cc
+index 88db76541d9c..0047c571ad6f 100644
+--- third_party/blink/renderer/modules/notifications/notification.cc
++++ third_party/blink/renderer/modules/notifications/notification.cc
+@@ -304,6 +304,10 @@ String Notification::tag() const {
+   return data_->tag;
+ }
+ 
++String Notification::context_message() const {
++  return data_->context_message;
++}
++
+ String Notification::image() const {
+   return data_->image.GetString();
+ }
+diff --git third_party/blink/renderer/modules/notifications/notification.h third_party/blink/renderer/modules/notifications/notification.h
+index 11347c605228..e5cc36c2e515 100644
+--- third_party/blink/renderer/modules/notifications/notification.h
++++ third_party/blink/renderer/modules/notifications/notification.h
+@@ -108,6 +108,7 @@ class MODULES_EXPORT Notification final
+   String lang() const;
+   String body() const;
+   String tag() const;
++  String context_message() const;
+   String image() const;
+   String icon() const;
+   String badge() const;
+diff --git third_party/blink/renderer/modules/notifications/notification.idl third_party/blink/renderer/modules/notifications/notification.idl
+index 6d358f683143..92e3c9b3b1c3 100644
+--- third_party/blink/renderer/modules/notifications/notification.idl
++++ third_party/blink/renderer/modules/notifications/notification.idl
+@@ -65,6 +65,7 @@ enum NotificationPermission {
+     readonly attribute DOMString lang;
+     readonly attribute DOMString body;
+     readonly attribute DOMString tag;
++    readonly attribute DOMString context_message;
+     [RuntimeEnabled=NotificationContentImage] readonly attribute USVString image;
+     readonly attribute USVString icon;
+     readonly attribute USVString badge;
+diff --git third_party/blink/renderer/modules/notifications/notification_data.cc third_party/blink/renderer/modules/notifications/notification_data.cc
+index efc43ca20383..51a3a677fa4f 100644
+--- third_party/blink/renderer/modules/notifications/notification_data.cc
++++ third_party/blink/renderer/modules/notifications/notification_data.cc
+@@ -66,6 +66,7 @@ mojom::blink::NotificationDataPtr CreateNotificationData(
+   notification_data->lang = options->lang();
+   notification_data->body = options->body();
+   notification_data->tag = options->tag();
++  notification_data->context_message = options->context_message();
+ 
+   if (options->hasImage() && !options->image().IsEmpty())
+     notification_data->image = CompleteURL(context, options->image());
+diff --git third_party/blink/renderer/modules/notifications/notification_options.idl third_party/blink/renderer/modules/notifications/notification_options.idl
+index 2c77928de61e..9150f8008e10 100644
+--- third_party/blink/renderer/modules/notifications/notification_options.idl
++++ third_party/blink/renderer/modules/notifications/notification_options.idl
+@@ -15,6 +15,7 @@ dictionary NotificationOptions {
+     DOMString lang = "";
+     DOMString body = "";
+     DOMString tag = "";
++    DOMString context_message = "";
+     [RuntimeEnabled=NotificationContentImage] USVString image;
+     USVString icon;
+     USVString badge;
+diff --git ui/message_center/public/cpp/notification.cc ui/message_center/public/cpp/notification.cc
+index fe5219dab321..94ce6adb4197 100644
+--- ui/message_center/public/cpp/notification.cc
++++ ui/message_center/public/cpp/notification.cc
+@@ -130,8 +130,7 @@ void Notification::SetSystemPriority() {
+ }
+ 
+ bool Notification::UseOriginAsContextMessage() const {
+-  return optional_fields_.context_message.empty() && origin_url_.is_valid() &&
+-         origin_url_.SchemeIsHTTPOrHTTPS();
++  return false;
+ }
+ 
+ gfx::Image Notification::GenerateMaskedSmallIcon(int dip_size,
