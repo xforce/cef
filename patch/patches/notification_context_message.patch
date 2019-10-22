@@ -48,10 +48,10 @@ index 21f448cd024a..63e0042d2230 100644
      optional string image = 15;
      optional string icon = 6;
      optional string badge = 14;
-diff --git third_party/blink/common/notifications/notification_struct_traits.cc third_party/blink/common/notifications/notification_struct_traits.cc
+diff --git third_party/blink/common/notifications/notification_mojom_traits.cc third_party/blink/common/notifications/notification_mojom_traits.cc
 index 917d87c2f101..a5e048001af6 100644
---- third_party/blink/common/notifications/notification_struct_traits.cc
-+++ third_party/blink/common/notifications/notification_struct_traits.cc
+--- third_party/blink/common/notifications/notification_mojom_traits.cc
++++ third_party/blink/common/notifications/notification_mojom_traits.cc
 @@ -104,6 +104,7 @@ bool StructTraits<blink::mojom::NotificationDataDataView,
        !notification_data.ReadLang(&platform_notification_data->lang) ||
        !notification_data.ReadBody(&platform_notification_data->body) ||
@@ -60,10 +60,10 @@ index 917d87c2f101..a5e048001af6 100644
        !notification_data.ReadImage(&platform_notification_data->image) ||
        !notification_data.ReadIcon(&platform_notification_data->icon) ||
        !notification_data.ReadBadge(&platform_notification_data->badge) ||
-diff --git third_party/blink/public/common/notifications/notification_struct_traits.h third_party/blink/public/common/notifications/notification_struct_traits.h
+diff --git third_party/blink/public/common/notifications/notification_mojom_traits.h third_party/blink/public/common/notifications/notification_mojom_traits.h
 index 6c269f28c4bd..8223adb86ab2 100644
---- third_party/blink/public/common/notifications/notification_struct_traits.h
-+++ third_party/blink/public/common/notifications/notification_struct_traits.h
+--- third_party/blink/public/common/notifications/notification_mojom_traits.h
++++ third_party/blink/public/common/notifications/notification_mojom_traits.h
 @@ -88,6 +88,10 @@ struct BLINK_COMMON_EXPORT StructTraits<blink::mojom::NotificationDataDataView,
      return data.tag;
    }
