@@ -27,3 +27,151 @@ index 46f516b5f2d3..7409fb08963a 100644
  
  #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
      AddNotificationHandler(
+diff --git ui/message_center/BUILD.gn ui/message_center/BUILD.gn
+index ce4ea2bf80ba..bfbc82bc40ca 100644
+--- ui/message_center/BUILD.gn
++++ ui/message_center/BUILD.gn
+@@ -5,6 +5,7 @@
+ import("//build/config/features.gni")
+ import("//build/config/jumbo.gni")
+ import("//build/config/ui.gni")
++import("//cef/libcef/features/features.gni")
+ import("//components/vector_icons/vector_icons.gni")
+ import("//testing/test.gni")
+ import("//ui/base/ui_features.gni")
+@@ -92,6 +93,8 @@ jumbo_component("message_center") {
+ 
+     if (toolkit_views) {
+       sources += [
++        "//cef/libcef/browser/notifications/cef_notification_view.cc",
++        "//cef/libcef/browser/notifications/cef_notification_view.h",
+         "views/desktop_message_popup_collection.cc",
+         "views/desktop_message_popup_collection.h",
+         "views/message_popup_collection.cc",
+@@ -121,10 +124,15 @@ jumbo_component("message_center") {
+         "views/relative_time_formatter.h",
+       ]
+       deps += [
++        "//cef/libcef/features",
+         "//ui/compositor",
+         "//ui/events",
+         "//ui/views",
+       ]
++      if (enable_cef) {
++        configs += [ "//cef/libcef/features:config" ]
++      }
++
+       if (is_mac) {
+         libs = [ "Foundation.framework" ]
+       }
+diff --git ui/message_center/vector_icons/product.icon ui/message_center/vector_icons/product.icon
+index 7068cb20b970..9f232e1975e7 100644
+--- ui/message_center/vector_icons/product.icon
++++ ui/message_center/vector_icons/product.icon
+@@ -2,34 +2,56 @@
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
+ 
+-CANVAS_DIMENSIONS, 96,
+-MOVE_TO, 84.25f, 30.5f,
+-CUBIC_TO, 77.85f, 17.3f, 63.6f, 8, 48, 8,
+-R_CUBIC_TO, -12.4f, 0, -23.6f, 5.6f, -30.8f, 14.4f,
+-R_LINE_TO, 13.2f, 22.8f,
+-R_CUBIC_TO, 1.2f, -8.4f, 8.8f, -14.7f, 17.6f, -14.7f,
+-R_H_LINE_TO, 36.25f,
++CANVAS_DIMENSIONS, 16,
++MOVE_TO, 0.44f, 8.5f,
++CUBIC_TO, 0.47f, 8.26f, 0.42f, 7.99f, 0.47f, 7.7f,
++CUBIC_TO, 0.54f, 7.25f, 0.8f, 6.89f, 1.21f, 6.69f,
++CUBIC_TO, 1.31f, 6.64f, 1.36f, 6.59f, 1.39f, 6.45f,
++CUBIC_TO, 1.56f, 5.46f, 1.97f, 4.54f, 2.57f, 3.72f,
++CUBIC_TO, 2.64f, 3.62f, 2.69f, 3.57f, 2.59f, 3.43f,
++CUBIC_TO, 2.49f, 3.28f, 2.57f, 3.12f, 2.67f, 3,
++CUBIC_TO, 3.51f, 2.06f, 4.5f, 1.36f, 5.68f, 0.97f,
++CUBIC_TO, 8.51f, 0.08f, 11, 0.69f, 13.15f, 2.79f,
++CUBIC_TO, 13.34f, 2.99f, 13.6f, 3.17f, 13.34f, 3.51f,
++CUBIC_TO, 13.29f, 3.56f, 13.37f, 3.61f, 13.42f, 3.66f,
++CUBIC_TO, 14.03f, 4.5f, 14.44f, 5.44f, 14.62f, 6.46f,
++CUBIC_TO, 14.65f, 6.56f, 14.72f, 6.61f, 14.8f, 6.66f,
++CUBIC_TO, 15.31f, 6.92f, 15.57f, 7.36f, 15.57f, 7.94f,
++CUBIC_TO, 15.57f, 8.45f, 15.62f, 8.96f, 15.54f, 9.47f,
++CUBIC_TO, 15.42f, 10.21f, 14.67f, 10.72f, 13.95f, 10.56f,
++CUBIC_TO, 13.75f, 10.51f, 13.67f, 10.36f, 13.67f, 10.15f,
++CUBIC_TO, 13.67f, 9.31f, 13.69f, 8.46f, 13.67f, 7.62f,
++CUBIC_TO, 13.59f, 5.35f, 12.6f, 3.63f, 10.62f, 2.54f,
++CUBIC_TO, 7.37f, 0.75f, 3.15f, 2.78f, 2.44f, 6.48f,
++CUBIC_TO, 2.32f, 7.11f, 2.34f, 7.78f, 2.34f, 8.41f,
++CUBIC_TO, 2.34f, 9.02f, 2.34f, 9.62f, 2.32f, 10.23f,
++CUBIC_TO, 2.32f, 10.42f, 2.19f, 10.56f, 1.96f, 10.56f,
++CUBIC_TO, 1.03f, 10.61f, 0.42f, 10.03f, 0.42f, 9.08f,
++CUBIC_TO, 0.44f, 8.93f, 0.44f, 8.75f, 0.44f, 8.5f,
+ CLOSE,
+-MOVE_TO, 48, 66,
+-R_CUBIC_TO, -6.8f, 0, -12.4f, -3.6f, -15.6f, -9.2f,
+-LINE_TO, 14.4f, 26,
+-CUBIC_TO, 10.4f, 32.4f, 8, 40, 8, 48,
+-R_CUBIC_TO, 0, 20, 14.4f, 36.4f, 33.6f, 39.6f,
+-R_LINE_TO, 13.2f, -22.8f,
+-R_CUBIC_TO, -2.4f, 0.8f, -4.4f, 1.2f, -6.8f, 1.2f,
++MOVE_TO, 6.89f, 11.48f,
++CUBIC_TO, 7.22f, 11.36f, 7.47f, 11.12f, 7.55f, 10.73f,
++CUBIC_TO, 7.62f, 10.35f, 7.19f, 9.82f, 6.6f, 9.26f,
++CUBIC_TO, 5.99f, 8.67f, 5.2f, 8.05f, 4.76f, 7.83f,
++CUBIC_TO, 4.13f, 7.44f, 3.53f, 7.78f, 3.41f, 8.52f,
++CUBIC_TO, 3.26f, 9.34f, 3.41f, 10.11f, 3.85f, 10.8f,
++CUBIC_TO, 4.16f, 11.28f, 4.59f, 11.49f, 5.12f, 11.54f,
++CUBIC_TO, 5.42f, 11.53f, 6.63f, 11.59f, 6.89f, 11.48f,
+ CLOSE,
+-R_MOVE_TO, 18, -18,
+-R_CUBIC_TO, 0, -5.6f, -4, -11.8f, -8, -15,
+-R_H_LINE_TO, 27.5f,
+-R_CUBIC_TO, 1.6f, 4.4f, 2.5f, 10.2f, 2.5f, 15,
+-R_CUBIC_TO, 0, 22, -18, 40, -40, 40,
+-R_H_LINE_TO, -2.4f,
+-R_LINE_TO, 18, -31.2f,
+-R_CUBIC_TO, 1.6f, -2.4f, 2.4f, -5.6f, 2.4f, -8.8f,
++MOVE_TO, 9.62f, 11.72f,
++CUBIC_TO, 10, 11.76f, 10.36f, 11.84f, 10.75f, 11.86f,
++CUBIC_TO, 11.26f, 11.89f, 11.64f, 11.74f, 11.93f, 11.43f,
++CUBIC_TO, 12.29f, 11.04f, 12.46f, 10.56f, 12.44f, 10.05f,
++CUBIC_TO, 12.41f, 9.52f, 11.98f, 9.21f, 11.39f, 9.31f,
++CUBIC_TO, 10.86f, 9.38f, 10.4f, 9.62f, 9.92f, 9.79f,
++CUBIC_TO, 9.48f, 9.96f, 9.1f, 10.18f, 8.79f, 10.45f,
++CUBIC_TO, 8.35f, 10.86f, 8.59f, 11.42f, 9.27f, 11.63f,
++CUBIC_TO, 9.36f, 11.67f, 9.48f, 11.69f, 9.62f, 11.72f,
+ CLOSE,
+-MOVE_TO, 48, 62,
+-R_CUBIC_TO, -7.73f, 0, -14, -6.27f, -14, -14,
+-R_CUBIC_TO, 0, -7.73f, 6.27f, -14, 14, -14,
+-R_CUBIC_TO, 7.73f, 0, 14, 6.27f, 14, 14,
+-R_CUBIC_TO, 0, 7.73f, -6.27f, 14, -14, 14,
+-CLOSE
++MOVE_TO, 13.68f, 11.26f,
++CUBIC_TO, 13.6f, 11.18f, 13.48f, 11.23f, 13.42f, 11.33f,
++CUBIC_TO, 13.18f, 12.08f, 12.09f, 14.57f, 8.36f, 14.83f,
++CUBIC_TO, 3.97f, 15.14f, 10.71f, 16.09f, 12.64f, 14.66f,
++CUBIC_TO, 13.29f, 14.15f, 14.04f, 13.64f, 14.01f, 12.17f,
++CUBIC_TO, 14.01f, 11.89f, 13.88f, 11.4f, 13.68f, 11.26f,
++CLOSE
+\ No newline at end of file
+diff --git ui/message_center/views/message_view_factory.cc ui/message_center/views/message_view_factory.cc
+index e3915498a9f9..611ce9437132 100644
+--- ui/message_center/views/message_view_factory.cc
++++ ui/message_center/views/message_view_factory.cc
+@@ -7,6 +7,7 @@
+ #include <vector>
+ 
+ #include "base/lazy_instance.h"
++#include "cef/libcef/browser/notifications/cef_notification_view.h"
+ #include "ui/message_center/public/cpp/notification_types.h"
+ #include "ui/message_center/views/notification_view_md.h"
+ 
+@@ -57,7 +58,7 @@ MessageView* MessageViewFactory::Create(const Notification& notification) {
+   }
+ 
+   if (!notification_view)
+-    notification_view = new NotificationViewMD(notification);
++    notification_view = new CefNotificationView(notification);
+ 
+   return notification_view;
+ }
