@@ -27,9 +27,14 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task/post_task.h"
+#include "base/path_service.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_process_singleton.h"
 #include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/plugins/plugin_finder.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "extensions/browser/extension_system.h"
@@ -50,6 +55,8 @@
 #include "ui/wm/core/wm_state.h"
 
 #if defined(OS_WIN)
+#include "chrome/browser/notifications/notification_platform_bridge_win.h"
+#include "chrome/browser/notifications/win/notification_launch_id.h"
 #include "ui/base/cursor/cursor_loader_win.h"
 #endif
 #endif  // defined(USE_AURA)
@@ -90,6 +97,9 @@ int CefBrowserMainParts::PreEarlyInitialization() {
   // views::LinuxUI::SetInstance.
   ui::InitializeInputMethodForTesting();
 #endif
+
+  base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir_);
+  DCHECK(!user_data_dir_.empty());
 
   return service_manager::RESULT_CODE_NORMAL_EXIT;
 }
@@ -139,6 +149,73 @@ void CefBrowserMainParts::PostMainMessageLoopStart() {
 #endif
 }
 
+static base::FilePath GetStartupProfilePath(const base::FilePath& user_data_dir,
+                                     const base::CommandLine& command_line) {
+// If the browser is launched due to activation on Windows native notification,
+// the profile id encoded in the notification launch id should be chosen over
+// all others.
+#if defined(OS_WIN)
+  if (command_line.HasSwitch(switches::kNotificationLaunchId)) {
+    std::string profile_id = NotificationLaunchId::GetProfileIdFromLaunchId(
+        command_line.GetSwitchValueNative(switches::kNotificationLaunchId));
+    if (!profile_id.empty()) {
+      return user_data_dir.Append(
+          base::FilePath(base::UTF8ToUTF16(profile_id)));
+    }
+  }
+#endif  // defined(OS_WIN)
+  return g_browser_process->profile_manager()->GetLastUsedProfileDir(
+      user_data_dir);
+}
+
+void ProcessSingletonNotificationCallbackImpl(
+    const base::CommandLine& command_line,
+    const base::FilePath& current_directory) {
+  // Drop the request if the browser process is already shutting down.
+  if (!g_browser_process || g_browser_process->IsShuttingDown())
+    return;
+
+  base::FilePath user_data_dir =
+      g_browser_process->profile_manager()->user_data_dir();
+  base::FilePath startup_profile_dir =
+      GetStartupProfilePath(user_data_dir, command_line);
+
+
+#if defined(OS_WIN)
+  // If the command line has the kNotificationLaunchId switch, then this
+  // Launch() call is from notification_helper.exe to process toast activation.
+  // Delegate to the notification system; do not open a browser window here.
+  if (command_line.HasSwitch(switches::kNotificationLaunchId)) {
+    if (NotificationPlatformBridgeWin::HandleActivation(command_line)) {
+      return;
+    }
+    return;
+  }
+#endif  // defined(OS_WIN)
+}
+
+bool ProcessSingletonNotificationCallback(
+    const base::CommandLine& command_line,
+    const base::FilePath& current_directory) {
+  // Drop the request if the browser process is already shutting down.
+  // Note that we're going to post an async task below. Even if the browser
+  // process isn't shutting down right now, it could be by the time the task
+  // starts running. So, an additional check needs to happen when it starts.
+  // But regardless of any future check, there is no reason to post the task
+  // now if we know we're already shutting down.
+  if (!g_browser_process || g_browser_process->IsShuttingDown())
+    return false;
+
+  // In order to handle this request on Windows, there is platform specific
+  // code in browser_finder.cc that requires making outbound COM calls to
+  // cross-apartment shell objects (via IVirtualDesktopManager). That is not
+  // allowed within a SendMessage handler, which this function is a part of.
+  // So, we post a task to asynchronously finish the command line processing.
+  return base::ThreadTaskRunnerHandle::Get()->PostTask(
+       FROM_HERE, base::BindOnce(&ProcessSingletonNotificationCallbackImpl,
+                                 command_line, current_directory));
+}
+
 int CefBrowserMainParts::PreCreateThreads() {
 #if defined(OS_WIN)
   PlatformInitialize();
@@ -150,6 +227,9 @@ int CefBrowserMainParts::PreCreateThreads() {
   // before the IO thread is started.
   content::GpuDataManager::GetInstance();
   SystemNetworkContextManager::CreateInstance(g_browser_process->local_state());
+
+  process_singleton_.reset(new ChromeProcessSingleton(
+    user_data_dir_, base::Bind(&ProcessSingletonNotificationCallback)));
 
   return 0;
 }
@@ -189,6 +269,28 @@ void CefBrowserMainParts::PreMainMessageLoopRun() {
       {base::ThreadPool(), base::TaskPriority::USER_BLOCKING,
        base::TaskShutdownBehavior::BLOCK_SHUTDOWN, base::MayBlock()});
 
+  // When another process is running, use that process instead of starting a
+  // new one. NotifyOtherProcess will currently give the other process up to
+  // 20 seconds to respond. Note that this needs to be done before we attempt
+  // to read the profile.
+  notify_result_ = process_singleton_->NotifyOtherProcessOrCreate();
+  switch (notify_result_) {
+    case ProcessSingleton::PROCESS_NONE:
+      break;
+    case ProcessSingleton::PROCESS_NOTIFIED:
+      return /* service_manager::RESULT_CODE_NORMAL_EXIT */;
+    case ProcessSingleton::PROFILE_IN_USE:
+      return /* chrome::RESULT_CODE_PROFILE_IN_USE */;
+
+    case ProcessSingleton::LOCK_ERROR:
+      LOG(ERROR) << "Failed to create a ProcessSingleton for your profile "
+                    "directory. This means that running multiple instances "
+                    "would start multiple browser processes rather than "
+                    "opening a new window in the existing process. Aborting "
+                    "now to avoid profile corruption.";
+      return /* chrome::RESULT_CODE_PROFILE_IN_USE */;
+  }
+
   CefRequestContextSettings settings;
   CefContext::Get()->PopulateRequestContextSettings(&settings);
 
@@ -204,6 +306,8 @@ void CefBrowserMainParts::PreMainMessageLoopRun() {
   PluginFinder::GetInstance()->Init();
 
   scheme::RegisterWebUIControllerFactory();
+
+  process_singleton_->Unlock();
 }
 
 void CefBrowserMainParts::PostMainMessageLoopRun() {
