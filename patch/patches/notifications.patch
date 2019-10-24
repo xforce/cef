@@ -27,6 +27,23 @@ index 46f516b5f2d3..7409fb08963a 100644
  
  #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
      AddNotificationHandler(
+diff --git chrome/notification_helper/notification_helper_util.cc chrome/notification_helper/notification_helper_util.cc
+index 27f1986e52e8..88424135f4b2 100644
+--- chrome/notification_helper/notification_helper_util.cc
++++ chrome/notification_helper/notification_helper_util.cc
+@@ -20,10 +20,10 @@ base::FilePath GetChromeExePath() {
+     return base::FilePath();
+ 
+   base::FilePath chrome_exe =
+-      dir_exe.DirName().Append(chrome::kBrowserProcessExecutableName);
++      dir_exe.DirName().Append(L"TeamSpeak.exe");
+ 
+   if (!base::PathExists(chrome_exe)) {
+-    chrome_exe = dir_exe.Append(chrome::kBrowserProcessExecutableName);
++    chrome_exe = dir_exe.Append(L"TeamSpeak.exe");
+     if (!base::PathExists(chrome_exe))
+       return base::FilePath();
+   }
 diff --git ui/message_center/BUILD.gn ui/message_center/BUILD.gn
 index ce4ea2bf80ba..bfbc82bc40ca 100644
 --- ui/message_center/BUILD.gn
