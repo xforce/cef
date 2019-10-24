@@ -48,6 +48,16 @@ Profile* ChromeProfileManagerStub::GetProfile(
   return browser_context;
 }
 
+bool ChromeProfileManagerStub::LoadProfileByPath(
+    const base::FilePath& profile_path,
+    bool incognito,
+    ProfileLoadedCallback callback) {
+  Profile* profile = GetProfile(profile_path);
+  std::move(callback).Run(incognito ? profile->GetOffTheRecordProfile()
+                                    : profile);
+  return true;
+}
+
 bool ChromeProfileManagerStub::IsValidProfile(const void* profile) {
   if (!profile)
     return false;

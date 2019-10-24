@@ -19,6 +19,9 @@ class ChromeProfileManagerStub : public ProfileManager {
   Profile* GetProfile(const base::FilePath& profile_dir) override;
   bool IsValidProfile(const void* profile) override;
   Profile* GetLastUsedProfile(const base::FilePath& user_data_dir) override;
+  bool LoadProfileByPath(const base::FilePath& profile_path,
+                         bool incognito,
+                         ProfileLoadedCallback callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ChromeProfileManagerStub);
