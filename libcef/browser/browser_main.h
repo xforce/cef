@@ -11,8 +11,11 @@
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
 #include "build/build_config.h"
+#include "chrome/browser/process_singleton.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_main_parts.h"
+
+class ChromeProcessSingleton;
 
 namespace content {
 struct MainFunctionParams;
@@ -89,6 +92,11 @@ class CefBrowserMainParts : public content::BrowserMainParts {
   scoped_refptr<base::SingleThreadTaskRunner> background_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> user_visible_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> user_blocking_task_runner_;
+
+  base::FilePath user_data_dir_;
+  std::unique_ptr<ChromeProcessSingleton> process_singleton_;
+  ProcessSingleton::NotifyResult notify_result_ =
+      ProcessSingleton::PROCESS_NONE;
 
 #if defined(USE_AURA)
   std::unique_ptr<wm::WMState> wm_state_;

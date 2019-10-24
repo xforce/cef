@@ -24,6 +24,19 @@ index f4c3c9e25190..dd91e00d3001 100644
  
    // Returns total number of profiles available on this machine.
    size_t GetNumberOfProfiles();
+@@ -112,10 +112,10 @@ class ProfileManager : public content::NotificationObserver,
+   // already exist on disk
+   // Returns true if the profile exists, but the final loaded profile will come
+   // as part of the callback.
+-  bool LoadProfile(const std::string& profile_name,
++  virtual bool LoadProfile(const std::string& profile_name,
+                    bool incognito,
+                    ProfileLoadedCallback callback);
+-  bool LoadProfileByPath(const base::FilePath& profile_path,
++  virtual bool LoadProfileByPath(const base::FilePath& profile_path,
+                          bool incognito,
+                          ProfileLoadedCallback callback);
+ 
 @@ -131,7 +131,7 @@ class ProfileManager : public content::NotificationObserver,
  
    // Returns true if the profile pointer is known to point to an existing
