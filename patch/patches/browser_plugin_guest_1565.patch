@@ -1,56 +1,5 @@
-diff --git content/browser/browser_plugin/browser_plugin_guest.cc content/browser/browser_plugin/browser_plugin_guest.cc
-index 6eb21be63dec..87ccc46f4d43 100644
---- content/browser/browser_plugin/browser_plugin_guest.cc
-+++ content/browser/browser_plugin/browser_plugin_guest.cc
-@@ -306,8 +306,11 @@ void BrowserPluginGuest::InitInternal(
-           static_cast<WebContentsViewGuest*>(GetWebContents()->GetView());
-     }
- 
--    if (owner_web_contents_ && new_view)
-+    if (owner_web_contents_ && new_view) {
-       new_view->OnGuestDetached(owner_web_contents_->GetView());
-+      if (delegate_)
-+        delegate_->OnGuestDetached(owner_web_contents_->GetView());
-+    }
- 
-     // Once a BrowserPluginGuest has an embedder WebContents, it's considered to
-     // be attached.
-@@ -820,10 +823,19 @@ void BrowserPluginGuest::OnWillAttachComplete(
-         static_cast<WebContentsViewGuest*>(GetWebContents()->GetView());
-     if (!web_contents()->GetRenderViewHost()->GetWidget()->GetView()) {
-       web_contents_view->CreateViewForWidget(
--          web_contents()->GetRenderViewHost()->GetWidget(), true);
-+          web_contents()->GetRenderViewHost()->GetWidget(),
-+          embedder_web_contents->GetRenderViewHost()->GetWidget());
-     }
-   }
- 
-+  if (delegate_) {
-+    // Notify the delegate here instead of in InitInternal because InitInternal
-+    // will now be called from Init before GuestViewBase::CompleteInit has set
-+    // web_contents() to the guest WebContents. This behavior change is due to
-+    // https://crrev.com/07263b56.
-+    delegate_->OnGuestAttached(embedder_web_contents->GetView());
-+  }
-+
-   InitInternal(params, embedder_web_contents);
- 
-   attached_ = true;
-diff --git content/browser/frame_host/interstitial_page_impl.cc content/browser/frame_host/interstitial_page_impl.cc
-index 7bb71f92bb0a..a6b89a831044 100644
---- content/browser/frame_host/interstitial_page_impl.cc
-+++ content/browser/frame_host/interstitial_page_impl.cc
-@@ -619,7 +619,7 @@ WebContentsView* InterstitialPageImpl::CreateWebContentsView() {
-   WebContentsView* wcv =
-       static_cast<WebContentsImpl*>(web_contents())->GetView();
-   RenderWidgetHostViewBase* view =
--      wcv->CreateViewForWidget(render_view_host_->GetWidget(), false);
-+      wcv->CreateViewForWidget(render_view_host_->GetWidget(), nullptr);
-   render_view_host_->GetWidget()->SetView(view);
-   render_view_host_->GetMainFrame()->AllowBindings(
-       BINDINGS_POLICY_DOM_AUTOMATION);
 diff --git content/browser/web_contents/web_contents_view.h content/browser/web_contents/web_contents_view.h
-index bff5b42b166c..4e21a23e364b 100644
+index 4c5fb180bf82..4e21a23e364b 100644
 --- content/browser/web_contents/web_contents_view.h
 +++ content/browser/web_contents/web_contents_view.h
 @@ -23,7 +23,7 @@ struct DropData;
@@ -62,188 +11,118 @@ index bff5b42b166c..4e21a23e364b 100644
   public:
    virtual ~WebContentsView() {}
  
-@@ -83,13 +83,9 @@ class WebContentsView {
-   // Sets up the View that holds the rendered web page, receives messages for
+@@ -84,7 +84,8 @@ class WebContentsView {
    // it and contains page plugins. The host view should be sized to the current
    // size of the WebContents.
--  //
--  // |is_guest_view_hack| is temporary hack and will be removed once
--  // RenderWidgetHostViewGuest is not dependent on platform view.
--  // TODO(lazyboy): Remove |is_guest_view_hack| once http://crbug.com/330264 is
--  // fixed.
    virtual RenderWidgetHostViewBase* CreateViewForWidget(
--      RenderWidgetHost* render_widget_host, bool is_guest_view_hack) = 0;
+-      RenderWidgetHost* render_widget_host) = 0;
 +      RenderWidgetHost* render_widget_host,
 +      RenderWidgetHost* embedder_render_widget_host) = 0;
  
    // Creates a new View that holds a non-top-level widget and receives messages
    // for it.
 diff --git content/browser/web_contents/web_contents_view_aura.cc content/browser/web_contents/web_contents_view_aura.cc
-index fbefaf207527..093c9cfa2bd1 100644
+index 75972bb7f6cc..643a929e9751 100644
 --- content/browser/web_contents/web_contents_view_aura.cc
 +++ content/browser/web_contents/web_contents_view_aura.cc
-@@ -966,7 +966,8 @@ void WebContentsViewAura::CreateView(gfx::NativeView context) {
+@@ -962,7 +962,8 @@ void WebContentsViewAura::CreateView(gfx::NativeView context) {
  }
  
  RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
--    RenderWidgetHost* render_widget_host, bool is_guest_view_hack) {
+-    RenderWidgetHost* render_widget_host) {
 +    RenderWidgetHost* render_widget_host,
 +    RenderWidgetHost* embedder_render_widget_host) {
    if (render_widget_host->GetView()) {
      // During testing, the view will already be set up in most cases to the
      // test view, so we don't want to clobber it with a real one. To verify that
-@@ -978,6 +979,7 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
+@@ -974,6 +975,7 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
          render_widget_host->GetView());
    }
  
 +  const bool is_guest_view_hack = !!embedder_render_widget_host;
    RenderWidgetHostViewAura* view =
        g_create_render_widget_host_view
-           ? g_create_render_widget_host_view(render_widget_host,
+           ? g_create_render_widget_host_view(render_widget_host)
 diff --git content/browser/web_contents/web_contents_view_aura.h content/browser/web_contents/web_contents_view_aura.h
-index 180f4fa00e46..05ec3dec8331 100644
+index acdba5fb4de2..7c1afe3175ce 100644
 --- content/browser/web_contents/web_contents_view_aura.h
 +++ content/browser/web_contents/web_contents_view_aura.h
-@@ -148,7 +148,7 @@ class CONTENT_EXPORT WebContentsViewAura
+@@ -147,7 +147,8 @@ class CONTENT_EXPORT WebContentsViewAura
+   gfx::Rect GetViewBounds() const override;
    void CreateView(gfx::NativeView context) override;
    RenderWidgetHostViewBase* CreateViewForWidget(
-       RenderWidgetHost* render_widget_host,
--      bool is_guest_view_hack) override;
+-      RenderWidgetHost* render_widget_host) override;
++      RenderWidgetHost* render_widget_host,
 +      RenderWidgetHost* embedder_render_widget_host) override;
    RenderWidgetHostViewBase* CreateViewForChildWidget(
        RenderWidgetHost* render_widget_host) override;
    void SetPageTitle(const base::string16& title) override;
 diff --git content/browser/web_contents/web_contents_view_child_frame.cc content/browser/web_contents/web_contents_view_child_frame.cc
-index a766385cf589..fa6832be0759 100644
+index c8cb360345b4..fa6832be0759 100644
 --- content/browser/web_contents/web_contents_view_child_frame.cc
 +++ content/browser/web_contents/web_contents_view_child_frame.cc
-@@ -83,7 +83,7 @@ void WebContentsViewChildFrame::CreateView(gfx::NativeView context) {
+@@ -82,7 +82,8 @@ void WebContentsViewChildFrame::CreateView(gfx::NativeView context) {
+ }
  
  RenderWidgetHostViewBase* WebContentsViewChildFrame::CreateViewForWidget(
-     RenderWidgetHost* render_widget_host,
--    bool is_guest_view_hack) {
+-    RenderWidgetHost* render_widget_host) {
++    RenderWidgetHost* render_widget_host,
 +    RenderWidgetHost* embedder_render_widget_host) {
    return RenderWidgetHostViewChildFrame::Create(render_widget_host);
  }
  
 diff --git content/browser/web_contents/web_contents_view_child_frame.h content/browser/web_contents/web_contents_view_child_frame.h
-index 412bb35e4b69..2f5f7ac02b20 100644
+index 92cbe3d78b94..2f5f7ac02b20 100644
 --- content/browser/web_contents/web_contents_view_child_frame.h
 +++ content/browser/web_contents/web_contents_view_child_frame.h
-@@ -39,7 +39,7 @@ class WebContentsViewChildFrame : public WebContentsView,
+@@ -38,7 +38,8 @@ class WebContentsViewChildFrame : public WebContentsView,
+   gfx::Rect GetViewBounds() const override;
    void CreateView(gfx::NativeView context) override;
    RenderWidgetHostViewBase* CreateViewForWidget(
-       RenderWidgetHost* render_widget_host,
--      bool is_guest_view_hack) override;
-+      RenderWidgetHost* embedder_render_widget_host) override;
-   RenderWidgetHostViewBase* CreateViewForChildWidget(
-       RenderWidgetHost* render_widget_host) override;
-   void SetPageTitle(const base::string16& title) override;
-diff --git content/browser/web_contents/web_contents_view_guest.cc content/browser/web_contents/web_contents_view_guest.cc
-index c45581fd22b7..f9507a4e7db5 100644
---- content/browser/web_contents/web_contents_view_guest.cc
-+++ content/browser/web_contents/web_contents_view_guest.cc
-@@ -68,6 +68,8 @@ gfx::NativeWindow WebContentsViewGuest::GetTopLevelNativeWindow() const {
- 
- void WebContentsViewGuest::OnGuestAttached(WebContentsView* parent_view) {
- #if defined(USE_AURA)
-+  if (!platform_view_->GetNativeView())
-+    return;
-   // In aura, ScreenPositionClient doesn't work properly if we do
-   // not have the native view associated with this WebContentsViewGuest in the
-   // view hierarchy. We add this view as embedder's child here.
-@@ -78,6 +80,8 @@ void WebContentsViewGuest::OnGuestAttached(WebContentsView* parent_view) {
- }
- 
- void WebContentsViewGuest::OnGuestDetached(WebContentsView* old_parent_view) {
-+  if (!platform_view_->GetNativeView())
-+    return;
- #if defined(USE_AURA)
-   old_parent_view->GetNativeView()->RemoveChild(
-       platform_view_->GetNativeView());
-@@ -118,7 +122,8 @@ void WebContentsViewGuest::CreateView(gfx::NativeView context) {
- }
- 
- RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForWidget(
--    RenderWidgetHost* render_widget_host, bool is_guest_view_hack) {
-+    RenderWidgetHost* render_widget_host,
-+    RenderWidgetHost* embedder_render_widget_host) {
-   if (render_widget_host->GetView()) {
-     // During testing, the view will already be set up in most cases to the
-     // test view, so we don't want to clobber it with a real one. To verify that
-@@ -130,11 +135,19 @@ RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForWidget(
-         render_widget_host->GetView());
-   }
- 
-+  embedder_render_widget_host =
-+      guest_->embedder_web_contents()->GetRenderViewHost()->GetWidget();
-   RenderWidgetHostViewBase* platform_widget =
--      platform_view_->CreateViewForWidget(render_widget_host, true);
-+      platform_view_->CreateViewForWidget(render_widget_host,
-+                                          embedder_render_widget_host);
- 
--  return RenderWidgetHostViewGuest::Create(render_widget_host, guest_,
--                                           platform_widget->GetWeakPtr());
-+  RenderWidgetHostViewGuest* guest_view =
-+      RenderWidgetHostViewGuest::Create(render_widget_host, guest_,
-+                                        platform_widget->GetWeakPtr());
-+  platform_widget->InitAsGuest(embedder_render_widget_host->GetView(),
-+                               guest_view);
-+
-+  return guest_view;
- }
- 
- RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForChildWidget(
-diff --git content/browser/web_contents/web_contents_view_guest.h content/browser/web_contents/web_contents_view_guest.h
-index 12aa7cd4799d..bcd4e242c2f7 100644
---- content/browser/web_contents/web_contents_view_guest.h
-+++ content/browser/web_contents/web_contents_view_guest.h
-@@ -57,7 +57,7 @@ class WebContentsViewGuest : public WebContentsView,
-   void CreateView(gfx::NativeView context) override;
-   RenderWidgetHostViewBase* CreateViewForWidget(
-       RenderWidgetHost* render_widget_host,
--      bool is_guest_view_hack) override;
+-      RenderWidgetHost* render_widget_host) override;
++      RenderWidgetHost* render_widget_host,
 +      RenderWidgetHost* embedder_render_widget_host) override;
    RenderWidgetHostViewBase* CreateViewForChildWidget(
        RenderWidgetHost* render_widget_host) override;
    void SetPageTitle(const base::string16& title) override;
 diff --git content/browser/web_contents/web_contents_view_mac.h content/browser/web_contents/web_contents_view_mac.h
-index 6fdec8c0a5e2..f57dc03069a5 100644
+index 78b29f52cdb3..43251a54c72d 100644
 --- content/browser/web_contents/web_contents_view_mac.h
 +++ content/browser/web_contents/web_contents_view_mac.h
-@@ -76,7 +76,7 @@ class WebContentsViewMac : public WebContentsView,
+@@ -76,7 +76,8 @@ class WebContentsViewMac : public WebContentsView,
+   gfx::Rect GetViewBounds() const override;
    void CreateView(gfx::NativeView context) override;
    RenderWidgetHostViewBase* CreateViewForWidget(
-       RenderWidgetHost* render_widget_host,
--      bool is_guest_view_hack) override;
+-      RenderWidgetHost* render_widget_host) override;
++      RenderWidgetHost* render_widget_host,
 +      RenderWidgetHost* embedder_render_widget_host) override;
    RenderWidgetHostViewBase* CreateViewForChildWidget(
        RenderWidgetHost* render_widget_host) override;
    void SetPageTitle(const base::string16& title) override;
 diff --git content/browser/web_contents/web_contents_view_mac.mm content/browser/web_contents/web_contents_view_mac.mm
-index 4721a9b3f511..dfdd46d0c5d2 100644
+index e0bb1e527302..9cfdd400c535 100644
 --- content/browser/web_contents/web_contents_view_mac.mm
 +++ content/browser/web_contents/web_contents_view_mac.mm
-@@ -326,7 +326,8 @@ void WebContentsViewMac::CreateView(gfx::NativeView context) {
+@@ -326,7 +323,8 @@ void WebContentsViewMac::CreateView(gfx::NativeView context) {
  }
  
  RenderWidgetHostViewBase* WebContentsViewMac::CreateViewForWidget(
--    RenderWidgetHost* render_widget_host, bool is_guest_view_hack) {
+-    RenderWidgetHost* render_widget_host) {
 +    RenderWidgetHost* render_widget_host,
 +    RenderWidgetHost* embedder_render_widget_host) {
    if (render_widget_host->GetView()) {
      // During testing, the view will already be set up in most cases to the
      // test view, so we don't want to clobber it with a real one. To verify that
-@@ -338,6 +339,7 @@ RenderWidgetHostViewBase* WebContentsViewMac::CreateViewForWidget(
+@@ -338,6 +336,7 @@ RenderWidgetHostViewBase* WebContentsViewMac::CreateViewForWidget(
          render_widget_host->GetView());
    }
  
 +  const bool is_guest_view_hack = !!embedder_render_widget_host;
    RenderWidgetHostViewMac* view =
        g_create_render_widget_host_view
-           ? g_create_render_widget_host_view(render_widget_host,
+           ? g_create_render_widget_host_view(render_widget_host)
 diff --git content/public/browser/browser_plugin_guest_delegate.h content/public/browser/browser_plugin_guest_delegate.h
-index ea12af6b86b8..f1211f374328 100644
+index a163fb084d35..4720128894ee 100644
 --- content/public/browser/browser_plugin_guest_delegate.h
 +++ content/public/browser/browser_plugin_guest_delegate.h
 @@ -20,6 +20,7 @@ class GuestHost;
@@ -262,14 +141,14 @@ index ea12af6b86b8..f1211f374328 100644
 +  virtual void OnGuestAttached(content::WebContentsView* parent_view) {}
 +  virtual void OnGuestDetached(content::WebContentsView* parent_view) {}
 +
-   // TODO(ekaramad): A short workaround to force some types of guests to use
-   // a BrowserPlugin even when we are using cross process frames for guests. It
-   // should be removed after resolving https://crbug.com/642826).
+   // Returns the RenderWidgetHost corresponding to the owner frame.
+   virtual RenderWidgetHost* GetOwnerRenderWidgetHost();
+ 
 diff --git extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.cc extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.cc
-index fa13ab856de9..ddc70aedbab2 100644
+index 487f031c08c7..7afeeefe64cd 100644
 --- extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.cc
 +++ extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.cc
-@@ -215,6 +215,8 @@ void MimeHandlerViewGuest::CreateWebContents(
+@@ -207,6 +207,8 @@ void MimeHandlerViewGuest::CreateWebContents(
    WebContents::CreateParams params(browser_context(),
                                     guest_site_instance.get());
    params.guest_delegate = this;
@@ -278,7 +157,7 @@ index fa13ab856de9..ddc70aedbab2 100644
    // TODO(erikchen): Fix ownership semantics for guest views.
    // https://crbug.com/832879.
    std::move(callback).Run(
-@@ -259,6 +261,18 @@ bool MimeHandlerViewGuest::ShouldDestroyOnDetach() const {
+@@ -246,6 +248,18 @@ bool MimeHandlerViewGuest::ShouldDestroyOnDetach() const {
    return true;
  }
  
@@ -298,10 +177,10 @@ index fa13ab856de9..ddc70aedbab2 100644
      WebContents* source,
      const content::OpenURLParams& params) {
 diff --git extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h
-index 3d0b70d06fe7..a33da99391f6 100644
+index 242db17f8f3b..66f5d928c054 100644
 --- extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h
 +++ extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h
-@@ -128,6 +128,10 @@ class MimeHandlerViewGuest
+@@ -131,6 +131,10 @@ class MimeHandlerViewGuest
    bool ZoomPropagatesFromEmbedderToGuest() const final;
    bool ShouldDestroyOnDetach() const final;
  
