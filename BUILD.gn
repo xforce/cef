@@ -822,7 +822,7 @@ static_library("libcef_static") {
     "//third_party/cld_3/src/src:cld_3",
     "//third_party/hunspell",
     "//third_party/leveldatabase",
-    # "//third_party/libxml",
+    # "//third_party/libxml:xml_reader", # TODO(cef): Not sure yet how to make that work tbh
     "//third_party/widevine/cdm:headers",
     "//third_party/widevine/cdm",
     "//third_party/icu",

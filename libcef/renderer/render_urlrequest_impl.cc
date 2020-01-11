@@ -216,7 +216,7 @@ class CefRenderURLRequest::Context
     client_->OnRequestComplete(url_request_.get());
 
     // This may result in the Context object being deleted.
-    url_request_ = NULL;
+    url_request_ = nullptr;
   }
 
   void OnBodyReadable(MojoResult, const mojo::HandleSignalsState&) {

@@ -26,7 +26,7 @@ bool CefCommandLineImpl::IsReadOnly() {
 }
 
 CefRefPtr<CefCommandLine> CefCommandLineImpl::Copy() {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
   return new CefCommandLineImpl(new base::CommandLine(const_value().argv()),
                                 true, false);
 }
