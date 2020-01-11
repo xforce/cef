@@ -426,13 +426,13 @@ bool CefRenderURLRequest::Start() {
 
 CefRefPtr<CefRequest> CefRenderURLRequest::GetRequest() {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
   return context_->request();
 }
 
 CefRefPtr<CefURLRequestClient> CefRenderURLRequest::GetClient() {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
   return context_->client();
 }
 
@@ -450,7 +450,7 @@ CefURLRequest::ErrorCode CefRenderURLRequest::GetRequestError() {
 
 CefRefPtr<CefResponse> CefRenderURLRequest::GetResponse() {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
   return context_->response();
 }
 

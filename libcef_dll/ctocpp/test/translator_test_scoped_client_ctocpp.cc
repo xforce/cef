@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7cacf965cee2067dd7c60435eb312e93d311d409$
+// $hash=5c7f3edee8fa09ae414ccc7cacfaaa9713cdbf2c$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_scoped_client_ctocpp.h"
+
 #include "libcef_dll/ctocpp/test/translator_test_scoped_client_child_ctocpp.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -54,7 +55,7 @@ CefCToCppScoped<CefTranslatorTestScopedClientCToCpp,
                     c.release()))));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>
@@ -72,7 +73,7 @@ CefCToCppScoped<CefTranslatorTestScopedClientCToCpp,
                     CEF_RAW_PTR_GET(c)))));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

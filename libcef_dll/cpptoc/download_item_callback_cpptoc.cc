@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c1ef799fc872a0b1e986df28fa4553afb1d484b0$
+// $hash=ee4e0abc682de9b25e143d2c685d46d2bb10f33d$
 //
 
 #include "libcef_dll/cpptoc/download_item_callback_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -85,7 +86,7 @@ CefRefPtr<CefDownloadItemCallback> CefCppToCRefCounted<
                                                  cef_download_item_callback_t*
                                                      s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

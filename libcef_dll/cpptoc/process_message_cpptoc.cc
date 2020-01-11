@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=bf6ce24eeed82833769c61134753837b47745596$
+// $hash=c028c70975e2b5c99ff9df530e12cc31d46d1239$
 //
 
 #include "libcef_dll/cpptoc/process_message_cpptoc.h"
+
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -27,7 +28,7 @@ CEF_EXPORT cef_process_message_t* cef_process_message_create(
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefProcessMessage> _retval =
@@ -82,7 +83,7 @@ process_message_copy(struct _cef_process_message_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefProcessMessage> _retval =
@@ -100,7 +101,7 @@ process_message_get_name(struct _cef_process_message_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefProcessMessageCppToC::Get(self)->GetName();
@@ -117,7 +118,7 @@ process_message_get_argument_list(struct _cef_process_message_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefListValue> _retval =
@@ -152,7 +153,7 @@ CefRefPtr<CefProcessMessage> CefCppToCRefCounted<
     cef_process_message_t>::UnwrapDerived(CefWrapperType type,
                                           cef_process_message_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4eb64b628914b154fdb7fcbc0bc8fdf7e9696eb7$
+// $hash=a8507ec5bdca741d6290ec5579c02ed24eee647a$
 //
 
 #include "libcef_dll/cpptoc/views/view_cpptoc.h"
+
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
 #include "libcef_dll/cpptoc/views/button_cpptoc.h"
 #include "libcef_dll/cpptoc/views/label_button_cpptoc.h"
@@ -36,7 +37,7 @@ view_as_browser_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserView> _retval = CefViewCppToC::Get(self)->AsBrowserView();
@@ -52,7 +53,7 @@ cef_button_t* CEF_CALLBACK view_as_button(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefButton> _retval = CefViewCppToC::Get(self)->AsButton();
@@ -68,7 +69,7 @@ cef_panel_t* CEF_CALLBACK view_as_panel(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPanel> _retval = CefViewCppToC::Get(self)->AsPanel();
@@ -84,7 +85,7 @@ cef_scroll_view_t* CEF_CALLBACK view_as_scroll_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefScrollView> _retval = CefViewCppToC::Get(self)->AsScrollView();
@@ -100,7 +101,7 @@ cef_textfield_t* CEF_CALLBACK view_as_textfield(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTextfield> _retval = CefViewCppToC::Get(self)->AsTextfield();
@@ -117,7 +118,7 @@ view_get_type_string(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefViewCppToC::Get(self)->GetTypeString();
@@ -134,7 +135,7 @@ cef_string_userfree_t CEF_CALLBACK view_to_string(struct _cef_view_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -205,7 +206,7 @@ view_get_delegate(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefViewDelegate> _retval = CefViewCppToC::Get(self)->GetDelegate();
@@ -221,7 +222,7 @@ struct _cef_window_t* CEF_CALLBACK view_get_window(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefWindow> _retval = CefViewCppToC::Get(self)->GetWindow();
@@ -296,7 +297,7 @@ view_get_parent_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval = CefViewCppToC::Get(self)->GetParentView();
@@ -313,7 +314,7 @@ struct _cef_view_t* CEF_CALLBACK view_get_view_for_id(struct _cef_view_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval = CefViewCppToC::Get(self)->GetViewForID(id);
@@ -975,7 +976,7 @@ CefCppToCRefCounted<CefViewCppToC, CefView, cef_view_t>::UnwrapDerived(
     return CefWindowCppToC::Unwrap(reinterpret_cast<cef_window_t*>(s));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

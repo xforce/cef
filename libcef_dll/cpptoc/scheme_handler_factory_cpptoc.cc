@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0c1764d91adde00677083877182623491138bf40$
+// $hash=fe1b6f7028c22698af40e0d2a74086ca71319cfb$
 //
 
 #include "libcef_dll/cpptoc/scheme_handler_factory_cpptoc.h"
+
 #include "libcef_dll/cpptoc/resource_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/frame_ctocpp.h"
@@ -32,15 +33,15 @@ scheme_handler_factory_create(struct _cef_scheme_handler_factory_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: scheme_name; type: string_byref_const
   DCHECK(scheme_name);
   if (!scheme_name)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_diff
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Unverified params: browser, frame
 
   // Execute
@@ -73,7 +74,7 @@ CefRefPtr<CefSchemeHandlerFactory> CefCppToCRefCounted<
                                                  cef_scheme_handler_factory_t*
                                                      s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

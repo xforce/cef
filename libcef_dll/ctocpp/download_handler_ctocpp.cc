@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=3d0810666bd0d1d0268804ec142928ab71cdf705$
+// $hash=667fe6d2620ca95df5e503f6332cf3e2342032ff$
 //
 
 #include "libcef_dll/ctocpp/download_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/before_download_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/download_item_callback_cpptoc.h"
@@ -108,7 +109,7 @@ cef_download_handler_t* CefCToCppRefCounted<
     cef_download_handler_t>::UnwrapDerived(CefWrapperType type,
                                            CefDownloadHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

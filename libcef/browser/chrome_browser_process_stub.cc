@@ -171,7 +171,7 @@ PrefService* ChromeBrowserProcessStub::local_state() {
 scoped_refptr<network::SharedURLLoaderFactory>
 ChromeBrowserProcessStub::shared_url_loader_factory() {
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 variations::VariationsService* ChromeBrowserProcessStub::variations_service() {

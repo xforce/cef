@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c228145419ed0f0dd6f330ff79910d66f0a5a10c$
+// $hash=fc391fc099b8acaa048ede77704e6f4b5efed5b4$
 //
 
 #include "libcef_dll/cpptoc/xml_reader_cpptoc.h"
+
 #include "libcef_dll/cpptoc/stream_reader_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -29,11 +30,11 @@ CEF_EXPORT cef_xml_reader_t* cef_xml_reader_create(
   // Verify param: stream; type: refptr_same
   DCHECK(stream);
   if (!stream)
-    return NULL;
+    return nullptr;
   // Verify param: URI; type: string_byref_const
   DCHECK(URI);
   if (!URI)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefXmlReader> _retval = CefXmlReader::Create(
@@ -103,7 +104,7 @@ xml_reader_get_error(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetError();
@@ -153,7 +154,7 @@ xml_reader_get_local_name(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetLocalName();
@@ -170,7 +171,7 @@ xml_reader_get_prefix(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetPrefix();
@@ -187,7 +188,7 @@ xml_reader_get_qualified_name(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetQualifiedName();
@@ -204,7 +205,7 @@ xml_reader_get_namespace_uri(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetNamespaceURI();
@@ -221,7 +222,7 @@ xml_reader_get_base_uri(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetBaseURI();
@@ -238,7 +239,7 @@ xml_reader_get_xml_lang(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetXmlLang();
@@ -287,7 +288,7 @@ xml_reader_get_value(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetValue();
@@ -337,11 +338,11 @@ xml_reader_get_attribute_byindex(struct _cef_xml_reader_t* self, int index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: index; type: simple_byval
   DCHECK_GE(index, 0);
   if (index < 0)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetAttribute(index);
@@ -359,11 +360,11 @@ xml_reader_get_attribute_byqname(struct _cef_xml_reader_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: qualifiedName; type: string_byref_const
   DCHECK(qualifiedName);
   if (!qualifiedName)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -383,15 +384,15 @@ xml_reader_get_attribute_bylname(struct _cef_xml_reader_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: localName; type: string_byref_const
   DCHECK(localName);
   if (!localName)
-    return NULL;
+    return nullptr;
   // Verify param: namespaceURI; type: string_byref_const
   DCHECK(namespaceURI);
   if (!namespaceURI)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetAttribute(
@@ -409,7 +410,7 @@ xml_reader_get_inner_xml(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetInnerXml();
@@ -426,7 +427,7 @@ xml_reader_get_outer_xml(struct _cef_xml_reader_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefXmlReaderCppToC::Get(self)->GetOuterXml();
@@ -622,7 +623,7 @@ CefRefPtr<CefXmlReader>
 CefCppToCRefCounted<CefXmlReaderCppToC, CefXmlReader, cef_xml_reader_t>::
     UnwrapDerived(CefWrapperType type, cef_xml_reader_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

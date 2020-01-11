@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f69d44791ac763b2445b75274b5918f385a033b4$
+// $hash=bd270680638e2de6262b56f157db33b2803b6982$
 //
 
 #include "libcef_dll/cpptoc/urlrequest_cpptoc.h"
+
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
 #include "libcef_dll/cpptoc/request_cpptoc.h"
 #include "libcef_dll/cpptoc/response_cpptoc.h"
@@ -32,11 +33,11 @@ CEF_EXPORT cef_urlrequest_t* cef_urlrequest_create(
   // Verify param: request; type: refptr_same
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Verify param: client; type: refptr_diff
   DCHECK(client);
   if (!client)
-    return NULL;
+    return nullptr;
   // Unverified params: request_context
 
   // Execute
@@ -61,7 +62,7 @@ urlrequest_get_request(struct _cef_urlrequest_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRequest> _retval = CefURLRequestCppToC::Get(self)->GetRequest();
@@ -78,7 +79,7 @@ urlrequest_get_client(struct _cef_urlrequest_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefURLRequestClient> _retval =
@@ -131,7 +132,7 @@ urlrequest_get_response(struct _cef_urlrequest_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefResponse> _retval =
@@ -196,7 +197,7 @@ CefRefPtr<CefURLRequest>
 CefCppToCRefCounted<CefURLRequestCppToC, CefURLRequest, cef_urlrequest_t>::
     UnwrapDerived(CefWrapperType type, cef_urlrequest_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

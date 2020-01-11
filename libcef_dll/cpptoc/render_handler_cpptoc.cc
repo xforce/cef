@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e7116b4e0392841c7da9eff30ec0f73374e7b676$
+// $hash=16151abfc805a3db4c89bd2c0ee2bc1e388e62d7$
 //
 
 #include "libcef_dll/cpptoc/render_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/accessibility_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/drag_data_ctocpp.h"
@@ -30,7 +31,7 @@ render_handler_get_accessibility_handler(struct _cef_render_handler_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefAccessibilityHandler> _retval =
@@ -562,7 +563,7 @@ CefRefPtr<CefRenderHandler> CefCppToCRefCounted<
     cef_render_handler_t>::UnwrapDerived(CefWrapperType type,
                                          cef_render_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

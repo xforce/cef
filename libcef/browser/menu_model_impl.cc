@@ -304,7 +304,7 @@ bool CefMenuModelImpl::AddRadioItem(int command_id,
 CefRefPtr<CefMenuModel> CefMenuModelImpl::AddSubMenu(int command_id,
                                                      const CefString& label) {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
 
   Item item(MENUITEMTYPE_SUBMENU, command_id, label, kInvalidGroupId);
   item.submenu_ = new CefMenuModelImpl(delegate_, menu_model_delegate_, true);
@@ -360,7 +360,7 @@ CefRefPtr<CefMenuModel> CefMenuModelImpl::InsertSubMenuAt(
     int command_id,
     const CefString& label) {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
 
   Item item(MENUITEMTYPE_SUBMENU, command_id, label, kInvalidGroupId);
   item.submenu_ = new CefMenuModelImpl(delegate_, menu_model_delegate_, true);
@@ -490,11 +490,11 @@ CefRefPtr<CefMenuModel> CefMenuModelImpl::GetSubMenu(int command_id) {
 
 CefRefPtr<CefMenuModel> CefMenuModelImpl::GetSubMenuAt(int index) {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
 
   if (index >= 0 && index < static_cast<int>(items_.size()))
     return items_[index].submenu_.get();
-  return NULL;
+  return nullptr;
 }
 
 bool CefMenuModelImpl::IsVisible(int command_id) {

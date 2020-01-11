@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e6ff8b7f1e26b31619c61af1e492348eb969aa67$
+// $hash=5428694318f67955d63efd90c28e0b218e1d38e9$
 //
 
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/cpptoc/browser_host_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -31,7 +33,7 @@ browser_get_host(struct _cef_browser_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserHost> _retval = CefBrowserCppToC::Get(self)->GetHost();
@@ -231,7 +233,7 @@ browser_get_main_frame(struct _cef_browser_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFrame> _retval = CefBrowserCppToC::Get(self)->GetMainFrame();
@@ -248,7 +250,7 @@ browser_get_focused_frame(struct _cef_browser_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFrame> _retval = CefBrowserCppToC::Get(self)->GetFocusedFrame();
@@ -265,7 +267,7 @@ browser_get_frame_byident(struct _cef_browser_t* self, int64 identifier) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFrame> _retval =
@@ -283,7 +285,7 @@ struct _cef_frame_t* CEF_CALLBACK browser_get_frame(struct _cef_browser_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Unverified params: name
 
   // Execute
@@ -412,7 +414,7 @@ CefCppToCRefCounted<CefBrowserCppToC, CefBrowser, cef_browser_t>::UnwrapDerived(
     CefWrapperType type,
     cef_browser_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

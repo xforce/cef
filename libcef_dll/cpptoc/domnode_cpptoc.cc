@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=cc2ae8420326af27d931c09cad6a14c8ffc46805$
+// $hash=c8c34a5ef511b1bdd9470188cee9c621a3dd3246$
 //
 
 #include "libcef_dll/cpptoc/domnode_cpptoc.h"
+
 #include "libcef_dll/cpptoc/domdocument_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
@@ -109,7 +110,7 @@ domnode_get_form_control_element_type(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetFormControlElementType();
@@ -148,7 +149,7 @@ domnode_get_name(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetName();
@@ -165,7 +166,7 @@ domnode_get_value(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetValue();
@@ -203,7 +204,7 @@ domnode_get_as_markup(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetAsMarkup();
@@ -220,7 +221,7 @@ domnode_get_document(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMDocument> _retval =
@@ -238,7 +239,7 @@ domnode_get_parent(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMNodeCppToC::Get(self)->GetParent();
@@ -255,7 +256,7 @@ domnode_get_previous_sibling(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval =
@@ -273,7 +274,7 @@ domnode_get_next_sibling(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMNodeCppToC::Get(self)->GetNextSibling();
@@ -306,7 +307,7 @@ domnode_get_first_child(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMNodeCppToC::Get(self)->GetFirstChild();
@@ -323,7 +324,7 @@ domnode_get_last_child(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMNodeCppToC::Get(self)->GetLastChild();
@@ -340,7 +341,7 @@ domnode_get_element_tag_name(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetElementTagName();
@@ -396,11 +397,11 @@ domnode_get_element_attribute(struct _cef_domnode_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: attrName; type: string_byref_const
   DCHECK(attrName);
   if (!attrName)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -471,7 +472,7 @@ domnode_get_element_inner_text(struct _cef_domnode_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMNodeCppToC::Get(self)->GetElementInnerText();
@@ -543,7 +544,7 @@ CefCppToCRefCounted<CefDOMNodeCppToC, CefDOMNode, cef_domnode_t>::UnwrapDerived(
     CefWrapperType type,
     cef_domnode_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

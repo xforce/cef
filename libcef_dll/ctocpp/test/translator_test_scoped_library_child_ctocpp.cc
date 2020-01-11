@@ -9,17 +9,19 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=41882a1e3c513646c965c678011f0db28573d38c$
+// $hash=e76720f37e225d0c2f30938ec59b1e73e61b9017$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_child_ctocpp.h"
+
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_child_child_ctocpp.h"
 
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedLibraryChild>
-CefTranslatorTestScopedLibraryChild::Create(int value, int other_value) {
+CefOwnPtr<
+    CefTranslatorTestScopedLibraryChild> CefTranslatorTestScopedLibraryChild::
+    Create(int value, int other_value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
@@ -113,7 +115,7 @@ CefCToCppScoped<CefTranslatorTestScopedLibraryChildCToCpp,
                     c.release()))));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>
@@ -131,7 +133,7 @@ CefCToCppScoped<CefTranslatorTestScopedLibraryChildCToCpp,
                     CEF_RAW_PTR_GET(c)))));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

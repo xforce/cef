@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=01c36f8797e703abb4a2757947704019444d2a8f$
+// $hash=fd840fce008edc7699ad649e5f114ec7dc0259e1$
 //
 
 #include "libcef_dll/cpptoc/accessibility_handler_cpptoc.h"
+
 #include "libcef_dll/ctocpp/value_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -85,7 +86,7 @@ CefRefPtr<CefAccessibilityHandler> CefCppToCRefCounted<
                                                 cef_accessibility_handler_t*
                                                     s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4765074e73b5685fdd8274c0e86fd15e1e3aaa28$
+// $hash=ce618780672b92c6a5f4468b24bdf6c15abe7a82$
 //
 
 #include "libcef_dll/ctocpp/cookie_manager_ctocpp.h"
+
 #include "libcef_dll/cpptoc/completion_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/cookie_visitor_cpptoc.h"
 #include "libcef_dll/cpptoc/delete_cookies_callback_cpptoc.h"
@@ -198,7 +199,7 @@ CefCToCppRefCounted<CefCookieManagerCToCpp,
                     cef_cookie_manager_t>::UnwrapDerived(CefWrapperType type,
                                                          CefCookieManager* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -2119,8 +2119,7 @@ void CefBrowserHostImpl::LoadingStateChanged(content::WebContents* source,
   }
 }
 
-void CefBrowserHostImpl::LoadProgressChanged(content::WebContents* source,
-                                             double progress) {
+void CefBrowserHostImpl::LoadProgressChanged(double progress) {
   if (client_.get()) {
     CefRefPtr<CefDisplayHandler> handler = client_->GetDisplayHandler();
     if (handler.get()) {

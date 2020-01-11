@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=1fe2a38a96dd37310aeb35d6f03dc4308b0ea6ae$
+// $hash=acc1c5c39c2d49fff5124714723fd181e0172b7a$
 //
 
 #include "libcef_dll/cpptoc/x509certificate_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/x509cert_principal_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -30,7 +32,7 @@ x509certificate_get_subject(struct _cef_x509certificate_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefX509CertPrincipal> _retval =
@@ -48,7 +50,7 @@ x509certificate_get_issuer(struct _cef_x509certificate_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefX509CertPrincipal> _retval =
@@ -66,7 +68,7 @@ x509certificate_get_serial_number(struct _cef_x509certificate_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval =
@@ -118,7 +120,7 @@ x509certificate_get_derencoded(struct _cef_x509certificate_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval =
@@ -136,7 +138,7 @@ x509certificate_get_pemencoded(struct _cef_x509certificate_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval =
@@ -271,7 +273,7 @@ CefRefPtr<CefX509Certificate> CefCppToCRefCounted<
     cef_x509certificate_t>::UnwrapDerived(CefWrapperType type,
                                           cef_x509certificate_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

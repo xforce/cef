@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c37fce403323d485b8079a38c65a4460862f3faa$
+// $hash=388834fbfb0d4906eded2edbef4425d8118aee69$
 //
 
 #include "libcef_dll/cpptoc/v8context_cpptoc.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
 #include "libcef_dll/cpptoc/task_runner_cpptoc.h"
@@ -61,7 +62,7 @@ v8context_get_task_runner(struct _cef_v8context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTaskRunner> _retval =
@@ -91,7 +92,7 @@ v8context_get_browser(struct _cef_v8context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowser> _retval = CefV8ContextCppToC::Get(self)->GetBrowser();
@@ -105,7 +106,7 @@ cef_frame_t* CEF_CALLBACK v8context_get_frame(struct _cef_v8context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFrame> _retval = CefV8ContextCppToC::Get(self)->GetFrame();
@@ -120,7 +121,7 @@ v8context_get_global(struct _cef_v8context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Value> _retval = CefV8ContextCppToC::Get(self)->GetGlobal();
@@ -268,7 +269,7 @@ CefRefPtr<CefV8Context>
 CefCppToCRefCounted<CefV8ContextCppToC, CefV8Context, cef_v8context_t>::
     UnwrapDerived(CefWrapperType type, cef_v8context_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

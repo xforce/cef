@@ -807,7 +807,7 @@ static_library("libcef_static") {
     "//media",
     "//media/blink",
     "//net",
-    "//net:net_with_v8",
+    # "//net:net_with_v8",
     "//pdf",
     "//ppapi/buildflags",
     "//printing/buildflags",
@@ -822,7 +822,7 @@ static_library("libcef_static") {
     "//third_party/cld_3/src/src:cld_3",
     "//third_party/hunspell",
     "//third_party/leveldatabase",
-    "//third_party/libxml",
+    # "//third_party/libxml",
     "//third_party/widevine/cdm:headers",
     "//third_party/widevine/cdm",
     "//third_party/icu",
@@ -1386,7 +1386,7 @@ repack("pak") {
   # listed both here and in the libcef_static target.
   public_deps = [
     "//chrome/browser:resources",
-    "//chrome/browser/resources:net_internals_resources",
+    "//chrome/browser/resources/net_internals:net_internals_resources",
     "//chrome/browser/resources:print_preview_resources",
     "//chrome/common:resources",
     "//components/resources:components_resources",

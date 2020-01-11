@@ -127,7 +127,7 @@ index bcf172e645a2..f879aa745adf 100644
  // on the given |command_line|.
  void SetCrashKeysFromCommandLine(const base::CommandLine& command_line);
 diff --git components/crash/content/app/breakpad_linux.cc components/crash/content/app/breakpad_linux.cc
-index 27683246750c..8d9a4ae137e2 100644
+index 27683246750c..064c679a03f1 100644
 --- components/crash/content/app/breakpad_linux.cc
 +++ components/crash/content/app/breakpad_linux.cc
 @@ -28,6 +28,7 @@
@@ -201,13 +201,13 @@ index 27683246750c..8d9a4ae137e2 100644
                         : my_strlen(entry->value);
  
 -      writer.AddPairData(entry->key, key_size, entry->value, value_size);
-+      parameters.insert(std::make_pair({entry->key, key_size}, {entry->value, value_size}));
++      parameters.insert(std::make_pair(std::string{entry->key, key_size}, std::string{entry->value, value_size}));
 +    }
 +    if (!parameters.empty())
 +      parameters = GetCrashReporterClient()->FilterParameters(parameters);
 +
 +    for (const auto& param : parameters) {
-+      writer.AddPairData(entry->key, entry->key.size(), entry->value, entry->value.size());
++      writer.AddPairData(param.first.data(), param.first.size(), param.second.data(), param.second.size());
        writer.AddBoundary();
        writer.Flush();
      }

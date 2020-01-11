@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=b8b3bf624f3fa84725f08d52eaa33ceb092bb94a$
+// $hash=14171095dfa57aac616fdf1ae4739dd2b5023cb8$
 //
 
 #include "libcef_dll/cpptoc/context_menu_params_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -80,7 +81,7 @@ context_menu_params_get_link_url(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetLinkUrl();
@@ -97,7 +98,7 @@ cef_string_userfree_t CEF_CALLBACK context_menu_params_get_unfiltered_link_url(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -115,7 +116,7 @@ context_menu_params_get_source_url(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetSourceUrl();
@@ -149,7 +150,7 @@ context_menu_params_get_title_text(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetTitleText();
@@ -166,7 +167,7 @@ context_menu_params_get_page_url(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetPageUrl();
@@ -183,7 +184,7 @@ context_menu_params_get_frame_url(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetFrameUrl();
@@ -200,7 +201,7 @@ context_menu_params_get_frame_charset(struct _cef_context_menu_params_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetFrameCharset();
@@ -254,7 +255,7 @@ cef_string_userfree_t CEF_CALLBACK context_menu_params_get_selection_text(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefContextMenuParamsCppToC::Get(self)->GetSelectionText();
@@ -271,7 +272,7 @@ cef_string_userfree_t CEF_CALLBACK context_menu_params_get_misspelled_word(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -445,7 +446,7 @@ CefRefPtr<CefContextMenuParams> CefCppToCRefCounted<
     cef_context_menu_params_t>::UnwrapDerived(CefWrapperType type,
                                               cef_context_menu_params_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

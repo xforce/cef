@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a0b724f1171be83cbebb9262424297a2a8e92ac9$
+// $hash=d97d50b74b2806c0ce13bfcf86ee87790cd5ddaf$
 //
 
 #include "libcef_dll/cpptoc/render_process_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/load_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/dictionary_value_ctocpp.h"
@@ -106,7 +107,7 @@ cef_load_handler_t* CEF_CALLBACK render_process_handler_get_load_handler(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefLoadHandler> _retval =
@@ -305,7 +306,7 @@ CefRefPtr<CefRenderProcessHandler> CefCppToCRefCounted<
                                                  cef_render_process_handler_t*
                                                      s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

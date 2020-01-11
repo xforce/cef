@@ -67,7 +67,7 @@ std::unique_ptr<base::DictionaryValue> ParseManifest(
 
   if (!manifest.get() || !manifest->is_dict()) {
     LOG(ERROR) << "Failed to parse extension manifest.";
-    return NULL;
+    return nullptr;
   }
   // Transfer ownership to the caller.
   return base::WrapUnique(

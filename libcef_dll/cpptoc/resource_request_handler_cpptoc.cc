@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7f55529dc5da1d2c27bb8ff3035369d0c3214cab$
+// $hash=d90758459ed8ed7c3b422d18d1fb71e1a6f7289d$
 //
 
 #include "libcef_dll/cpptoc/resource_request_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/cookie_access_filter_cpptoc.h"
 #include "libcef_dll/cpptoc/resource_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/response_filter_cpptoc.h"
@@ -36,11 +37,11 @@ resource_request_handler_get_cookie_access_filter(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_diff
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Unverified params: browser, frame
 
   // Execute
@@ -96,11 +97,11 @@ resource_request_handler_get_resource_handler(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_diff
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Unverified params: browser, frame
 
   // Execute
@@ -190,15 +191,15 @@ resource_request_handler_get_resource_response_filter(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_diff
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Verify param: response; type: refptr_diff
   DCHECK(response);
   if (!response)
-    return NULL;
+    return nullptr;
   // Unverified params: browser, frame
 
   // Execute
@@ -310,7 +311,7 @@ CefCppToCRefCounted<CefResourceRequestHandlerCppToC,
                     cef_resource_request_handler_t>::
     UnwrapDerived(CefWrapperType type, cef_resource_request_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

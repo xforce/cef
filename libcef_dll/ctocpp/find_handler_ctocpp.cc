@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=eacc45852935b16aff48b527cc5525a6935e6007$
+// $hash=4899d7b77e91c0a5c46dad615f2e1b32f8077c40$
 //
 
 #include "libcef_dll/ctocpp/find_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -59,7 +60,7 @@ cef_find_handler_t*
 CefCToCppRefCounted<CefFindHandlerCToCpp, CefFindHandler, cef_find_handler_t>::
     UnwrapDerived(CefWrapperType type, CefFindHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

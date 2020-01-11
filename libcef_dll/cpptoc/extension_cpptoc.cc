@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a5767fd7265a33f99bc6b31e448dbd0bec3d973e$
+// $hash=3454f9142e259b987f4c35c4ab747bc5971328ed$
 //
 
 #include "libcef_dll/cpptoc/extension_cpptoc.h"
+
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
 #include "libcef_dll/ctocpp/extension_handler_ctocpp.h"
@@ -30,7 +31,7 @@ extension_get_identifier(struct _cef_extension_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefExtensionCppToC::Get(self)->GetIdentifier();
@@ -47,7 +48,7 @@ extension_get_path(struct _cef_extension_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefExtensionCppToC::Get(self)->GetPath();
@@ -64,7 +65,7 @@ extension_get_manifest(struct _cef_extension_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -104,7 +105,7 @@ extension_get_handler(struct _cef_extension_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefExtensionHandler> _retval =
@@ -122,7 +123,7 @@ extension_get_loader_context(struct _cef_extension_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRequestContext> _retval =
@@ -187,7 +188,7 @@ CefRefPtr<CefExtension>
 CefCppToCRefCounted<CefExtensionCppToC, CefExtension, cef_extension_t>::
     UnwrapDerived(CefWrapperType type, cef_extension_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

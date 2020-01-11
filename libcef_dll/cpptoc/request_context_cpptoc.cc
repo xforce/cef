@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=ca9c8f821e2e25b7c7f2ad6d1bb323a79eb8b053$
+// $hash=452f28a8a5560fcc69cd12a19ff6eab7b1f1f714$
 //
 
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
+
 #include "libcef_dll/cpptoc/cookie_manager_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/extension_cpptoc.h"
@@ -44,7 +45,7 @@ CEF_EXPORT cef_request_context_t* cef_request_context_create_context(
   // Verify param: settings; type: struct_byref_const
   DCHECK(settings);
   if (!settings)
-    return NULL;
+    return nullptr;
   // Unverified params: handler
 
   // Translate param: settings; type: struct_byref_const
@@ -68,7 +69,7 @@ CEF_EXPORT cef_request_context_t* cef_create_context_shared(
   // Verify param: other; type: refptr_same
   DCHECK(other);
   if (!other)
-    return NULL;
+    return nullptr;
   // Unverified params: handler
 
   // Execute
@@ -146,7 +147,7 @@ request_context_get_handler(struct _cef_request_context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRequestContextHandler> _retval =
@@ -162,7 +163,7 @@ request_context_get_cache_path(struct _cef_request_context_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefRequestContextCppToC::Get(self)->GetCachePath();
@@ -178,7 +179,7 @@ request_context_get_cookie_manager(struct _cef_request_context_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Unverified params: callback
 
   // Execute
@@ -274,11 +275,11 @@ request_context_get_preference(struct _cef_request_context_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefValue> _retval =
@@ -295,7 +296,7 @@ request_context_get_all_preferences(struct _cef_request_context_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -526,11 +527,11 @@ request_context_get_extension(struct _cef_request_context_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: extension_id; type: string_byref_const
   DCHECK(extension_id);
   if (!extension_id)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefExtension> _retval =
@@ -586,7 +587,7 @@ CefRefPtr<CefRequestContext> CefCppToCRefCounted<
     cef_request_context_t>::UnwrapDerived(CefWrapperType type,
                                           cef_request_context_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

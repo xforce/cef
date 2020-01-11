@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a502e2f6c77a12c9d3ab5b511e7d2f701470ceb3$
+// $hash=352b1570cd74cce646f914bf25fc97a749f15898$
 //
 
 #include "libcef_dll/ctocpp/binary_value_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // STATIC METHODS - Body may be edited by hand.
@@ -27,7 +28,7 @@ CefRefPtr<CefBinaryValue> CefBinaryValue::Create(const void* data,
   // Verify param: data; type: simple_byaddr
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_binary_value_t* _retval = cef_binary_value_create(data, data_size);
@@ -120,7 +121,7 @@ CefRefPtr<CefBinaryValue> CefBinaryValueCToCpp::Copy() {
 
   cef_binary_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, copy))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -186,7 +187,7 @@ cef_binary_value_t*
 CefCToCppRefCounted<CefBinaryValueCToCpp, CefBinaryValue, cef_binary_value_t>::
     UnwrapDerived(CefWrapperType type, CefBinaryValue* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

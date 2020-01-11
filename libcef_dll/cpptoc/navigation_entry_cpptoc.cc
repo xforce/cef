@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=8afe93f428c397c3553e499b9c3d3193d986100d$
+// $hash=d46ac6baede9cb539ee01a6d46436b32624aba8c$
 //
 
 #include "libcef_dll/cpptoc/navigation_entry_cpptoc.h"
+
 #include "libcef_dll/cpptoc/sslstatus_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -45,7 +46,7 @@ navigation_entry_get_url(struct _cef_navigation_entry_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefNavigationEntryCppToC::Get(self)->GetURL();
@@ -62,7 +63,7 @@ navigation_entry_get_display_url(struct _cef_navigation_entry_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefNavigationEntryCppToC::Get(self)->GetDisplayURL();
@@ -79,7 +80,7 @@ navigation_entry_get_original_url(struct _cef_navigation_entry_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefNavigationEntryCppToC::Get(self)->GetOriginalURL();
@@ -96,7 +97,7 @@ navigation_entry_get_title(struct _cef_navigation_entry_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefNavigationEntryCppToC::Get(self)->GetTitle();
@@ -182,7 +183,7 @@ navigation_entry_get_sslstatus(struct _cef_navigation_entry_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefSSLStatus> _retval =
@@ -222,7 +223,7 @@ CefRefPtr<CefNavigationEntry> CefCppToCRefCounted<
     cef_navigation_entry_t>::UnwrapDerived(CefWrapperType type,
                                            cef_navigation_entry_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

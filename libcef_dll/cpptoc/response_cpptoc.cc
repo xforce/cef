@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c5c7f1790ea6663f0ea06020b4ec897603321cac$
+// $hash=c86879298cac9e5e71d4afcd6111e89ed214b3bf$
 //
 
 #include "libcef_dll/cpptoc/response_cpptoc.h"
+
 #include "libcef_dll/transfer_util.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.
@@ -103,7 +104,7 @@ response_get_status_text(struct _cef_response_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefResponseCppToC::Get(self)->GetStatusText();
@@ -131,7 +132,7 @@ response_get_mime_type(struct _cef_response_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefResponseCppToC::Get(self)->GetMimeType();
@@ -159,7 +160,7 @@ response_get_charset(struct _cef_response_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefResponseCppToC::Get(self)->GetCharset();
@@ -188,11 +189,11 @@ response_get_header_by_name(struct _cef_response_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -272,7 +273,7 @@ response_get_url(struct _cef_response_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefResponseCppToC::Get(self)->GetURL();
@@ -327,7 +328,7 @@ CefRefPtr<CefResponse>
 CefCppToCRefCounted<CefResponseCppToC, CefResponse, cef_response_t>::
     UnwrapDerived(CefWrapperType type, cef_response_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

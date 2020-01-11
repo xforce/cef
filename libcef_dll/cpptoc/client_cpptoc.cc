@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7f4fe1072722867f291dfa790a700847288f08d4$
+// $hash=0084c7721b192312a63e991ba64d793d34767ef1$
 //
 
 #include "libcef_dll/cpptoc/client_cpptoc.h"
+
 #include "libcef_dll/cpptoc/context_menu_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/dialog_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/display_handler_cpptoc.h"
@@ -40,7 +41,7 @@ client_get_context_menu_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefContextMenuHandler> _retval =
@@ -56,7 +57,7 @@ client_get_dialog_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDialogHandler> _retval =
@@ -72,7 +73,7 @@ client_get_display_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDisplayHandler> _retval =
@@ -88,7 +89,7 @@ client_get_download_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDownloadHandler> _retval =
@@ -104,7 +105,7 @@ client_get_drag_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDragHandler> _retval =
@@ -120,7 +121,7 @@ client_get_find_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFindHandler> _retval =
@@ -136,7 +137,7 @@ client_get_focus_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFocusHandler> _retval =
@@ -152,7 +153,7 @@ client_get_jsdialog_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefJSDialogHandler> _retval =
@@ -168,7 +169,7 @@ client_get_keyboard_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefKeyboardHandler> _retval =
@@ -184,7 +185,7 @@ client_get_life_span_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefLifeSpanHandler> _retval =
@@ -200,7 +201,7 @@ client_get_load_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefLoadHandler> _retval =
@@ -216,7 +217,7 @@ client_get_render_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRenderHandler> _retval =
@@ -232,7 +233,7 @@ client_get_request_handler(struct _cef_client_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRequestHandler> _retval =
@@ -306,7 +307,7 @@ CefCppToCRefCounted<CefClientCppToC, CefClient, cef_client_t>::UnwrapDerived(
     CefWrapperType type,
     cef_client_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

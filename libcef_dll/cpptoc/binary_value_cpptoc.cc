@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4b918f6b512d20b2a46b716ee0b7aa268f9c8705$
+// $hash=c0101ecf9ad38020ca16153133247e06e0b0cc4f$
 //
 
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.
@@ -26,7 +27,7 @@ CEF_EXPORT cef_binary_value_t* cef_binary_value_create(const void* data,
   // Verify param: data; type: simple_byaddr
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval = CefBinaryValue::Create(data, data_size);
@@ -123,7 +124,7 @@ binary_value_copy(struct _cef_binary_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval = CefBinaryValueCppToC::Get(self)->Copy();
@@ -197,7 +198,7 @@ CefRefPtr<CefBinaryValue>
 CefCppToCRefCounted<CefBinaryValueCppToC, CefBinaryValue, cef_binary_value_t>::
     UnwrapDerived(CefWrapperType type, cef_binary_value_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

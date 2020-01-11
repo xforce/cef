@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=83db508324306f1de536e01274c7360ee185cfd9$
+// $hash=e0a6432bb54e21c91fb9a82c708b04b36822c067$
 //
 
 #include "libcef_dll/ctocpp/resource_bundle_handler_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -95,7 +96,7 @@ cef_resource_bundle_handler_t* CefCToCppRefCounted<
     cef_resource_bundle_handler_t>::UnwrapDerived(CefWrapperType type,
                                                   CefResourceBundleHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

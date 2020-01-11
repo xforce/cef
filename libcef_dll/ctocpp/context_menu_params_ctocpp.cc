@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=49c9f328dd09ab88f1742e360fdfd1c69c248970$
+// $hash=7a5343c03a9b84f8831be8b9c7e5d2f35c62983c$
 //
 
 #include "libcef_dll/ctocpp/context_menu_params_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -230,7 +231,7 @@ CefContextMenuParams::MediaType CefContextMenuParamsCToCpp::GetMediaType() {
 
 NO_SANITIZE("cfi-icall")
 CefContextMenuParams::MediaStateFlags
-CefContextMenuParamsCToCpp::GetMediaStateFlags() {
+    CefContextMenuParamsCToCpp::GetMediaStateFlags() {
   shutdown_checker::AssertNotShutdown();
 
   cef_context_menu_params_t* _struct = GetStruct();
@@ -351,7 +352,7 @@ bool CefContextMenuParamsCToCpp::IsSpellCheckEnabled() {
 
 NO_SANITIZE("cfi-icall")
 CefContextMenuParams::EditStateFlags
-CefContextMenuParamsCToCpp::GetEditStateFlags() {
+    CefContextMenuParamsCToCpp::GetEditStateFlags() {
   shutdown_checker::AssertNotShutdown();
 
   cef_context_menu_params_t* _struct = GetStruct();
@@ -417,7 +418,7 @@ cef_context_menu_params_t* CefCToCppRefCounted<
     cef_context_menu_params_t>::UnwrapDerived(CefWrapperType type,
                                               CefContextMenuParams* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

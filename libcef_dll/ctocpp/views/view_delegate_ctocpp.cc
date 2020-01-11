@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=bfe8153552ad56a5e4affc7d2f83976e89ab4212$
+// $hash=7303b34e865e03fae0c070d9df8157f9b343fe7c$
 //
 
 #include "libcef_dll/ctocpp/views/view_delegate_ctocpp.h"
+
 #include "libcef_dll/cpptoc/views/view_cpptoc.h"
 #include "libcef_dll/ctocpp/views/browser_view_delegate_ctocpp.h"
 #include "libcef_dll/ctocpp/views/button_delegate_ctocpp.h"
@@ -253,7 +254,7 @@ CefCToCppRefCounted<CefViewDelegateCToCpp,
             reinterpret_cast<CefWindowDelegate*>(c)));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

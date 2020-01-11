@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f11064e315f64bc0754e9280bd4e1f1c75ba1fa9$
+// $hash=d2d1b03efa4af59ca1e882ad733bcbc25134ca24$
 //
 
 #include "libcef_dll/cpptoc/sslstatus_cpptoc.h"
+
 #include "libcef_dll/cpptoc/x509certificate_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -96,7 +97,7 @@ sslstatus_get_x509certificate(struct _cef_sslstatus_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefX509Certificate> _retval =
@@ -129,7 +130,7 @@ CefRefPtr<CefSSLStatus>
 CefCppToCRefCounted<CefSSLStatusCppToC, CefSSLStatus, cef_sslstatus_t>::
     UnwrapDerived(CefWrapperType type, cef_sslstatus_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

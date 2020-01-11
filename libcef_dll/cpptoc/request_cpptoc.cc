@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=db49a91c50fa51cce497cfc068679f0fc620c168$
+// $hash=cfa193ca81513b636a511c54d0e568721c5a73a1$
 //
 
 #include "libcef_dll/cpptoc/request_cpptoc.h"
+
 #include "libcef_dll/cpptoc/post_data_cpptoc.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -52,7 +53,7 @@ request_get_url(struct _cef_request_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefRequestCppToC::Get(self)->GetURL();
@@ -83,7 +84,7 @@ request_get_method(struct _cef_request_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefRequestCppToC::Get(self)->GetMethod();
@@ -128,7 +129,7 @@ request_get_referrer_url(struct _cef_request_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefRequestCppToC::Get(self)->GetReferrerURL();
@@ -159,7 +160,7 @@ request_get_post_data(struct _cef_request_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPostData> _retval = CefRequestCppToC::Get(self)->GetPostData();
@@ -235,11 +236,11 @@ request_get_header_by_name(struct _cef_request_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -334,7 +335,7 @@ request_get_first_party_for_cookies(struct _cef_request_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefRequestCppToC::Get(self)->GetFirstPartyForCookies();
@@ -443,7 +444,7 @@ CefCppToCRefCounted<CefRequestCppToC, CefRequest, cef_request_t>::UnwrapDerived(
     CefWrapperType type,
     cef_request_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

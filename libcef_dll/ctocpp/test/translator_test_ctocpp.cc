@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=6ed36459f735673582a3619a92be93ccf8bf05db$
+// $hash=4ccc62b0449038044535576aed814a925db93432$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_ctocpp.h"
+
 #include <algorithm>
+
 #include "libcef_dll/cpptoc/test/translator_test_ref_ptr_client_child_cpptoc.h"
 #include "libcef_dll/cpptoc/test/translator_test_ref_ptr_client_cpptoc.h"
 #include "libcef_dll/cpptoc/test/translator_test_scoped_client_child_cpptoc.h"
@@ -692,13 +694,13 @@ NO_SANITIZE("cfi-icall") size_t CefTranslatorTestCToCpp::GetPointListSize() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrLibrary>
-CefTranslatorTestCToCpp::GetRefPtrLibrary(int val) {
+CefRefPtr<CefTranslatorTestRefPtrLibrary> CefTranslatorTestCToCpp::
+    GetRefPtrLibrary(int val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_ref_ptr_library))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -735,21 +737,20 @@ int CefTranslatorTestCToCpp::SetRefPtrLibrary(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrLibrary>
-CefTranslatorTestCToCpp::SetRefPtrLibraryAndReturn(
-    CefRefPtr<CefTranslatorTestRefPtrLibrary> val) {
+CefRefPtr<CefTranslatorTestRefPtrLibrary> CefTranslatorTestCToCpp::
+    SetRefPtrLibraryAndReturn(CefRefPtr<CefTranslatorTestRefPtrLibrary> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_ref_ptr_library_and_return))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: val; type: refptr_same
   DCHECK(val.get());
   if (!val.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_translator_test_ref_ptr_library_t* _retval =
@@ -785,21 +786,21 @@ int CefTranslatorTestCToCpp::SetChildRefPtrLibrary(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrLibrary>
-CefTranslatorTestCToCpp::SetChildRefPtrLibraryAndReturnParent(
-    CefRefPtr<CefTranslatorTestRefPtrLibraryChild> val) {
+CefRefPtr<CefTranslatorTestRefPtrLibrary> CefTranslatorTestCToCpp::
+    SetChildRefPtrLibraryAndReturnParent(
+        CefRefPtr<CefTranslatorTestRefPtrLibraryChild> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_child_ref_ptr_library_and_return_parent))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: val; type: refptr_same
   DCHECK(val.get());
   if (!val.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_translator_test_ref_ptr_library_t* _retval =
@@ -937,21 +938,20 @@ int CefTranslatorTestCToCpp::SetRefPtrClient(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrClient>
-CefTranslatorTestCToCpp::SetRefPtrClientAndReturn(
-    CefRefPtr<CefTranslatorTestRefPtrClient> val) {
+CefRefPtr<CefTranslatorTestRefPtrClient> CefTranslatorTestCToCpp::
+    SetRefPtrClientAndReturn(CefRefPtr<CefTranslatorTestRefPtrClient> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_ref_ptr_client_and_return))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: val; type: refptr_diff
   DCHECK(val.get());
   if (!val.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_translator_test_ref_ptr_client_t* _retval =
@@ -987,21 +987,21 @@ int CefTranslatorTestCToCpp::SetChildRefPtrClient(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrClient>
-CefTranslatorTestCToCpp::SetChildRefPtrClientAndReturnParent(
-    CefRefPtr<CefTranslatorTestRefPtrClientChild> val) {
+CefRefPtr<CefTranslatorTestRefPtrClient> CefTranslatorTestCToCpp::
+    SetChildRefPtrClientAndReturnParent(
+        CefRefPtr<CefTranslatorTestRefPtrClientChild> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_child_ref_ptr_client_and_return_parent))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: val; type: refptr_diff
   DCHECK(val.get());
   if (!val.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_translator_test_ref_ptr_client_t* _retval =
@@ -1127,8 +1127,8 @@ size_t CefTranslatorTestCToCpp::GetRefPtrClientListSize() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedLibrary>
-CefTranslatorTestCToCpp::GetOwnPtrLibrary(int val) {
+CefOwnPtr<CefTranslatorTestScopedLibrary> CefTranslatorTestCToCpp::
+    GetOwnPtrLibrary(int val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
@@ -1170,9 +1170,8 @@ int CefTranslatorTestCToCpp::SetOwnPtrLibrary(
 }
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedLibrary>
-CefTranslatorTestCToCpp::SetOwnPtrLibraryAndReturn(
-    CefOwnPtr<CefTranslatorTestScopedLibrary> val) {
+CefOwnPtr<CefTranslatorTestScopedLibrary> CefTranslatorTestCToCpp::
+    SetOwnPtrLibraryAndReturn(CefOwnPtr<CefTranslatorTestScopedLibrary> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
@@ -1222,9 +1221,9 @@ int CefTranslatorTestCToCpp::SetChildOwnPtrLibrary(
 }
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedLibrary>
-CefTranslatorTestCToCpp::SetChildOwnPtrLibraryAndReturnParent(
-    CefOwnPtr<CefTranslatorTestScopedLibraryChild> val) {
+CefOwnPtr<CefTranslatorTestScopedLibrary> CefTranslatorTestCToCpp::
+    SetChildOwnPtrLibraryAndReturnParent(
+        CefOwnPtr<CefTranslatorTestScopedLibraryChild> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
@@ -1273,9 +1272,8 @@ int CefTranslatorTestCToCpp::SetOwnPtrClient(
 }
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedClient>
-CefTranslatorTestCToCpp::SetOwnPtrClientAndReturn(
-    CefOwnPtr<CefTranslatorTestScopedClient> val) {
+CefOwnPtr<CefTranslatorTestScopedClient> CefTranslatorTestCToCpp::
+    SetOwnPtrClientAndReturn(CefOwnPtr<CefTranslatorTestScopedClient> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
@@ -1324,9 +1322,9 @@ int CefTranslatorTestCToCpp::SetChildOwnPtrClient(
 }
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedClient>
-CefTranslatorTestCToCpp::SetChildOwnPtrClientAndReturnParent(
-    CefOwnPtr<CefTranslatorTestScopedClientChild> val) {
+CefOwnPtr<CefTranslatorTestScopedClient> CefTranslatorTestCToCpp::
+    SetChildOwnPtrClientAndReturnParent(
+        CefOwnPtr<CefTranslatorTestScopedClientChild> val) {
   shutdown_checker::AssertNotShutdown();
 
   cef_translator_test_t* _struct = GetStruct();
@@ -1552,7 +1550,7 @@ cef_translator_test_t* CefCToCppRefCounted<
     cef_translator_test_t>::UnwrapDerived(CefWrapperType type,
                                           CefTranslatorTest* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

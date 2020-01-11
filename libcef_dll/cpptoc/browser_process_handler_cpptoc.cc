@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4064173339490fe9f711bd1906be20dadd4c26ba$
+// $hash=3f11f466d3310b587d3b2ddb892abcb5c7513c86$
 //
 
 #include "libcef_dll/cpptoc/browser_process_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/print_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/command_line_ctocpp.h"
 #include "libcef_dll/ctocpp/list_value_ctocpp.h"
@@ -76,7 +77,7 @@ browser_process_handler_get_print_handler(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPrintHandler> _retval =
@@ -128,7 +129,7 @@ CefRefPtr<CefBrowserProcessHandler> CefCppToCRefCounted<
                                                   cef_browser_process_handler_t*
                                                       s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

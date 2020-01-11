@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=577dbc869474862c56ebb8ba0ec88dffdfbb2041$
+// $hash=ad47bb8d870deaf5d51606f6c2bce0105eccdd4b$
 //
 
 #include "libcef_dll/ctocpp/dialog_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/file_dialog_callback_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -88,7 +89,7 @@ CefCToCppRefCounted<CefDialogHandlerCToCpp,
                     cef_dialog_handler_t>::UnwrapDerived(CefWrapperType type,
                                                          CefDialogHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=b082935de7c6abbd9211afff8f8ca5b065697677$
+// $hash=30b04cd1f58a68a772d1ce0da9082fda461612ab$
 //
 
 #include "libcef_dll/cpptoc/views/box_layout_cpptoc.h"
+
 #include "libcef_dll/cpptoc/views/fill_layout_cpptoc.h"
 #include "libcef_dll/cpptoc/views/view_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -67,7 +68,7 @@ box_layout_as_box_layout(struct _cef_layout_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBoxLayout> _retval =
@@ -86,7 +87,7 @@ box_layout_as_fill_layout(struct _cef_layout_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFillLayout> _retval =
@@ -138,7 +139,7 @@ CefRefPtr<CefBoxLayout>
 CefCppToCRefCounted<CefBoxLayoutCppToC, CefBoxLayout, cef_box_layout_t>::
     UnwrapDerived(CefWrapperType type, cef_box_layout_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

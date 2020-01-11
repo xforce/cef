@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=6c231c522ddb8591a638d093c44d68c1e2cbe511$
+// $hash=565613dbb99435d203b41dbb8717334527a4acb7$
 //
 
 #include "libcef_dll/cpptoc/print_handler_cpptoc.h"
+
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/print_dialog_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/print_job_callback_ctocpp.h"
@@ -204,7 +205,7 @@ CefRefPtr<CefPrintHandler> CefCppToCRefCounted<
     cef_print_handler_t>::UnwrapDerived(CefWrapperType type,
                                         cef_print_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

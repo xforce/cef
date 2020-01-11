@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=ad4e20591b3365d78f30e9052fb14ec4744f48ff$
+// $hash=44c96dfb68d558be1f6d622a63ffddd8b8b2630c$
 //
 
 #include "libcef_dll/cpptoc/domdocument_cpptoc.h"
+
 #include "libcef_dll/cpptoc/domnode_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -45,7 +46,7 @@ domdocument_get_document(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval =
@@ -63,7 +64,7 @@ domdocument_get_body(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMDocumentCppToC::Get(self)->GetBody();
@@ -80,7 +81,7 @@ domdocument_get_head(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval = CefDOMDocumentCppToC::Get(self)->GetHead();
@@ -97,7 +98,7 @@ domdocument_get_title(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMDocumentCppToC::Get(self)->GetTitle();
@@ -115,11 +116,11 @@ domdocument_get_element_by_id(struct _cef_domdocument_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: id; type: string_byref_const
   DCHECK(id);
   if (!id)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval =
@@ -137,7 +138,7 @@ domdocument_get_focused_node(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDOMNode> _retval =
@@ -205,7 +206,7 @@ domdocument_get_selection_as_markup(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMDocumentCppToC::Get(self)->GetSelectionAsMarkup();
@@ -222,7 +223,7 @@ domdocument_get_selection_as_text(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMDocumentCppToC::Get(self)->GetSelectionAsText();
@@ -239,7 +240,7 @@ domdocument_get_base_url(struct _cef_domdocument_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDOMDocumentCppToC::Get(self)->GetBaseURL();
@@ -257,11 +258,11 @@ domdocument_get_complete_url(struct _cef_domdocument_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: partialURL; type: string_byref_const
   DCHECK(partialURL);
   if (!partialURL)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -304,7 +305,7 @@ CefRefPtr<CefDOMDocument>
 CefCppToCRefCounted<CefDOMDocumentCppToC, CefDOMDocument, cef_domdocument_t>::
     UnwrapDerived(CefWrapperType type, cef_domdocument_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

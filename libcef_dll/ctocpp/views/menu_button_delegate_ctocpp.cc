@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=587fe5150e913b8591373d04d574c237602ade00$
+// $hash=e22af57f1e6505996368140760d9a249bf9189e9$
 //
 
 #include "libcef_dll/ctocpp/views/menu_button_delegate_ctocpp.h"
+
 #include "libcef_dll/cpptoc/views/button_cpptoc.h"
 #include "libcef_dll/cpptoc/views/menu_button_cpptoc.h"
 #include "libcef_dll/cpptoc/views/menu_button_pressed_lock_cpptoc.h"
@@ -299,7 +300,7 @@ cef_menu_button_delegate_t* CefCToCppRefCounted<
     cef_menu_button_delegate_t>::UnwrapDerived(CefWrapperType type,
                                                CefMenuButtonDelegate* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

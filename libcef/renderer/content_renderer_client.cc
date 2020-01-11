@@ -199,7 +199,7 @@ CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForView(
   BrowserMap::const_iterator it = browsers_.find(view);
   if (it != browsers_.end())
     return it->second;
-  return NULL;
+  return nullptr;
 }
 
 CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForMainFrame(
@@ -215,7 +215,7 @@ CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForMainFrame(
     }
   }
 
-  return NULL;
+  return nullptr;
 }
 
 void CefContentRendererClient::OnBrowserDestroyed(CefBrowserImpl* browser) {
@@ -341,7 +341,7 @@ CefContentRendererClient::GetCurrentTaskRunner() {
   // Check if currently on the render thread.
   if (CEF_CURRENTLY_ON_RT())
     return render_task_runner_;
-  return NULL;
+  return nullptr;
 }
 
 void CefContentRendererClient::RunSingleProcessCleanup() {

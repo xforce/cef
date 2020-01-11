@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c2d3dc16787949690754c720d2dc3515d5135646$
+// $hash=f6bf695d7da9ee1403168cc18747dde4cb740a09$
 //
 
 #include "libcef_dll/cpptoc/v8interceptor_cpptoc.h"
+
 #include "libcef_dll/ctocpp/v8value_ctocpp.h"
 
 namespace {
@@ -227,7 +228,7 @@ CefRefPtr<CefV8Interceptor> CefCppToCRefCounted<
     cef_v8interceptor_t>::UnwrapDerived(CefWrapperType type,
                                         cef_v8interceptor_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

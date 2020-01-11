@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=ca469ac8c8c31ef31c7b3884065ca5d64d5ceab6$
+// $hash=49819e2bcbd343c99877ff3281cf898e8d19d1d5$
 //
 
 #include "libcef_dll/cpptoc/value_cpptoc.h"
+
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
@@ -135,7 +136,7 @@ struct _cef_value_t* CEF_CALLBACK value_copy(struct _cef_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefValue> _retval = CefValueCppToC::Get(self)->Copy();
@@ -215,7 +216,7 @@ cef_string_userfree_t CEF_CALLBACK value_get_string(struct _cef_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefValueCppToC::Get(self)->GetString();
@@ -232,7 +233,7 @@ value_get_binary(struct _cef_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval = CefValueCppToC::Get(self)->GetBinary();
@@ -249,7 +250,7 @@ value_get_dictionary(struct _cef_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -267,7 +268,7 @@ value_get_list(struct _cef_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefListValue> _retval = CefValueCppToC::Get(self)->GetList();
@@ -465,7 +466,7 @@ CefCppToCRefCounted<CefValueCppToC, CefValue, cef_value_t>::UnwrapDerived(
     CefWrapperType type,
     cef_value_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

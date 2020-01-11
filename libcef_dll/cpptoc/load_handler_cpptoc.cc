@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=2c69016170598d8919de0886c3a16d55564b8857$
+// $hash=e404a832b0a8a2d9ddc086c7f4763a4513d8a730$
 //
 
 #include "libcef_dll/cpptoc/load_handler_cpptoc.h"
+
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/frame_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -153,7 +154,7 @@ CefRefPtr<CefLoadHandler>
 CefCppToCRefCounted<CefLoadHandlerCppToC, CefLoadHandler, cef_load_handler_t>::
     UnwrapDerived(CefWrapperType type, cef_load_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=60cb93ae404284f84735a6f496d64a7136dfb5e2$
+// $hash=d93c4fc8043923d4413530dc385597114e5fc05e$
 //
 
 #include "libcef_dll/cpptoc/stream_reader_cpptoc.h"
+
 #include "libcef_dll/ctocpp/read_handler_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -27,7 +28,7 @@ CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_file(
   // Verify param: fileName; type: string_byref_const
   DCHECK(fileName);
   if (!fileName)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefStreamReader> _retval =
@@ -46,7 +47,7 @@ CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_data(void* data,
   // Verify param: data; type: simple_byaddr
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefStreamReader> _retval =
@@ -65,7 +66,7 @@ CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_handler(
   // Verify param: handler; type: refptr_diff
   DCHECK(handler);
   if (!handler)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefStreamReader> _retval =
@@ -193,7 +194,7 @@ CefRefPtr<CefStreamReader> CefCppToCRefCounted<
     cef_stream_reader_t>::UnwrapDerived(CefWrapperType type,
                                         cef_stream_reader_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

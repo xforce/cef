@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=301a972d95ae8ff41174ec6e7b0574be5ccf131e$
+// $hash=ec0d6a1abada255681087caf7a9db1bba5e90a7b$
 //
 
 #include "libcef_dll/ctocpp/download_image_callback_ctocpp.h"
+
 #include "libcef_dll/cpptoc/image_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -60,7 +61,7 @@ cef_download_image_callback_t* CefCToCppRefCounted<
     cef_download_image_callback_t>::UnwrapDerived(CefWrapperType type,
                                                   CefDownloadImageCallback* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

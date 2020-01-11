@@ -1076,7 +1076,7 @@ class CefMessageRouterRendererSideImpl : public CefMessageRouterRendererSide {
     ContextMap::const_iterator it = context_map_.find(context_id);
     if (it != context_map_.end())
       return it->second;
-    return NULL;
+    return nullptr;
   }
 
   const CefMessageRouterConfig config_;
@@ -1113,7 +1113,7 @@ CefRefPtr<CefMessageRouterBrowserSide> CefMessageRouterBrowserSide::Create(
     const CefMessageRouterConfig& config) {
   CefMessageRouterConfig validated_config = config;
   if (!ValidateConfig(validated_config))
-    return NULL;
+    return nullptr;
   return new CefMessageRouterBrowserSideImpl(validated_config);
 }
 
@@ -1122,6 +1122,6 @@ CefRefPtr<CefMessageRouterRendererSide> CefMessageRouterRendererSide::Create(
     const CefMessageRouterConfig& config) {
   CefMessageRouterConfig validated_config = config;
   if (!ValidateConfig(validated_config))
-    return NULL;
+    return nullptr;
   return new CefMessageRouterRendererSideImpl(validated_config);
 }

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a35d81c85bc3eea97cf712146fc929bc6af98b56$
+// $hash=37265d073717bef3508ba6c42f944e7b27c7b1dd$
 //
 
 #include "libcef_dll/ctocpp/resolve_callback_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -63,7 +64,7 @@ cef_resolve_callback_t* CefCToCppRefCounted<
     cef_resolve_callback_t>::UnwrapDerived(CefWrapperType type,
                                            CefResolveCallback* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

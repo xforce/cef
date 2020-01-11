@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=2bfd1cc54d7b868f98a7c8d90f2d243e438f468f$
+// $hash=de27cf9a29354fb3f0fd37141f1a4fe45ff73c88$
 //
 
 #include "libcef_dll/ctocpp/write_handler_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -121,7 +122,7 @@ CefCToCppRefCounted<CefWriteHandlerCToCpp,
                     cef_write_handler_t>::UnwrapDerived(CefWrapperType type,
                                                         CefWriteHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

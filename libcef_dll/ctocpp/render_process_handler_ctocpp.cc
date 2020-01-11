@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=049d5c9b4c8a3cb9aad2bb88afbdb48c2798fa92$
+// $hash=084106863bdaf595427b0d121362e207b15c66bf$
 //
 
 #include "libcef_dll/ctocpp/render_process_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/domnode_cpptoc.h"
@@ -103,7 +104,7 @@ NO_SANITIZE("cfi-icall")
 CefRefPtr<CefLoadHandler> CefRenderProcessHandlerCToCpp::GetLoadHandler() {
   cef_render_process_handler_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_load_handler))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -287,7 +288,7 @@ cef_render_process_handler_t* CefCToCppRefCounted<
     cef_render_process_handler_t>::UnwrapDerived(CefWrapperType type,
                                                  CefRenderProcessHandler* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

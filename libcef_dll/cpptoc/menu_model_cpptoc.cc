@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=ad9905513db9a0dc5d50a4009868b7cbe087de2c$
+// $hash=f8c6a8bc58cac2e31f9ec141a44aa4a414fbac91$
 //
 
 #include "libcef_dll/cpptoc/menu_model_cpptoc.h"
+
 #include "libcef_dll/ctocpp/menu_model_delegate_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -27,7 +28,7 @@ CEF_EXPORT cef_menu_model_t* cef_menu_model_create(
   // Verify param: delegate; type: refptr_diff
   DCHECK(delegate);
   if (!delegate)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuModel> _retval =
@@ -185,11 +186,11 @@ menu_model_add_sub_menu(struct _cef_menu_model_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: label; type: string_byref_const
   DCHECK(label);
   if (!label)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuModel> _retval =
@@ -300,11 +301,11 @@ menu_model_insert_sub_menu_at(struct _cef_menu_model_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: label; type: string_byref_const
   DCHECK(label);
   if (!label)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuModel> _retval =
@@ -410,7 +411,7 @@ menu_model_get_label(struct _cef_menu_model_t* self, int command_id) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefMenuModelCppToC::Get(self)->GetLabel(command_id);
@@ -427,7 +428,7 @@ menu_model_get_label_at(struct _cef_menu_model_t* self, int index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefMenuModelCppToC::Get(self)->GetLabelAt(index);
@@ -597,7 +598,7 @@ menu_model_get_sub_menu(struct _cef_menu_model_t* self, int command_id) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuModel> _retval =
@@ -615,7 +616,7 @@ menu_model_get_sub_menu_at(struct _cef_menu_model_t* self, int index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuModel> _retval =
@@ -1292,7 +1293,7 @@ CefRefPtr<CefMenuModel>
 CefCppToCRefCounted<CefMenuModelCppToC, CefMenuModel, cef_menu_model_t>::
     UnwrapDerived(CefWrapperType type, cef_menu_model_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

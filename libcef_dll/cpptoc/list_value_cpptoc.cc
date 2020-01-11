@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c69bc6de2e1b778382798d120ecfa5330fababad$
+// $hash=03e528e913caf9a28dd58456442f546a982a4e92$
 //
 
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
+
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/value_cpptoc.h"
@@ -136,7 +137,7 @@ list_value_copy(struct _cef_list_value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefListValue> _retval = CefListValueCppToC::Get(self)->Copy();
@@ -236,7 +237,7 @@ cef_value_t* CEF_CALLBACK list_value_get_value(struct _cef_list_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefValue> _retval = CefListValueCppToC::Get(self)->GetValue(index);
@@ -304,7 +305,7 @@ list_value_get_string(struct _cef_list_value_t* self, size_t index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefListValueCppToC::Get(self)->GetString(index);
@@ -321,7 +322,7 @@ list_value_get_binary(struct _cef_list_value_t* self, size_t index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval =
@@ -339,7 +340,7 @@ list_value_get_dictionary(struct _cef_list_value_t* self, size_t index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -357,7 +358,7 @@ list_value_get_list(struct _cef_list_value_t* self, size_t index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefListValue> _retval =
@@ -597,7 +598,7 @@ CefRefPtr<CefListValue>
 CefCppToCRefCounted<CefListValueCppToC, CefListValue, cef_list_value_t>::
     UnwrapDerived(CefWrapperType type, cef_list_value_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

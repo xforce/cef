@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e903c692a75a88ac4acdef408ed01923053dcba2$
+// $hash=8f893eacbae61479987b4843a275a3d8966a759b$
 //
 
 #include "libcef_dll/cpptoc/views/display_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/shutdown_checker.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.
@@ -40,7 +42,7 @@ CEF_EXPORT cef_display_t* cef_display_get_nearest_point(
   // Verify param: point; type: simple_byref_const
   DCHECK(point);
   if (!point)
-    return NULL;
+    return nullptr;
 
   // Translate param: point; type: simple_byref_const
   CefPoint pointVal = point ? *point : CefPoint();
@@ -63,7 +65,7 @@ CEF_EXPORT cef_display_t* cef_display_get_matching_bounds(
   // Verify param: bounds; type: simple_byref_const
   DCHECK(bounds);
   if (!bounds)
-    return NULL;
+    return nullptr;
 
   // Translate param: bounds; type: simple_byref_const
   CefRect boundsVal = bounds ? *bounds : CefRect();
@@ -282,7 +284,7 @@ CefCppToCRefCounted<CefDisplayCppToC, CefDisplay, cef_display_t>::UnwrapDerived(
     CefWrapperType type,
     cef_display_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

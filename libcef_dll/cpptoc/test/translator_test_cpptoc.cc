@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=8e5fe279b9e48b952f71635c3138dfb9e2c51b44$
+// $hash=ac760ec2af46535eb1c83cbc3e0906efc19dc3ee$
 //
 
 #include "libcef_dll/cpptoc/test/translator_test_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/cpptoc/test/translator_test_ref_ptr_library_child_cpptoc.h"
 #include "libcef_dll/cpptoc/test/translator_test_ref_ptr_library_cpptoc.h"
 #include "libcef_dll/cpptoc/test/translator_test_scoped_library_child_cpptoc.h"
@@ -340,7 +342,7 @@ translator_test_get_string(struct _cef_translator_test_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefTranslatorTestCppToC::Get(self)->GetString();
@@ -729,7 +731,7 @@ translator_test_get_ref_ptr_library(struct _cef_translator_test_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTranslatorTestRefPtrLibrary> _retval =
@@ -772,11 +774,11 @@ translator_test_set_ref_ptr_library_and_return(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: refptr_same
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTranslatorTestRefPtrLibrary> _retval =
@@ -820,11 +822,11 @@ translator_test_set_child_ref_ptr_library_and_return_parent(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: refptr_same
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTranslatorTestRefPtrLibrary> _retval =
@@ -966,11 +968,11 @@ translator_test_set_ref_ptr_client_and_return(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: refptr_diff
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTranslatorTestRefPtrClient> _retval =
@@ -1014,11 +1016,11 @@ translator_test_set_child_ref_ptr_client_and_return_parent(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: refptr_diff
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTranslatorTestRefPtrClient> _retval =
@@ -1145,7 +1147,7 @@ translator_test_get_own_ptr_library(struct _cef_translator_test_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefOwnPtr<CefTranslatorTestScopedLibrary> _retval =
@@ -1188,11 +1190,11 @@ translator_test_set_own_ptr_library_and_return(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: ownptr_same
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefOwnPtr<CefTranslatorTestScopedLibrary> _retval =
@@ -1236,11 +1238,11 @@ translator_test_set_child_own_ptr_library_and_return_parent(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: ownptr_same
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefOwnPtr<CefTranslatorTestScopedLibrary> _retval =
@@ -1288,11 +1290,11 @@ translator_test_set_own_ptr_client_and_return(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: ownptr_diff
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Translate param: val; type: ownptr_diff
   CefOwnPtr<CefTranslatorTestScopedClient> valPtr(
@@ -1344,11 +1346,11 @@ translator_test_set_child_own_ptr_client_and_return_parent(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: val; type: ownptr_diff
   DCHECK(val);
   if (!val)
-    return NULL;
+    return nullptr;
 
   // Translate param: val; type: ownptr_diff
   CefOwnPtr<CefTranslatorTestScopedClientChild> valPtr(
@@ -1645,7 +1647,7 @@ CefRefPtr<CefTranslatorTest> CefCppToCRefCounted<
     cef_translator_test_t>::UnwrapDerived(CefWrapperType type,
                                           cef_translator_test_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7254730542fae23050d8a0bc70f94c61828d6a7c$
+// $hash=4ec6b7d3ac59768907b1096d463f76a6caa45c1e$
 //
 
 #include "libcef_dll/cpptoc/register_cdm_callback_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -60,7 +61,7 @@ CefRefPtr<CefRegisterCdmCallback> CefCppToCRefCounted<
                                                 cef_register_cdm_callback_t*
                                                     s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

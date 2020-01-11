@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0a46d2275a85470affeddeae7873b874e5eb4e2c$
+// $hash=5b021c0503f8c766ac21f593c78655e8b7ef5ccb$
 //
 
 #include "libcef_dll/cpptoc/print_settings_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/shutdown_checker.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.
@@ -157,7 +159,7 @@ print_settings_get_device_name(struct _cef_print_settings_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefPrintSettingsCppToC::Get(self)->GetDeviceName();
@@ -483,7 +485,7 @@ CefRefPtr<CefPrintSettings> CefCppToCRefCounted<
     cef_print_settings_t>::UnwrapDerived(CefWrapperType type,
                                          cef_print_settings_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

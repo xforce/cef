@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=fa5ac4672a6e0baf8f8f5c03bf0bd4e2aaa57311$
+// $hash=f317870833b17779de0a9cb0f0516aface361613$
 //
 
 #include "libcef_dll/ctocpp/response_filter_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -34,13 +35,13 @@ NO_SANITIZE("cfi-icall") bool CefResponseFilterCToCpp::InitFilter() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefResponseFilter::FilterStatus CefResponseFilterCToCpp::Filter(
-    void* data_in,
-    size_t data_in_size,
-    size_t& data_in_read,
-    void* data_out,
-    size_t data_out_size,
-    size_t& data_out_written) {
+CefResponseFilter::FilterStatus
+    CefResponseFilterCToCpp::Filter(void* data_in,
+                                    size_t data_in_size,
+                                    size_t& data_in_read,
+                                    void* data_out,
+                                    size_t data_out_size,
+                                    size_t& data_out_written) {
   shutdown_checker::AssertNotShutdown();
 
   cef_response_filter_t* _struct = GetStruct();
@@ -81,7 +82,7 @@ cef_response_filter_t* CefCToCppRefCounted<
     cef_response_filter_t>::UnwrapDerived(CefWrapperType type,
                                           CefResponseFilter* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

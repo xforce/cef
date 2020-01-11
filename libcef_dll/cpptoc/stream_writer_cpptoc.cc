@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=bf16a23871c7a9f550bb7f3bc0792e24c5ecaf26$
+// $hash=e61d41a88cbe7c609370cc5b99598df080f573bd$
 //
 
 #include "libcef_dll/cpptoc/stream_writer_cpptoc.h"
+
 #include "libcef_dll/ctocpp/write_handler_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -27,7 +28,7 @@ CEF_EXPORT cef_stream_writer_t* cef_stream_writer_create_for_file(
   // Verify param: fileName; type: string_byref_const
   DCHECK(fileName);
   if (!fileName)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefStreamWriter> _retval =
@@ -46,7 +47,7 @@ CEF_EXPORT cef_stream_writer_t* cef_stream_writer_create_for_handler(
   // Verify param: handler; type: refptr_diff
   DCHECK(handler);
   if (!handler)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefStreamWriter> _retval =
@@ -174,7 +175,7 @@ CefRefPtr<CefStreamWriter> CefCppToCRefCounted<
     cef_stream_writer_t>::UnwrapDerived(CefWrapperType type,
                                         cef_stream_writer_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

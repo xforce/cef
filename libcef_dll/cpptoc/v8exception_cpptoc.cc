@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0b1dc43cd2e5754e39583d41bbe0c92c5d6e7d2d$
+// $hash=af9c0e0997aad1abd068e06ad5c8890d030aa819$
 //
 
 #include "libcef_dll/cpptoc/v8exception_cpptoc.h"
@@ -24,7 +24,7 @@ v8exception_get_message(struct _cef_v8exception_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8ExceptionCppToC::Get(self)->GetMessage();
@@ -39,7 +39,7 @@ v8exception_get_source_line(struct _cef_v8exception_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8ExceptionCppToC::Get(self)->GetSourceLine();
@@ -54,7 +54,7 @@ v8exception_get_script_resource_name(struct _cef_v8exception_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8ExceptionCppToC::Get(self)->GetScriptResourceName();
@@ -158,7 +158,7 @@ CefRefPtr<CefV8Exception>
 CefCppToCRefCounted<CefV8ExceptionCppToC, CefV8Exception, cef_v8exception_t>::
     UnwrapDerived(CefWrapperType type, cef_v8exception_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

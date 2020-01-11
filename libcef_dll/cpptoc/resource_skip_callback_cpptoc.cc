@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4725ab1221357571d1e4bf7c318d8b20f26ef60b$
+// $hash=1cb83ab583c93ae5b46cdd75a1a053d806a2d388$
 //
 
 #include "libcef_dll/cpptoc/resource_skip_callback_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -56,7 +57,7 @@ CefRefPtr<CefResourceSkipCallback> CefCppToCRefCounted<
                                                  cef_resource_skip_callback_t*
                                                      s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

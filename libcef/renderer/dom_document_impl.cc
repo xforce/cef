@@ -189,11 +189,11 @@ CefString CefDOMDocumentImpl::GetCompleteURL(const CefString& partialURL) {
 CefRefPtr<CefDOMNode> CefDOMDocumentImpl::GetOrCreateNode(
     const blink::WebNode& node) {
   if (!VerifyContext())
-    return NULL;
+    return nullptr;
 
   // Nodes may potentially be null.
   if (node.IsNull())
-    return NULL;
+    return nullptr;
 
   if (!node_map_.empty()) {
     // Locate the existing node, if any.

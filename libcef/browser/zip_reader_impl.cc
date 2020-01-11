@@ -14,7 +14,7 @@ CefRefPtr<CefZipReader> CefZipReader::Create(
     CefRefPtr<CefStreamReader> stream) {
   CefRefPtr<CefZipReaderImpl> impl(new CefZipReaderImpl());
   if (!impl->Initialize(stream))
-    return NULL;
+    return nullptr;
   return impl.get();
 }
 

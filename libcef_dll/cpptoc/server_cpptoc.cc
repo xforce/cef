@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=16236c1caad8d949aae9ed941770e10e7945da30$
+// $hash=7b57d9811a604edd1b6e94e87697a62601b89892$
 //
 
 #include "libcef_dll/cpptoc/server_cpptoc.h"
+
 #include "libcef_dll/cpptoc/task_runner_cpptoc.h"
 #include "libcef_dll/ctocpp/server_handler_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -54,7 +55,7 @@ server_get_task_runner(struct _cef_server_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTaskRunner> _retval =
@@ -101,7 +102,7 @@ server_get_address(struct _cef_server_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefServerCppToC::Get(self)->GetAddress();
@@ -321,7 +322,7 @@ CefCppToCRefCounted<CefServerCppToC, CefServer, cef_server_t>::UnwrapDerived(
     CefWrapperType type,
     cef_server_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

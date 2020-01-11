@@ -340,9 +340,9 @@ void CefValueImpl::SetValueInternal(base::Value* value) {
   lock_.AssertAcquired();
 
   value_.reset(NULL);
-  binary_value_ = NULL;
-  dictionary_value_ = NULL;
-  list_value_ = NULL;
+  binary_value_ = nullptr;
+  dictionary_value_ = nullptr;
+  list_value_ = nullptr;
 
   if (value) {
     switch (value->type()) {
@@ -419,7 +419,7 @@ CefRefPtr<CefBinaryValue> CefBinaryValue::Create(const void* data,
   DCHECK(data);
   DCHECK_GT(data_size, (size_t)0);
   if (!data || data_size == 0)
-    return NULL;
+    return nullptr;
 
   return new CefBinaryValueImpl(static_cast<char*>(const_cast<void*>(data)),
                                 data_size);
@@ -527,7 +527,7 @@ bool CefBinaryValueImpl::IsEqual(CefRefPtr<CefBinaryValue> that) {
 }
 
 CefRefPtr<CefBinaryValue> CefBinaryValueImpl::Copy() {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
   return new CefBinaryValueImpl(const_value().DeepCopy(), NULL,
                                 CefBinaryValueImpl::kOwnerWillDelete, NULL);
 }
@@ -674,7 +674,7 @@ bool CefDictionaryValueImpl::IsEqual(CefRefPtr<CefDictionaryValue> that) {
 
 CefRefPtr<CefDictionaryValue> CefDictionaryValueImpl::Copy(
     bool exclude_empty_children) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   base::DictionaryValue* value;
   if (exclude_empty_children) {
@@ -757,7 +757,7 @@ CefValueType CefDictionaryValueImpl::GetType(const CefString& key) {
 }
 
 CefRefPtr<CefValue> CefDictionaryValueImpl::GetValue(const CefString& key) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
   if (const_value().GetWithoutPathExpansion(base::StringPiece(key),
@@ -768,7 +768,7 @@ CefRefPtr<CefValue> CefDictionaryValueImpl::GetValue(const CefString& key) {
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 bool CefDictionaryValueImpl::GetBool(const CefString& key) {
@@ -821,7 +821,7 @@ CefString CefDictionaryValueImpl::GetString(const CefString& key) {
 
 CefRefPtr<CefBinaryValue> CefDictionaryValueImpl::GetBinary(
     const CefString& key) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -834,12 +834,12 @@ CefRefPtr<CefBinaryValue> CefDictionaryValueImpl::GetBinary(
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 CefRefPtr<CefDictionaryValue> CefDictionaryValueImpl::GetDictionary(
     const CefString& key) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -853,11 +853,11 @@ CefRefPtr<CefDictionaryValue> CefDictionaryValueImpl::GetDictionary(
         read_only(), controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 CefRefPtr<CefListValue> CefDictionaryValueImpl::GetList(const CefString& key) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -871,7 +871,7 @@ CefRefPtr<CefListValue> CefDictionaryValueImpl::GetList(const CefString& key) {
         read_only(), controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 bool CefDictionaryValueImpl::SetValue(const CefString& key,
@@ -1095,7 +1095,7 @@ bool CefListValueImpl::IsEqual(CefRefPtr<CefListValue> that) {
 }
 
 CefRefPtr<CefListValue> CefListValueImpl::Copy() {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   return new CefListValueImpl(const_value().DeepCopy(), NULL,
                               CefListValueImpl::kOwnerWillDelete, false, NULL);
@@ -1167,7 +1167,7 @@ CefValueType CefListValueImpl::GetType(size_t index) {
 }
 
 CefRefPtr<CefValue> CefListValueImpl::GetValue(size_t index) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
   if (const_value().Get(index, &out_value)) {
@@ -1177,7 +1177,7 @@ CefRefPtr<CefValue> CefListValueImpl::GetValue(size_t index) {
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 bool CefListValueImpl::GetBool(size_t index) {
@@ -1229,7 +1229,7 @@ CefString CefListValueImpl::GetString(size_t index) {
 }
 
 CefRefPtr<CefBinaryValue> CefListValueImpl::GetBinary(size_t index) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -1240,11 +1240,11 @@ CefRefPtr<CefBinaryValue> CefListValueImpl::GetBinary(size_t index) {
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 CefRefPtr<CefDictionaryValue> CefListValueImpl::GetDictionary(size_t index) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -1256,11 +1256,11 @@ CefRefPtr<CefDictionaryValue> CefListValueImpl::GetDictionary(size_t index) {
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 CefRefPtr<CefListValue> CefListValueImpl::GetList(size_t index) {
-  CEF_VALUE_VERIFY_RETURN(false, NULL);
+  CEF_VALUE_VERIFY_RETURN(false, nullptr);
 
   const base::Value* out_value = NULL;
 
@@ -1272,7 +1272,7 @@ CefRefPtr<CefListValue> CefListValueImpl::GetList(size_t index) {
         controller());
   }
 
-  return NULL;
+  return nullptr;
 }
 
 bool CefListValueImpl::SetValue(size_t index, CefRefPtr<CefValue> value) {

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=5b1a1918e3cb6df23b83d08328b4fe1901fbd099$
+// $hash=43de99832b5ff8dda3468c4df4633ee8a74e05c7$
 //
 
 #include "libcef_dll/cpptoc/request_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/resource_request_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/auth_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
@@ -117,23 +118,23 @@ request_handler_get_resource_request_handler(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: browser; type: refptr_diff
   DCHECK(browser);
   if (!browser)
-    return NULL;
+    return nullptr;
   // Verify param: frame; type: refptr_diff
   DCHECK(frame);
   if (!frame)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_diff
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Verify param: disable_default_handling; type: bool_byref
   DCHECK(disable_default_handling);
   if (!disable_default_handling)
-    return NULL;
+    return nullptr;
   // Unverified params: request_initiator
 
   // Translate param: disable_default_handling; type: bool_byref
@@ -429,7 +430,7 @@ CefRefPtr<CefRequestHandler> CefCppToCRefCounted<
     cef_request_handler_t>::UnwrapDerived(CefWrapperType type,
                                           cef_request_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

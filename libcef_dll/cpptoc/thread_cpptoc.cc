@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=021143077a1c6c05ea7e30a91185669fc4eeebc8$
+// $hash=a8fd119733249087fd8f5e6acd7c47a87ee36cd7$
 //
 
 #include "libcef_dll/cpptoc/thread_cpptoc.h"
+
 #include "libcef_dll/cpptoc/task_runner_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -51,7 +52,7 @@ thread_get_task_runner(struct _cef_thread_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTaskRunner> _retval =
@@ -131,7 +132,7 @@ CefCppToCRefCounted<CefThreadCppToC, CefThread, cef_thread_t>::UnwrapDerived(
     CefWrapperType type,
     cef_thread_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

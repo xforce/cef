@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a6b07af53b9f3af8804e7068f60e1cb15614b1a8$
+// $hash=d6d505d1dcebafde62a30eb0f662d62f8b90251b$
 //
 
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
@@ -43,7 +44,7 @@ CEF_EXPORT cef_browser_view_t* cef_browser_view_create(
   // Verify param: settings; type: struct_byref_const
   DCHECK(settings);
   if (!settings)
-    return NULL;
+    return nullptr;
   // Unverified params: client, url, extra_info, request_context, delegate
 
   // Translate param: settings; type: struct_byref_const
@@ -71,7 +72,7 @@ CEF_EXPORT cef_browser_view_t* cef_browser_view_get_for_browser(
   // Verify param: browser; type: refptr_same
   DCHECK(browser);
   if (!browser)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserView> _retval =
@@ -93,7 +94,7 @@ browser_view_get_browser(struct _cef_browser_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowser> _retval = CefBrowserViewCppToC::Get(self)->GetBrowser();
@@ -126,7 +127,7 @@ browser_view_as_browser_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserView> _retval =
@@ -144,7 +145,7 @@ cef_button_t* CEF_CALLBACK browser_view_as_button(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefButton> _retval =
@@ -162,7 +163,7 @@ cef_panel_t* CEF_CALLBACK browser_view_as_panel(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPanel> _retval =
@@ -181,7 +182,7 @@ browser_view_as_scroll_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefScrollView> _retval =
@@ -200,7 +201,7 @@ browser_view_as_textfield(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTextfield> _retval =
@@ -219,7 +220,7 @@ browser_view_get_type_string(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -238,7 +239,7 @@ browser_view_to_string(struct _cef_view_t* self, int include_children) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -316,7 +317,7 @@ browser_view_get_delegate(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefViewDelegate> _retval =
@@ -335,7 +336,7 @@ browser_view_get_window(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefWindow> _retval =
@@ -419,7 +420,7 @@ browser_view_get_parent_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -438,7 +439,7 @@ browser_view_get_view_for_id(struct _cef_view_t* self, int id) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -1144,7 +1145,7 @@ CefRefPtr<CefBrowserView>
 CefCppToCRefCounted<CefBrowserViewCppToC, CefBrowserView, cef_browser_view_t>::
     UnwrapDerived(CefWrapperType type, cef_browser_view_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

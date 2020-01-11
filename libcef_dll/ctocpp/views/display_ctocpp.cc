@@ -9,11 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c56638500cb95e383422f773e4968783566d202c$
+// $hash=50521680b4ef13badbac42fa1a5e28d5ddf46194$
 //
 
 #include "libcef_dll/ctocpp/views/display_ctocpp.h"
+
 #include <algorithm>
+
 #include "libcef_dll/shutdown_checker.h"
 
 // STATIC METHODS - Body may be edited by hand.
@@ -236,7 +238,7 @@ CefCToCppRefCounted<CefDisplayCToCpp, CefDisplay, cef_display_t>::UnwrapDerived(
     CefWrapperType type,
     CefDisplay* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7b9456e6c60c73a8fed4dace1bd08f49ad1dcf2b$
+// $hash=4bce6920aa4f2963aed0461c020b9fb60157ff7a$
 //
 
 #include "libcef_dll/cpptoc/image_cpptoc.h"
+
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -278,15 +279,15 @@ image_get_as_bitmap(struct _cef_image_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_width; type: simple_byref
   DCHECK(pixel_width);
   if (!pixel_width)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_height; type: simple_byref
   DCHECK(pixel_height);
   if (!pixel_height)
-    return NULL;
+    return nullptr;
 
   // Translate param: pixel_width; type: simple_byref
   int pixel_widthVal = pixel_width ? *pixel_width : 0;
@@ -320,15 +321,15 @@ image_get_as_png(struct _cef_image_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_width; type: simple_byref
   DCHECK(pixel_width);
   if (!pixel_width)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_height; type: simple_byref
   DCHECK(pixel_height);
   if (!pixel_height)
-    return NULL;
+    return nullptr;
 
   // Translate param: pixel_width; type: simple_byref
   int pixel_widthVal = pixel_width ? *pixel_width : 0;
@@ -363,15 +364,15 @@ image_get_as_jpeg(struct _cef_image_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_width; type: simple_byref
   DCHECK(pixel_width);
   if (!pixel_width)
-    return NULL;
+    return nullptr;
   // Verify param: pixel_height; type: simple_byref
   DCHECK(pixel_height);
   if (!pixel_height)
-    return NULL;
+    return nullptr;
 
   // Translate param: pixel_width; type: simple_byref
   int pixel_widthVal = pixel_width ? *pixel_width : 0;
@@ -425,7 +426,7 @@ CefCppToCRefCounted<CefImageCppToC, CefImage, cef_image_t>::UnwrapDerived(
     CefWrapperType type,
     cef_image_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

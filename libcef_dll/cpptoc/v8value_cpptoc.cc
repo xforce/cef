@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=5d0df0d6088d6c7a1c643da7404c0d68e64be1bb$
+// $hash=4648c24557f2f17b84706e3c9070bc896fc27dee$
 //
 
 #include "libcef_dll/cpptoc/v8value_cpptoc.h"
+
 #include "libcef_dll/cpptoc/v8context_cpptoc.h"
 #include "libcef_dll/cpptoc/v8exception_cpptoc.h"
 #include "libcef_dll/ctocpp/base_ref_counted_ctocpp.h"
@@ -90,7 +91,7 @@ CEF_EXPORT cef_v8value_t* cef_v8value_create_date(const cef_time_t* date) {
   // Verify param: date; type: simple_byref_const
   DCHECK(date);
   if (!date)
-    return NULL;
+    return nullptr;
 
   // Translate param: date; type: simple_byref_const
   CefTime dateVal = date ? *date : CefTime();
@@ -149,11 +150,11 @@ CEF_EXPORT cef_v8value_t* cef_v8value_create_array_buffer(
   // Verify param: buffer; type: simple_byaddr
   DCHECK(buffer);
   if (!buffer)
-    return NULL;
+    return nullptr;
   // Verify param: release_callback; type: refptr_diff
   DCHECK(release_callback);
   if (!release_callback)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Value> _retval = CefV8Value::CreateArrayBuffer(
@@ -172,11 +173,11 @@ CEF_EXPORT cef_v8value_t* cef_v8value_create_function(
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
   // Verify param: handler; type: refptr_diff
   DCHECK(handler);
   if (!handler)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Value> _retval = CefV8Value::CreateFunction(
@@ -468,7 +469,7 @@ v8value_get_string_value(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8ValueCppToC::Get(self)->GetStringValue();
@@ -511,7 +512,7 @@ v8value_get_exception(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Exception> _retval =
@@ -641,7 +642,7 @@ v8value_get_value_bykey(struct _cef_v8value_t* self, const cef_string_t* key) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Unverified params: key
 
   // Execute
@@ -658,11 +659,11 @@ v8value_get_value_byindex(struct _cef_v8value_t* self, int index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: index; type: simple_byval
   DCHECK_GE(index, 0);
   if (index < 0)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Value> _retval = CefV8ValueCppToC::Get(self)->GetValue(index);
@@ -789,7 +790,7 @@ v8value_get_user_data(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBaseRefCounted> _retval =
@@ -851,7 +852,7 @@ v8value_get_array_buffer_release_callback(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8ArrayBufferReleaseCallback> _retval =
@@ -881,7 +882,7 @@ v8value_get_function_name(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8ValueCppToC::Get(self)->GetFunctionName();
@@ -896,7 +897,7 @@ v8value_get_function_handler(struct _cef_v8value_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Handler> _retval =
@@ -915,11 +916,11 @@ v8value_execute_function(struct _cef_v8value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: arguments; type: refptr_vec_same_byref_const
   DCHECK(argumentsCount == 0 || arguments);
   if (argumentsCount > 0 && !arguments)
-    return NULL;
+    return nullptr;
   // Unverified params: object
 
   // Translate param: arguments; type: refptr_vec_same_byref_const
@@ -950,15 +951,15 @@ v8value_execute_function_with_context(struct _cef_v8value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: context; type: refptr_same
   DCHECK(context);
   if (!context)
-    return NULL;
+    return nullptr;
   // Verify param: arguments; type: refptr_vec_same_byref_const
   DCHECK(argumentsCount == 0 || arguments);
   if (argumentsCount > 0 && !arguments)
-    return NULL;
+    return nullptr;
   // Unverified params: object
 
   // Translate param: arguments; type: refptr_vec_same_byref_const
@@ -1049,7 +1050,7 @@ CefCppToCRefCounted<CefV8ValueCppToC, CefV8Value, cef_v8value_t>::UnwrapDerived(
     CefWrapperType type,
     cef_v8value_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

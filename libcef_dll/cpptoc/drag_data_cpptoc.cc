@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f5d05a4a199268fc700e7c064cb87ac6db084194$
+// $hash=bc41b81d7726067bdea33a7fd6e0ff9ff06b5f34$
 //
 
 #include "libcef_dll/cpptoc/drag_data_cpptoc.h"
+
 #include "libcef_dll/cpptoc/image_cpptoc.h"
 #include "libcef_dll/cpptoc/stream_writer_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -44,7 +45,7 @@ drag_data_clone(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDragData> _retval = CefDragDataCppToC::Get(self)->Clone();
@@ -125,7 +126,7 @@ drag_data_get_link_url(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetLinkURL();
@@ -142,7 +143,7 @@ drag_data_get_link_title(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetLinkTitle();
@@ -159,7 +160,7 @@ drag_data_get_link_metadata(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetLinkMetadata();
@@ -176,7 +177,7 @@ drag_data_get_fragment_text(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetFragmentText();
@@ -193,7 +194,7 @@ drag_data_get_fragment_html(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetFragmentHtml();
@@ -210,7 +211,7 @@ drag_data_get_fragment_base_url(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetFragmentBaseURL();
@@ -227,7 +228,7 @@ drag_data_get_file_name(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDragDataCppToC::Get(self)->GetFileName();
@@ -418,7 +419,7 @@ drag_data_get_image(struct _cef_drag_data_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefImage> _retval = CefDragDataCppToC::Get(self)->GetImage();
@@ -503,7 +504,7 @@ CefRefPtr<CefDragData>
 CefCppToCRefCounted<CefDragDataCppToC, CefDragData, cef_drag_data_t>::
     UnwrapDerived(CefWrapperType type, cef_drag_data_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=8de9d3ac6c65492625846bfa17cf6e59c48631e3$
+// $hash=bf4c7f06e09cf23d40eb14bdfc2745bc2f84dfa8$
 //
 
 #include "libcef_dll/cpptoc/views/window_delegate_cpptoc.h"
+
 #include "libcef_dll/ctocpp/views/view_ctocpp.h"
 #include "libcef_dll/ctocpp/views/window_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -72,19 +73,19 @@ window_delegate_get_parent_window(struct _cef_window_delegate_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: window; type: refptr_diff
   DCHECK(window);
   if (!window)
-    return NULL;
+    return nullptr;
   // Verify param: is_menu; type: bool_byaddr
   DCHECK(is_menu);
   if (!is_menu)
-    return NULL;
+    return nullptr;
   // Verify param: can_activate_menu; type: bool_byaddr
   DCHECK(can_activate_menu);
   if (!can_activate_menu)
-    return NULL;
+    return nullptr;
 
   // Translate param: is_menu; type: bool_byaddr
   bool is_menuBool = (is_menu && *is_menu) ? true : false;
@@ -509,7 +510,7 @@ CefRefPtr<CefWindowDelegate> CefCppToCRefCounted<
     cef_window_delegate_t>::UnwrapDerived(CefWrapperType type,
                                           cef_window_delegate_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

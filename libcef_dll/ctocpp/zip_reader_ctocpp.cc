@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f9359debb41aa04ef46fd43cfb4b385af178a292$
+// $hash=078dbecccef4097257adf7962e33168411375928$
 //
 
 #include "libcef_dll/ctocpp/zip_reader_ctocpp.h"
+
 #include "libcef_dll/ctocpp/stream_reader_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -28,7 +29,7 @@ CefRefPtr<CefZipReader> CefZipReader::Create(
   // Verify param: stream; type: refptr_same
   DCHECK(stream.get());
   if (!stream.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_zip_reader_t* _retval =
@@ -266,7 +267,7 @@ cef_zip_reader_t*
 CefCToCppRefCounted<CefZipReaderCToCpp, CefZipReader, cef_zip_reader_t>::
     UnwrapDerived(CefWrapperType type, CefZipReader* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

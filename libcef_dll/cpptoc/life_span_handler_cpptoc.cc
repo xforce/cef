@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=72da1d9b068bc016cb851977af3557bc8679f310$
+// $hash=ae0127643f3428823c83b4638dc6cf9ce772d50d$
 //
 
 #include "libcef_dll/cpptoc/life_span_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/client_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/dictionary_value_ctocpp.h"
@@ -232,7 +233,7 @@ CefRefPtr<CefLifeSpanHandler> CefCppToCRefCounted<
     cef_life_span_handler_t>::UnwrapDerived(CefWrapperType type,
                                             cef_life_span_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

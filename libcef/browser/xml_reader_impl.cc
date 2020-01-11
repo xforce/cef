@@ -14,7 +14,7 @@ CefRefPtr<CefXmlReader> CefXmlReader::Create(CefRefPtr<CefStreamReader> stream,
                                              const CefString& URI) {
   CefRefPtr<CefXmlReaderImpl> impl(new CefXmlReaderImpl());
   if (!impl->Initialize(stream, encodingType, URI))
-    return NULL;
+    return nullptr;
   return impl.get();
 }
 

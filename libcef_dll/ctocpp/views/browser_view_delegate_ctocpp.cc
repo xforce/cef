@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=5324f142da5ca5e214ce03eeab0babbaa4031126$
+// $hash=31420c63af54d0862f106caad051e85ed7a6772d$
 //
 
 #include "libcef_dll/ctocpp/views/browser_view_delegate_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
 #include "libcef_dll/cpptoc/views/view_cpptoc.h"
@@ -75,28 +76,27 @@ void CefBrowserViewDelegateCToCpp::OnBrowserDestroyed(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefBrowserViewDelegate>
-CefBrowserViewDelegateCToCpp::GetDelegateForPopupBrowserView(
-    CefRefPtr<CefBrowserView> browser_view,
-    const CefBrowserSettings& settings,
-    CefRefPtr<CefClient> client,
-    bool is_devtools) {
+CefRefPtr<CefBrowserViewDelegate> CefBrowserViewDelegateCToCpp::
+    GetDelegateForPopupBrowserView(CefRefPtr<CefBrowserView> browser_view,
+                                   const CefBrowserSettings& settings,
+                                   CefRefPtr<CefClient> client,
+                                   bool is_devtools) {
   shutdown_checker::AssertNotShutdown();
 
   cef_browser_view_delegate_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_delegate_for_popup_browser_view))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: browser_view; type: refptr_diff
   DCHECK(browser_view.get());
   if (!browser_view.get())
-    return NULL;
+    return nullptr;
   // Verify param: client; type: refptr_same
   DCHECK(client.get());
   if (!client.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_browser_view_delegate_t* _retval =
@@ -140,8 +140,8 @@ bool CefBrowserViewDelegateCToCpp::OnPopupBrowserViewCreated(
 }
 
 NO_SANITIZE("cfi-icall")
-CefSize CefBrowserViewDelegateCToCpp::GetPreferredSize(
-    CefRefPtr<CefView> view) {
+CefSize
+    CefBrowserViewDelegateCToCpp::GetPreferredSize(CefRefPtr<CefView> view) {
   shutdown_checker::AssertNotShutdown();
 
   cef_view_delegate_t* _struct =
@@ -350,7 +350,7 @@ cef_browser_view_delegate_t* CefCToCppRefCounted<
     cef_browser_view_delegate_t>::UnwrapDerived(CefWrapperType type,
                                                 CefBrowserViewDelegate* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

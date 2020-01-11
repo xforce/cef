@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=142a2ba17910dd7c4741e7772776fa6f94fd586f$
+// $hash=2453173215db3e380519cc01ccf4e6716728a3e6$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_ref_ptr_client_child_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -71,7 +72,7 @@ CefCToCppRefCounted<CefTranslatorTestRefPtrClientChildCToCpp,
                     cef_translator_test_ref_ptr_client_child_t>::
     UnwrapDerived(CefWrapperType type, CefTranslatorTestRefPtrClientChild* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

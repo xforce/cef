@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=2dd95768d6461fce4dd337201ebe8a5f097e754c$
+// $hash=4f70dc8d5391cb5254f038ec2b3b56804b447087$
 //
 
 #include "libcef_dll/ctocpp/app_ctocpp.h"
+
 #include "libcef_dll/cpptoc/command_line_cpptoc.h"
 #include "libcef_dll/cpptoc/scheme_registrar_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_process_handler_ctocpp.h"
@@ -69,7 +70,7 @@ NO_SANITIZE("cfi-icall")
 CefRefPtr<CefResourceBundleHandler> CefAppCToCpp::GetResourceBundleHandler() {
   cef_app_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_resource_bundle_handler))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -85,7 +86,7 @@ NO_SANITIZE("cfi-icall")
 CefRefPtr<CefBrowserProcessHandler> CefAppCToCpp::GetBrowserProcessHandler() {
   cef_app_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_browser_process_handler))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -101,7 +102,7 @@ NO_SANITIZE("cfi-icall")
 CefRefPtr<CefRenderProcessHandler> CefAppCToCpp::GetRenderProcessHandler() {
   cef_app_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_render_process_handler))
-    return NULL;
+    return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -126,7 +127,7 @@ cef_app_t* CefCToCppRefCounted<CefAppCToCpp, CefApp, cef_app_t>::UnwrapDerived(
     CefWrapperType type,
     CefApp* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

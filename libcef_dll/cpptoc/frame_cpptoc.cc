@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7a1d2539355ab737d97cda11a59271c6235b9788$
+// $hash=bcbda3900027c91cd8209a01b9ff6dab220a5ed2$
 //
 
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/process_message_cpptoc.h"
 #include "libcef_dll/cpptoc/request_cpptoc.h"
@@ -280,7 +281,7 @@ cef_string_userfree_t CEF_CALLBACK frame_get_name(struct _cef_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefFrameCppToC::Get(self)->GetName();
@@ -312,7 +313,7 @@ struct _cef_frame_t* CEF_CALLBACK frame_get_parent(struct _cef_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefFrame> _retval = CefFrameCppToC::Get(self)->GetParent();
@@ -328,7 +329,7 @@ cef_string_userfree_t CEF_CALLBACK frame_get_url(struct _cef_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefFrameCppToC::Get(self)->GetURL();
@@ -344,7 +345,7 @@ cef_browser_t* CEF_CALLBACK frame_get_browser(struct _cef_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowser> _retval = CefFrameCppToC::Get(self)->GetBrowser();
@@ -361,7 +362,7 @@ frame_get_v8context(struct _cef_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8Context> _retval = CefFrameCppToC::Get(self)->GetV8Context();
@@ -398,15 +399,15 @@ frame_create_urlrequest(struct _cef_frame_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: request; type: refptr_same
   DCHECK(request);
   if (!request)
-    return NULL;
+    return nullptr;
   // Verify param: client; type: refptr_diff
   DCHECK(client);
   if (!client)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefURLRequest> _retval =
@@ -483,7 +484,7 @@ CefCppToCRefCounted<CefFrameCppToC, CefFrame, cef_frame_t>::UnwrapDerived(
     CefWrapperType type,
     cef_frame_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

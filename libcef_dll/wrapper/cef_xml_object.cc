@@ -409,7 +409,7 @@ void CefXmlObject::ClearChildren() {
 CefRefPtr<CefXmlObject> CefXmlObject::FindChild(const CefString& name) {
   DCHECK(!name.empty());
   if (name.empty())
-    return NULL;
+    return nullptr;
 
   base::AutoLock lock_scope(lock_);
   ObjectVector::const_iterator it = children_.begin();
@@ -417,7 +417,7 @@ CefRefPtr<CefXmlObject> CefXmlObject::FindChild(const CefString& name) {
     if ((*it)->GetName() == name)
       return (*it);
   }
-  return NULL;
+  return nullptr;
 }
 
 size_t CefXmlObject::FindChildren(const CefString& name,

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a0344ba7d0e1f0b81d7dd457c30d71f944a81cd9$
+// $hash=ffeb5bb7eabc8fe97efec03683ee719dcae17f07$
 //
 
 #include "libcef_dll/cpptoc/app_cpptoc.h"
+
 #include "libcef_dll/cpptoc/browser_process_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/render_process_handler_cpptoc.h"
 #include "libcef_dll/cpptoc/resource_bundle_handler_cpptoc.h"
@@ -70,7 +71,7 @@ app_get_resource_bundle_handler(struct _cef_app_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefResourceBundleHandler> _retval =
@@ -86,7 +87,7 @@ app_get_browser_process_handler(struct _cef_app_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserProcessHandler> _retval =
@@ -102,7 +103,7 @@ app_get_render_process_handler(struct _cef_app_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRenderProcessHandler> _retval =
@@ -135,7 +136,7 @@ CefCppToCRefCounted<CefAppCppToC, CefApp, cef_app_t>::UnwrapDerived(
     CefWrapperType type,
     cef_app_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

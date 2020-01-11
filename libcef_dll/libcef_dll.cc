@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=fbf992432bd4ff88bed34f803047f70b5b3400f7$
+// $hash=bac294735704973a809c4f780994ab34ad17d605$
 //
 
 #include "include/capi/cef_app_capi.h"
@@ -455,7 +455,7 @@ cef_format_url_for_security_display(const cef_string_t* origin_url) {
   // Verify param: origin_url; type: string_byref_const
   DCHECK(origin_url);
   if (!origin_url)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefFormatUrlForSecurityDisplay(CefString(origin_url));
@@ -471,7 +471,7 @@ cef_get_mime_type(const cef_string_t* extension) {
   // Verify param: extension; type: string_byref_const
   DCHECK(extension);
   if (!extension)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefGetMimeType(CefString(extension));
@@ -512,7 +512,7 @@ CEF_EXPORT cef_string_userfree_t cef_base64encode(const void* data,
   // Verify param: data; type: simple_byaddr
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefBase64Encode(data, data_size);
@@ -528,7 +528,7 @@ CEF_EXPORT struct _cef_binary_value_t* cef_base64decode(
   // Verify param: data; type: string_byref_const
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval = CefBase64Decode(CefString(data));
@@ -544,7 +544,7 @@ CEF_EXPORT cef_string_userfree_t cef_uriencode(const cef_string_t* text,
   // Verify param: text; type: string_byref_const
   DCHECK(text);
   if (!text)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefURIEncode(CefString(text), use_plus ? true : false);
@@ -562,7 +562,7 @@ cef_uridecode(const cef_string_t* text,
   // Verify param: text; type: string_byref_const
   DCHECK(text);
   if (!text)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefURIDecode(
@@ -580,7 +580,7 @@ CEF_EXPORT struct _cef_value_t* cef_parse_json(
   // Verify param: json_string; type: string_byref_const
   DCHECK(json_string);
   if (!json_string)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefValue> _retval = CefParseJSON(CefString(json_string), options);
@@ -599,15 +599,15 @@ CEF_EXPORT struct _cef_value_t* cef_parse_jsonand_return_error(
   // Verify param: json_string; type: string_byref_const
   DCHECK(json_string);
   if (!json_string)
-    return NULL;
+    return nullptr;
   // Verify param: error_code_out; type: simple_byref
   DCHECK(error_code_out);
   if (!error_code_out)
-    return NULL;
+    return nullptr;
   // Verify param: error_msg_out; type: string_byref
   DCHECK(error_msg_out);
   if (!error_msg_out)
-    return NULL;
+    return nullptr;
 
   // Translate param: error_code_out; type: simple_byref
   cef_json_parser_error_t error_code_outVal =
@@ -634,7 +634,7 @@ cef_write_json(struct _cef_value_t* node, cef_json_writer_options_t options) {
   // Verify param: node; type: refptr_same
   DCHECK(node);
   if (!node)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefWriteJSON(CefValueCppToC::Unwrap(node), options);

@@ -598,7 +598,7 @@ CefRefPtr<CefResourceHandler> CefResourceManager::GetResourceHandler(
   CEF_REQUIRE_IO_THREAD();
 
   if (pending_handlers_.empty())
-    return NULL;
+    return nullptr;
 
   CefRefPtr<CefResourceHandler> handler;
 

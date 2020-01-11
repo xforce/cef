@@ -34,7 +34,7 @@ CefRefPtr<CefDownloadHandler> GetDownloadHandler(
   CefRefPtr<CefClient> client = browser->GetClient();
   if (client.get())
     return client->GetDownloadHandler();
-  return NULL;
+  return nullptr;
 }
 
 // CefBeforeDownloadCallback implementation.

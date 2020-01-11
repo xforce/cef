@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f70375400b9290b4ca6fb3acb4b622029f77a422$
+// $hash=b6ed42f6b10c08507e33ef0ea3b5606f7111c156$
 //
 
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
+
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
 #include "libcef_dll/cpptoc/value_cpptoc.h"
@@ -143,7 +144,7 @@ dictionary_value_copy(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -290,11 +291,11 @@ dictionary_value_get_value(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: key; type: string_byref_const
   DCHECK(key);
   if (!key)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefValue> _retval =
@@ -378,11 +379,11 @@ dictionary_value_get_string(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: key; type: string_byref_const
   DCHECK(key);
   if (!key)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -401,11 +402,11 @@ dictionary_value_get_binary(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: key; type: string_byref_const
   DCHECK(key);
   if (!key)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBinaryValue> _retval =
@@ -424,11 +425,11 @@ dictionary_value_get_dictionary(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: key; type: string_byref_const
   DCHECK(key);
   if (!key)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefDictionaryValue> _retval =
@@ -447,11 +448,11 @@ dictionary_value_get_list(struct _cef_dictionary_value_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: key; type: string_byref_const
   DCHECK(key);
   if (!key)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefListValue> _retval =
@@ -737,7 +738,7 @@ CefRefPtr<CefDictionaryValue> CefCppToCRefCounted<
     cef_dictionary_value_t>::UnwrapDerived(CefWrapperType type,
                                            cef_dictionary_value_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

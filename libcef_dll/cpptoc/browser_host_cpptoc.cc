@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=6b86953f81833b7807e861a44c6c324da3c103d9$
+// $hash=85d4d2ef15b4bc2a255451c015b24dfc1d5392ef$
 //
 
 #include "libcef_dll/cpptoc/browser_host_cpptoc.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/dictionary_value_cpptoc.h"
 #include "libcef_dll/cpptoc/drag_data_cpptoc.h"
@@ -83,11 +84,11 @@ CEF_EXPORT cef_browser_t* cef_browser_host_create_browser_sync(
   // Verify param: windowInfo; type: struct_byref_const
   DCHECK(windowInfo);
   if (!windowInfo)
-    return NULL;
+    return nullptr;
   // Verify param: settings; type: struct_byref_const
   DCHECK(settings);
   if (!settings)
-    return NULL;
+    return nullptr;
   // Unverified params: client, url, extra_info, request_context
 
   // Translate param: windowInfo; type: struct_byref_const
@@ -121,7 +122,7 @@ browser_host_get_browser(struct _cef_browser_host_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowser> _retval = CefBrowserHostCppToC::Get(self)->GetBrowser();
@@ -235,7 +236,7 @@ browser_host_get_client(struct _cef_browser_host_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefClient> _retval = CefBrowserHostCppToC::Get(self)->GetClient();
@@ -252,7 +253,7 @@ browser_host_get_request_context(struct _cef_browser_host_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefRequestContext> _retval =
@@ -1138,7 +1139,7 @@ browser_host_get_visible_navigation_entry(struct _cef_browser_host_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefNavigationEntry> _retval =
@@ -1202,7 +1203,7 @@ browser_host_get_extension(struct _cef_browser_host_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefExtension> _retval =
@@ -1347,7 +1348,7 @@ CefRefPtr<CefBrowserHost>
 CefCppToCRefCounted<CefBrowserHostCppToC, CefBrowserHost, cef_browser_host_t>::
     UnwrapDerived(CefWrapperType type, cef_browser_host_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

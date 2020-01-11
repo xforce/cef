@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=70013cf57c6fb26d7eaa3abd5c3ecd4ca5529891$
+// $hash=ee84fd285933d5f7eb6f731782e5c496d4fd9782$
 //
 
 #include "libcef_dll/cpptoc/v8stack_trace_cpptoc.h"
+
 #include "libcef_dll/cpptoc/v8stack_frame_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -75,7 +76,7 @@ v8stack_trace_get_frame(struct _cef_v8stack_trace_t* self, int index) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefV8StackFrame> _retval =
@@ -108,7 +109,7 @@ CefRefPtr<CefV8StackTrace> CefCppToCRefCounted<
     cef_v8stack_trace_t>::UnwrapDerived(CefWrapperType type,
                                         cef_v8stack_trace_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

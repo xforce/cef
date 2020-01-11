@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=6a07e2def546a1b7ce458d11a5241b85ce05f987$
+// $hash=22a3b053f526f2c7c810cff8867c3ef214ce0228$
 //
 
 #include "libcef_dll/cpptoc/download_item_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -194,7 +195,7 @@ download_item_get_full_path(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetFullPath();
@@ -227,7 +228,7 @@ download_item_get_url(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetURL();
@@ -244,7 +245,7 @@ download_item_get_original_url(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetOriginalUrl();
@@ -261,7 +262,7 @@ download_item_get_suggested_file_name(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetSuggestedFileName();
@@ -278,7 +279,7 @@ download_item_get_content_disposition(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetContentDisposition();
@@ -295,7 +296,7 @@ download_item_get_mime_type(struct _cef_download_item_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefDownloadItemCppToC::Get(self)->GetMimeType();
@@ -341,7 +342,7 @@ CefRefPtr<CefDownloadItem> CefCppToCRefCounted<
     cef_download_item_t>::UnwrapDerived(CefWrapperType type,
                                         cef_download_item_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=dacea96f837c3164297c17c11944761772ac371d$
+// $hash=032ba6bf047d8ad5af63d9bfb6b1e206065f2d7a$
 //
 
 #include "libcef_dll/cpptoc/x509cert_principal_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -28,7 +29,7 @@ x509cert_principal_get_display_name(struct _cef_x509cert_principal_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefX509CertPrincipalCppToC::Get(self)->GetDisplayName();
@@ -45,7 +46,7 @@ x509cert_principal_get_common_name(struct _cef_x509cert_principal_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefX509CertPrincipalCppToC::Get(self)->GetCommonName();
@@ -62,7 +63,7 @@ x509cert_principal_get_locality_name(struct _cef_x509cert_principal_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefX509CertPrincipalCppToC::Get(self)->GetLocalityName();
@@ -80,7 +81,7 @@ x509cert_principal_get_state_or_province_name(
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -98,7 +99,7 @@ x509cert_principal_get_country_name(struct _cef_x509cert_principal_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefX509CertPrincipalCppToC::Get(self)->GetCountryName();
@@ -247,7 +248,7 @@ CefRefPtr<CefX509CertPrincipal> CefCppToCRefCounted<
     cef_x509cert_principal_t>::UnwrapDerived(CefWrapperType type,
                                              cef_x509cert_principal_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

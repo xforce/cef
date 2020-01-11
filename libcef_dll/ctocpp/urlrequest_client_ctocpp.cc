@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e91cf37ffebefd7aab9c7eee4f46f97f3ecee9c1$
+// $hash=b08f8ba4d2ee2aaf4ee5f805d9cd6d0159a84969$
 //
 
 #include "libcef_dll/ctocpp/urlrequest_client_ctocpp.h"
+
 #include "libcef_dll/cpptoc/auth_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/urlrequest_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
@@ -167,7 +168,7 @@ cef_urlrequest_client_t* CefCToCppRefCounted<
     cef_urlrequest_client_t>::UnwrapDerived(CefWrapperType type,
                                             CefURLRequestClient* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

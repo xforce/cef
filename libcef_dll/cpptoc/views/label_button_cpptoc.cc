@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=fbc73716d31a2f3f1a7ae9a5c07bb145d5deeb64$
+// $hash=616fbdf6e7d68b250b007070efb0612e58d9bf99$
 //
 
 #include "libcef_dll/cpptoc/views/label_button_cpptoc.h"
+
 #include "libcef_dll/cpptoc/image_cpptoc.h"
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
 #include "libcef_dll/cpptoc/views/button_cpptoc.h"
@@ -38,7 +39,7 @@ CEF_EXPORT cef_label_button_t* cef_label_button_create(
   // Verify param: delegate; type: refptr_diff
   DCHECK(delegate);
   if (!delegate)
-    return NULL;
+    return nullptr;
   // Unverified params: text
 
   // Execute
@@ -61,7 +62,7 @@ label_button_as_menu_button(struct _cef_label_button_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefMenuButton> _retval =
@@ -97,7 +98,7 @@ label_button_get_text(struct _cef_label_button_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefLabelButtonCppToC::Get(self)->GetText();
@@ -132,7 +133,7 @@ label_button_get_image(struct _cef_label_button_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefImage> _retval =
@@ -257,7 +258,7 @@ label_button_as_label_button(struct _cef_button_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefLabelButton> _retval =
@@ -364,7 +365,7 @@ label_button_as_browser_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserView> _retval =
@@ -382,7 +383,7 @@ cef_button_t* CEF_CALLBACK label_button_as_button(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefButton> _retval =
@@ -400,7 +401,7 @@ cef_panel_t* CEF_CALLBACK label_button_as_panel(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPanel> _retval =
@@ -419,7 +420,7 @@ label_button_as_scroll_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefScrollView> _retval =
@@ -438,7 +439,7 @@ label_button_as_textfield(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTextfield> _retval =
@@ -457,7 +458,7 @@ label_button_get_type_string(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -476,7 +477,7 @@ label_button_to_string(struct _cef_view_t* self, int include_children) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -554,7 +555,7 @@ label_button_get_delegate(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefViewDelegate> _retval =
@@ -573,7 +574,7 @@ label_button_get_window(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefWindow> _retval =
@@ -657,7 +658,7 @@ label_button_get_parent_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -676,7 +677,7 @@ label_button_get_view_for_id(struct _cef_view_t* self, int id) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -1405,7 +1406,7 @@ CefCppToCRefCounted<CefLabelButtonCppToC, CefLabelButton, cef_label_button_t>::
     return CefMenuButtonCppToC::Unwrap(reinterpret_cast<cef_menu_button_t*>(s));
   }
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=72764aa71557dcd95d03c496b9470300e7dc9bdf$
+// $hash=33ad141af7e64e90a477af5ea9ac5fda15b27add$
 //
 
 #include "libcef_dll/cpptoc/command_line_cpptoc.h"
+
 #include "libcef_dll/transfer_util.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.
@@ -75,7 +76,7 @@ command_line_copy(struct _cef_command_line_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefCommandLine> _retval = CefCommandLineCppToC::Get(self)->Copy();
@@ -159,7 +160,7 @@ command_line_get_command_line_string(struct _cef_command_line_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefCommandLineCppToC::Get(self)->GetCommandLineString();
@@ -174,7 +175,7 @@ command_line_get_program(struct _cef_command_line_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefCommandLineCppToC::Get(self)->GetProgram();
@@ -239,11 +240,11 @@ command_line_get_switch_value(struct _cef_command_line_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: name; type: string_byref_const
   DCHECK(name);
   if (!name)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -422,7 +423,7 @@ CefRefPtr<CefCommandLine>
 CefCppToCRefCounted<CefCommandLineCppToC, CefCommandLine, cef_command_line_t>::
     UnwrapDerived(CefWrapperType type, cef_command_line_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

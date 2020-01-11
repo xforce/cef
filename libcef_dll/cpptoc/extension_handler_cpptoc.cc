@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=54aac42c1bfed7bc4e1ef031a0709bb36b2f5702$
+// $hash=25cdbe925971bc5d0a78df4c43fde541ba2ddd57$
 //
 
 #include "libcef_dll/cpptoc/extension_handler_cpptoc.h"
+
 #include "libcef_dll/cpptoc/client_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/extension_ctocpp.h"
@@ -241,15 +242,15 @@ extension_handler_get_active_browser(struct _cef_extension_handler_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
   // Verify param: extension; type: refptr_diff
   DCHECK(extension);
   if (!extension)
-    return NULL;
+    return nullptr;
   // Verify param: browser; type: refptr_diff
   DCHECK(browser);
   if (!browser)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowser> _retval =
@@ -366,7 +367,7 @@ CefRefPtr<CefExtensionHandler> CefCppToCRefCounted<
     cef_extension_handler_t>::UnwrapDerived(CefWrapperType type,
                                             cef_extension_handler_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

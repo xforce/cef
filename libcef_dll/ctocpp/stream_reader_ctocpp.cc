@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=aacc9cb4cafc9308d3125bba75ed0cf736b28410$
+// $hash=82b24259bb9ee73f15743e8b9970f5eeb7e47e7e$
 //
 
 #include "libcef_dll/ctocpp/stream_reader_ctocpp.h"
+
 #include "libcef_dll/cpptoc/read_handler_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -28,7 +29,7 @@ CefRefPtr<CefStreamReader> CefStreamReader::CreateForFile(
   // Verify param: fileName; type: string_byref_const
   DCHECK(!fileName.empty());
   if (fileName.empty())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_stream_reader_t* _retval =
@@ -48,7 +49,7 @@ CefRefPtr<CefStreamReader> CefStreamReader::CreateForData(void* data,
   // Verify param: data; type: simple_byaddr
   DCHECK(data);
   if (!data)
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_stream_reader_t* _retval = cef_stream_reader_create_for_data(data, size);
@@ -67,7 +68,7 @@ CefRefPtr<CefStreamReader> CefStreamReader::CreateForHandler(
   // Verify param: handler; type: refptr_diff
   DCHECK(handler.get());
   if (!handler.get())
-    return NULL;
+    return nullptr;
 
   // Execute
   cef_stream_reader_t* _retval =
@@ -183,7 +184,7 @@ CefCToCppRefCounted<CefStreamReaderCToCpp,
                     cef_stream_reader_t>::UnwrapDerived(CefWrapperType type,
                                                         CefStreamReader* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

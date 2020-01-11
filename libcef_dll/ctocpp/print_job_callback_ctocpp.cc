@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e3a7423d73fcf53a17ea3449e88e20b913081665$
+// $hash=f378864057814460c2cee92c0a31e1e2333220ff$
 //
 
 #include "libcef_dll/ctocpp/print_job_callback_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -47,7 +48,7 @@ cef_print_job_callback_t* CefCToCppRefCounted<
     cef_print_job_callback_t>::UnwrapDerived(CefWrapperType type,
                                              CefPrintJobCallback* c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

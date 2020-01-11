@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f53be20a44c3bd718b07487a4275d70f8f285c75$
+// $hash=b6ca4f2fce1c1aded001bc1117833d8e1d90aca8$
 //
 
 #include "libcef_dll/cpptoc/views/textfield_cpptoc.h"
+
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
 #include "libcef_dll/cpptoc/views/button_cpptoc.h"
 #include "libcef_dll/cpptoc/views/panel_cpptoc.h"
@@ -114,7 +115,7 @@ textfield_get_text(struct _cef_textfield_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefTextfieldCppToC::Get(self)->GetText();
@@ -202,7 +203,7 @@ textfield_get_selected_text(struct _cef_textfield_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefTextfieldCppToC::Get(self)->GetSelectedText();
@@ -523,7 +524,7 @@ textfield_get_placeholder_text(struct _cef_textfield_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefTextfieldCppToC::Get(self)->GetPlaceholderText();
@@ -573,7 +574,7 @@ textfield_as_browser_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefBrowserView> _retval =
@@ -591,7 +592,7 @@ cef_button_t* CEF_CALLBACK textfield_as_button(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefButton> _retval =
@@ -609,7 +610,7 @@ cef_panel_t* CEF_CALLBACK textfield_as_panel(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefPanel> _retval =
@@ -628,7 +629,7 @@ textfield_as_scroll_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefScrollView> _retval =
@@ -646,7 +647,7 @@ cef_textfield_t* CEF_CALLBACK textfield_as_textfield(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefTextfield> _retval =
@@ -665,7 +666,7 @@ textfield_get_type_string(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -684,7 +685,7 @@ cef_string_userfree_t CEF_CALLBACK textfield_to_string(struct _cef_view_t* self,
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -762,7 +763,7 @@ textfield_get_delegate(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefViewDelegate> _retval =
@@ -781,7 +782,7 @@ textfield_get_window(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefWindow> _retval =
@@ -864,7 +865,7 @@ textfield_get_parent_view(struct _cef_view_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -883,7 +884,7 @@ textfield_get_view_for_id(struct _cef_view_t* self, int id) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefRefPtr<CefView> _retval =
@@ -1609,7 +1610,7 @@ CefRefPtr<CefTextfield>
 CefCppToCRefCounted<CefTextfieldCppToC, CefTextfield, cef_textfield_t>::
     UnwrapDerived(CefWrapperType type, cef_textfield_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=80acec0f2efd94bad9a4de54cd9eb5c9e21d8f8b$
+// $hash=be4b247da2987252e1471149aade76c4d4a34394$
 //
 
 #include "libcef_dll/ctocpp/before_download_callback_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -52,7 +53,7 @@ cef_before_download_callback_t* CefCToCppRefCounted<
                                                    CefBeforeDownloadCallback*
                                                        c) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

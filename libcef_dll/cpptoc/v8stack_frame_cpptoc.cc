@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a655045d490e27f522ddae79f0e1d80119f1f24f$
+// $hash=31a482f46fd3893766a0bb7767be9eb0b1c66155$
 //
 
 #include "libcef_dll/cpptoc/v8stack_frame_cpptoc.h"
@@ -38,7 +38,7 @@ v8stack_frame_get_script_name(struct _cef_v8stack_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8StackFrameCppToC::Get(self)->GetScriptName();
@@ -53,7 +53,7 @@ v8stack_frame_get_script_name_or_source_url(struct _cef_v8stack_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval =
@@ -69,7 +69,7 @@ v8stack_frame_get_function_name(struct _cef_v8stack_frame_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefV8StackFrameCppToC::Get(self)->GetFunctionName();
@@ -163,7 +163,7 @@ CefRefPtr<CefV8StackFrame> CefCppToCRefCounted<
     cef_v8stack_frame_t>::UnwrapDerived(CefWrapperType type,
                                         cef_v8stack_frame_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

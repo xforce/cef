@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=bba9026cb0bae3ad341dc5ed4bd291c24d484045$
+// $hash=b041280729bcbe060d591caccd43deeb208d02b2$
 //
 
 #include "libcef_dll/cpptoc/resource_bundle_handler_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -156,7 +157,7 @@ CefRefPtr<CefResourceBundleHandler> CefCppToCRefCounted<
                                                   cef_resource_bundle_handler_t*
                                                       s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

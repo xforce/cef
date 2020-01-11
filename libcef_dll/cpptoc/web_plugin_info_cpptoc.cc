@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=cbcf553a3a5210539b934a153cdc56c0a0496d98$
+// $hash=1a5878d91a0531437a1386f9de20ceba5e9a3db4$
 //
 
 #include "libcef_dll/cpptoc/web_plugin_info_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {
@@ -27,7 +28,7 @@ web_plugin_info_get_name(struct _cef_web_plugin_info_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefWebPluginInfoCppToC::Get(self)->GetName();
@@ -44,7 +45,7 @@ web_plugin_info_get_path(struct _cef_web_plugin_info_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefWebPluginInfoCppToC::Get(self)->GetPath();
@@ -61,7 +62,7 @@ web_plugin_info_get_version(struct _cef_web_plugin_info_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefWebPluginInfoCppToC::Get(self)->GetVersion();
@@ -78,7 +79,7 @@ web_plugin_info_get_description(struct _cef_web_plugin_info_t* self) {
 
   DCHECK(self);
   if (!self)
-    return NULL;
+    return nullptr;
 
   // Execute
   CefString _retval = CefWebPluginInfoCppToC::Get(self)->GetDescription();
@@ -111,7 +112,7 @@ CefRefPtr<CefWebPluginInfo> CefCppToCRefCounted<
     cef_web_plugin_info_t>::UnwrapDerived(CefWrapperType type,
                                           cef_web_plugin_info_t* s) {
   NOTREACHED() << "Unexpected class type: " << type;
-  return NULL;
+  return nullptr;
 }
 
 template <>

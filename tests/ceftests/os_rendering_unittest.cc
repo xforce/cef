@@ -400,7 +400,7 @@ class OSRTestHandler : public RoutingTestHandler,
       return new CefStreamResourceHandler("text/html", stream);
     }
 
-    return NULL;
+    return nullptr;
   }
 
   // CefRenderHandler methods
