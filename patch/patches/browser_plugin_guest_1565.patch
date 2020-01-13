@@ -1,3 +1,16 @@
+diff --git content/browser/frame_host/interstitial_page_impl.cc content/browser/frame_host/interstitial_page_impl.cc
+index 767fd314736c..8db0323e3e1c 100644
+--- content/browser/frame_host/interstitial_page_impl.cc
++++ content/browser/frame_host/interstitial_page_impl.cc
+@@ -614,7 +614,7 @@ WebContentsView* InterstitialPageImpl::CreateWebContentsView() {
+   WebContentsView* wcv =
+       static_cast<WebContentsImpl*>(web_contents())->GetView();
+   RenderWidgetHostViewBase* view =
+-      wcv->CreateViewForWidget(render_view_host_->GetWidget());
++      wcv->CreateViewForWidget(render_view_host_->GetWidget(), nullptr);
+   render_view_host_->GetWidget()->SetView(view);
+   render_view_host_->GetMainFrame()->AllowBindings(
+       BINDINGS_POLICY_DOM_AUTOMATION);
 diff --git content/browser/web_contents/web_contents_view.h content/browser/web_contents/web_contents_view.h
 index 4c5fb180bf82..4e21a23e364b 100644
 --- content/browser/web_contents/web_contents_view.h
