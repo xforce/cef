@@ -113,7 +113,7 @@ index 307a119bb9d8..c522bfcf3298 100644
                         const std::string& mime_type,
                         bool* found,
 diff --git content/browser/loader/navigation_url_loader_impl.cc content/browser/loader/navigation_url_loader_impl.cc
-index a223fcaccd46..248c7acc0397 100644
+index a223fcaccd46..9ca82d7c1c8d 100644
 --- content/browser/loader/navigation_url_loader_impl.cc
 +++ content/browser/loader/navigation_url_loader_impl.cc
 @@ -697,6 +697,13 @@ class NavigationURLLoaderImpl::URLLoaderRequestController
@@ -130,6 +130,15 @@ index a223fcaccd46..248c7acc0397 100644
          if (loader_factory) {
            factory =
                base::MakeRefCounted<network::WrapperSharedURLLoaderFactory>(
+@@ -905,7 +912,7 @@ class NavigationURLLoaderImpl::URLLoaderRequestController
+         frame_tree_node->current_frame_host()->GetProcess()->GetID();
+     int routing_id = frame_tree_node->current_frame_host()->GetRoutingID();
+     bool has_plugin = PluginService::GetInstance()->GetPluginInfo(
+-        render_process_id, routing_id, resource_request_->url, url::Origin(),
++        render_process_id, routing_id, resource_request_->url, true, url::Origin(),
+         head->mime_type, false /* allow_wildcard */, &stale, &plugin, nullptr);
+ 
+     if (stale) {
 diff --git content/browser/plugin_service_impl.cc content/browser/plugin_service_impl.cc
 index 4461a489227e..fea615b44abe 100644
 --- content/browser/plugin_service_impl.cc
@@ -233,7 +242,7 @@ index 06c8e08ba8d5..1e349e3c06b6 100644
                              std::string /* mime_type */,
                              bool /* found */,
 diff --git content/public/browser/content_browser_client.h content/public/browser/content_browser_client.h
-index b70473936db0..7ce4bb36940f 100644
+index b70473936db0..0cb62733520b 100644
 --- content/public/browser/content_browser_client.h
 +++ content/public/browser/content_browser_client.h
 @@ -24,6 +24,7 @@
@@ -254,7 +263,7 @@ index b70473936db0..7ce4bb36940f 100644
 +      int frame_tree_node_id,
 +      NavigationUIData* navigation_data,
 +      const network::ResourceRequest& request,
-+      network::mojom::URLLoaderFactoryPtr* out_factory) { return false; }
++      mojo::PendingRemote<network::mojom::URLLoaderFactory>* out_factory) { return false; }
 +
    // Creates an OverlayWindow to be used for Picture-in-Picture. This window
    // will house the content shown when in Picture-in-Picture mode. This will

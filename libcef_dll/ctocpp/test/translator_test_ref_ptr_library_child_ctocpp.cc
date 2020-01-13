@@ -13,14 +13,16 @@
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_ref_ptr_library_child_ctocpp.h"
+
 #include "libcef_dll/ctocpp/test/translator_test_ref_ptr_library_child_child_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefTranslatorTestRefPtrLibraryChild>
-CefTranslatorTestRefPtrLibraryChild::Create(int value, int other_value) {
+CefRefPtr<
+    CefTranslatorTestRefPtrLibraryChild> CefTranslatorTestRefPtrLibraryChild::
+    Create(int value, int other_value) {
   shutdown_checker::AssertNotShutdown();
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING

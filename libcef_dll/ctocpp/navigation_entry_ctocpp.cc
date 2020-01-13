@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/navigation_entry_ctocpp.h"
+
 #include "libcef_dll/ctocpp/sslstatus_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 
@@ -108,7 +109,7 @@ NO_SANITIZE("cfi-icall") CefString CefNavigationEntryCToCpp::GetTitle() {
 
 NO_SANITIZE("cfi-icall")
 CefNavigationEntry::TransitionType
-CefNavigationEntryCToCpp::GetTransitionType() {
+    CefNavigationEntryCToCpp::GetTransitionType() {
   shutdown_checker::AssertNotShutdown();
 
   cef_navigation_entry_t* _struct = GetStruct();

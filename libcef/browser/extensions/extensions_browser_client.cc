@@ -29,8 +29,8 @@
 #include "extensions/browser/core_extensions_browser_api_provider.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_host_delegate.h"
+#include "extensions/browser/extensions_browser_interface_binders.h"
 #include "extensions/browser/mojo/interface_registration.h"
-#include "extensions/browser/serial_extension_host_queue.h"
 #include "extensions/browser/url_request_util.h"
 #include "extensions/common/constants.h"
 
@@ -117,11 +117,11 @@ base::FilePath CefExtensionsBrowserClient::GetBundleResourcePath(
 
 void CefExtensionsBrowserClient::LoadResourceFromResourceBundle(
     const network::ResourceRequest& request,
-    network::mojom::URLLoaderRequest loader,
+    mojo::PendingReceiver<network::mojom::URLLoader> loader,
     const base::FilePath& resource_relative_path,
     const int resource_id,
     const std::string& content_security_policy,
-    network::mojom::URLLoaderClientPtr client,
+    mojo::PendingRemote<network::mojom::URLLoaderClient> client,
     bool send_cors_header) {
   chrome_url_request_util::LoadResourceFromResourceBundle(
       request, std::move(loader), resource_relative_path, resource_id,
@@ -257,6 +257,13 @@ CefExtensionsBrowserClient::GetExtensionSystemFactory() {
   return CefExtensionSystemFactory::GetInstance();
 }
 
+void CefExtensionsBrowserClient::RegisterBrowserInterfaceBindersForFrame(
+    service_manager::BinderMapWithContext<content::RenderFrameHost*>* map,
+    content::RenderFrameHost* render_frame_host,
+    const Extension* extension) const {
+  PopulateExtensionFrameBinders(map, render_frame_host, extension);
+}
+
 void CefExtensionsBrowserClient::RegisterExtensionInterfaces(
     service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>*
         registry,
@@ -321,12 +328,6 @@ bool CefExtensionsBrowserClient::IsLockScreenContext(
 
 std::string CefExtensionsBrowserClient::GetApplicationLocale() {
   return g_browser_process->GetApplicationLocale();
-}
-
-ExtensionHostQueue* CefExtensionsBrowserClient::GetExtensionHostQueue() {
-  if (!extension_host_queue_)
-    extension_host_queue_.reset(new SerialExtensionHostQueue);
-  return extension_host_queue_.get();
 }
 
 }  // namespace extensions

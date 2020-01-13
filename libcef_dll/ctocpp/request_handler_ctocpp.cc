@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/request_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/auth_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
@@ -100,15 +101,14 @@ bool CefRequestHandlerCToCpp::OnOpenURLFromTab(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefResourceRequestHandler>
-CefRequestHandlerCToCpp::GetResourceRequestHandler(
-    CefRefPtr<CefBrowser> browser,
-    CefRefPtr<CefFrame> frame,
-    CefRefPtr<CefRequest> request,
-    bool is_navigation,
-    bool is_download,
-    const CefString& request_initiator,
-    bool& disable_default_handling) {
+CefRefPtr<CefResourceRequestHandler> CefRequestHandlerCToCpp::
+    GetResourceRequestHandler(CefRefPtr<CefBrowser> browser,
+                              CefRefPtr<CefFrame> frame,
+                              CefRefPtr<CefRequest> request,
+                              bool is_navigation,
+                              bool is_download,
+                              const CefString& request_initiator,
+                              bool& disable_default_handling) {
   shutdown_checker::AssertNotShutdown();
 
   cef_request_handler_t* _struct = GetStruct();

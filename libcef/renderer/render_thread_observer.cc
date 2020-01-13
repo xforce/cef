@@ -10,10 +10,9 @@
 #include "libcef/renderer/blink_glue.h"
 #include "libcef/renderer/content_renderer_client.h"
 
-#include "components/visitedlink/renderer/visitedlink_slave.h"
+#include "components/visitedlink/renderer/visitedlink_reader.h"
 #include "content/public/child/child_thread.h"
 #include "content/public/common/service_manager_connection.h"
-#include "content/public/common/simple_connection_filter.h"
 #include "content/public/renderer/render_thread.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/net_module.h"
@@ -36,18 +35,18 @@ chrome::mojom::DynamicParams* GetDynamicConfigParams() {
 bool CefRenderThreadObserver::is_incognito_process_ = false;
 
 CefRenderThreadObserver::CefRenderThreadObserver()
-    : visited_link_slave_(new visitedlink::VisitedLinkSlave) {
+    : visited_link_slave_(new visitedlink::VisitedLinkReader) {
   net::NetModule::SetResourceProvider(NetResourceProvider);
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   registry->AddInterface(visited_link_slave_->GetBindCallback(),
                          base::ThreadTaskRunnerHandle::Get());
-  if (content::ChildThread::Get()) {
-    content::ChildThread::Get()
-        ->GetServiceManagerConnection()
-        ->AddConnectionFilter(std::make_unique<content::SimpleConnectionFilter>(
-            std::move(registry)));
-  }
+  // if (content::ChildThread::Get()) {
+  //   content::ChildThread::Get()
+  //       ->GetServiceManagerConnection()
+  //       ->AddConnectionFilter(std::make_unique<content::SimpleConnectionFilter>(
+  //           std::move(registry)));
+  // }
 }
 
 CefRenderThreadObserver::~CefRenderThreadObserver() {}

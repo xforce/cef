@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/request_context_handler_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
@@ -80,15 +81,14 @@ bool CefRequestContextHandlerCToCpp::OnBeforePluginLoad(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefResourceRequestHandler>
-CefRequestContextHandlerCToCpp::GetResourceRequestHandler(
-    CefRefPtr<CefBrowser> browser,
-    CefRefPtr<CefFrame> frame,
-    CefRefPtr<CefRequest> request,
-    bool is_navigation,
-    bool is_download,
-    const CefString& request_initiator,
-    bool& disable_default_handling) {
+CefRefPtr<CefResourceRequestHandler> CefRequestContextHandlerCToCpp::
+    GetResourceRequestHandler(CefRefPtr<CefBrowser> browser,
+                              CefRefPtr<CefFrame> frame,
+                              CefRefPtr<CefRequest> request,
+                              bool is_navigation,
+                              bool is_download,
+                              const CefString& request_initiator,
+                              bool& disable_default_handling) {
   cef_request_context_handler_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_resource_request_handler))
     return nullptr;

@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/response_filter_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -34,13 +35,13 @@ NO_SANITIZE("cfi-icall") bool CefResponseFilterCToCpp::InitFilter() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefResponseFilter::FilterStatus CefResponseFilterCToCpp::Filter(
-    void* data_in,
-    size_t data_in_size,
-    size_t& data_in_read,
-    void* data_out,
-    size_t data_out_size,
-    size_t& data_out_written) {
+CefResponseFilter::FilterStatus
+    CefResponseFilterCToCpp::Filter(void* data_in,
+                                    size_t data_in_size,
+                                    size_t& data_in_read,
+                                    void* data_out,
+                                    size_t data_out_size,
+                                    size_t& data_out_written) {
   shutdown_checker::AssertNotShutdown();
 
   cef_response_filter_t* _struct = GetStruct();

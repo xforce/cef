@@ -591,7 +591,7 @@ void CefBrowserHostImpl::CloseBrowser(bool force_close) {
     }
 
     content::WebContents* contents = web_contents();
-    if (contents && contents->NeedToFireBeforeUnload()) {
+    if (contents && contents->NeedToFireBeforeUnloadOrUnload()) {
       // Will result in a call to BeforeUnloadFired() and, if the close isn't
       // canceled, CloseContents().
       contents->DispatchBeforeUnload(false /* auto_cancel */);
@@ -763,7 +763,7 @@ void CefBrowserHostImpl::DownloadImage(
     return;
 
   web_contents()->DownloadImage(
-      gurl, is_favicon, max_image_size * gfx::ImageSkia::GetMaxSupportedScale(),
+      gurl, is_favicon, max_image_size, max_image_size * gfx::ImageSkia::GetMaxSupportedScale(),
       bypass_cache, base::BindOnce(OnDownloadImage, max_image_size, callback));
 }
 
@@ -2108,8 +2108,7 @@ void CefBrowserHostImpl::LoadingStateChanged(content::WebContents* source,
   }
 }
 
-void CefBrowserHostImpl::LoadProgressChanged(content::WebContents* source,
-                                             double progress) {
+void CefBrowserHostImpl::LoadProgressChanged(double progress) {
   if (client_.get()) {
     CefRefPtr<CefDisplayHandler> handler = client_->GetDisplayHandler();
     if (handler.get()) {

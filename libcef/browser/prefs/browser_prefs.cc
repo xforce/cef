@@ -23,10 +23,10 @@
 #include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/plugins/plugin_info_host_impl.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
+#include "chrome/browser/printing/print_preview_sticky_settings.h"
 #include "chrome/browser/renderer_host/pepper/device_id_fetcher.h"
 #include "chrome/browser/ssl/ssl_config_service_manager.h"
 #include "chrome/browser/themes/theme_service.h"
-#include "chrome/browser/ui/webui/print_preview/sticky_settings.h"
 #include "chrome/common/buildflags.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/net/safe_search_util.h"
@@ -244,7 +244,7 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     registry->RegisterStringPref(
         prefs::kPrintPreviewDefaultDestinationSelectionRules, std::string());
     registry->RegisterBooleanPref(prefs::kCloudPrintSubmitEnabled, false);
-    printing::StickySettings::RegisterProfilePrefs(registry.get());
+    printing::PrintPreviewStickySettings::RegisterProfilePrefs(registry.get());
     DownloadPrefs::RegisterProfilePrefs(registry.get());
 
     // Cache preferences.
@@ -282,8 +282,9 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     const std::string& accept_language_list = GetAcceptLanguageList(profile);
     if (!accept_language_list.empty()) {
       registry->SetDefaultPrefValue(language::prefs::kAcceptLanguages,
-                                    base::Value(accept_language_list));
+                                    base::Value(accept_language_list));                                    
     }
+    registry->RegisterListPref(prefs::kWebRtcLocalIpsAllowedUrls);
   }
 
   // Build the PrefService that manages the PrefRegistry and PrefStores.

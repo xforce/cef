@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/context_menu_params_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
@@ -230,7 +231,7 @@ CefContextMenuParams::MediaType CefContextMenuParamsCToCpp::GetMediaType() {
 
 NO_SANITIZE("cfi-icall")
 CefContextMenuParams::MediaStateFlags
-CefContextMenuParamsCToCpp::GetMediaStateFlags() {
+    CefContextMenuParamsCToCpp::GetMediaStateFlags() {
   shutdown_checker::AssertNotShutdown();
 
   cef_context_menu_params_t* _struct = GetStruct();
@@ -351,7 +352,7 @@ bool CefContextMenuParamsCToCpp::IsSpellCheckEnabled() {
 
 NO_SANITIZE("cfi-icall")
 CefContextMenuParams::EditStateFlags
-CefContextMenuParamsCToCpp::GetEditStateFlags() {
+    CefContextMenuParamsCToCpp::GetEditStateFlags() {
   shutdown_checker::AssertNotShutdown();
 
   cef_context_menu_params_t* _struct = GetStruct();

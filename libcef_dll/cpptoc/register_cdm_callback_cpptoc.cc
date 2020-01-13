@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/cpptoc/register_cdm_callback_cpptoc.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {

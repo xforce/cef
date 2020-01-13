@@ -13,7 +13,9 @@
 //
 
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
+
 #include <algorithm>
+
 #include "libcef_dll/cpptoc/browser_host_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"

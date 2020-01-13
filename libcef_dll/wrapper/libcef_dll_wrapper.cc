@@ -167,7 +167,7 @@ NO_SANITIZE("cfi-icall") CEF_GLOBAL bool CefCrashReportingEnabled() {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefSetCrashKeyValue(const CefString& key, const CefString& value) {
+    void CefSetCrashKeyValue(const CefString& key, const CefString& value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: key; type: string_byref_const
@@ -312,10 +312,10 @@ CEF_GLOBAL void CefLoadCRLSetsFile(const CefString& path) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
-                                     const CefString& target_protocol,
-                                     const CefString& target_domain,
-                                     bool allow_target_subdomains) {
+    bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
+                                         const CefString& target_protocol,
+                                         const CefString& target_domain,
+                                         bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
@@ -339,10 +339,10 @@ bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-bool CefRemoveCrossOriginWhitelistEntry(const CefString& source_origin,
-                                        const CefString& target_protocol,
-                                        const CefString& target_domain,
-                                        bool allow_target_subdomains) {
+    bool CefRemoveCrossOriginWhitelistEntry(const CefString& source_origin,
+                                            const CefString& target_protocol,
+                                            const CefString& target_domain,
+                                            bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
@@ -403,7 +403,7 @@ CEF_GLOBAL bool CefCreateURL(const CefURLParts& parts, CefString& url) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL CefString
-CefFormatUrlForSecurityDisplay(const CefString& origin_url) {
+    CefFormatUrlForSecurityDisplay(const CefString& origin_url) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: origin_url; type: string_byref_const
@@ -441,8 +441,8 @@ CEF_GLOBAL CefString CefGetMimeType(const CefString& extension) {
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefGetExtensionsForMimeType(const CefString& mime_type,
-                                 std::vector<CefString>& extensions) {
+    void CefGetExtensionsForMimeType(const CefString& mime_type,
+                                     std::vector<CefString>& extensions) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: mime_type; type: string_byref_const
@@ -580,8 +580,8 @@ CEF_GLOBAL CefRefPtr<CefValue> CefParseJSONAndReturnError(
 }
 
 NO_SANITIZE("cfi-icall")
-CEF_GLOBAL CefString CefWriteJSON(CefRefPtr<CefValue> node,
-                                  cef_json_writer_options_t options) {
+CEF_GLOBAL CefString
+    CefWriteJSON(CefRefPtr<CefValue> node, cef_json_writer_options_t options) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: node; type: refptr_same
@@ -781,7 +781,7 @@ CEF_GLOBAL bool CefRegisterExtension(const CefString& extension_name,
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefVisitWebPluginInfo(CefRefPtr<CefWebPluginInfoVisitor> visitor) {
+    void CefVisitWebPluginInfo(CefRefPtr<CefWebPluginInfoVisitor> visitor) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: visitor; type: refptr_diff
@@ -848,8 +848,8 @@ CEF_GLOBAL void CefIsWebPluginUnstable(
 
 NO_SANITIZE("cfi-icall")
 CEF_GLOBAL
-void CefRegisterWidevineCdm(const CefString& path,
-                            CefRefPtr<CefRegisterCdmCallback> callback) {
+    void CefRegisterWidevineCdm(const CefString& path,
+                                CefRefPtr<CefRegisterCdmCallback> callback) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: path; type: string_byref_const

@@ -16,7 +16,7 @@
 #include "mojo/public/cpp/bindings/associated_receiver_set.h"
 
 namespace visitedlink {
-class VisitedLinkSlave;
+class VisitedLinkReader;
 }
 
 struct Cef_CrossOriginWhiteListEntry_Params;
@@ -34,7 +34,7 @@ class CefRenderThreadObserver : public content::RenderThreadObserver,
   // render process is running.
   static const chrome::mojom::DynamicParams& GetDynamicParams();
 
-  visitedlink::VisitedLinkSlave* visited_link_slave() {
+  visitedlink::VisitedLinkReader* visited_link_slave() {
     return visited_link_slave_.get();
   }
 
@@ -69,7 +69,7 @@ class CefRenderThreadObserver : public content::RenderThreadObserver,
 
   static bool is_incognito_process_;
 
-  std::unique_ptr<visitedlink::VisitedLinkSlave> visited_link_slave_;
+  std::unique_ptr<visitedlink::VisitedLinkReader> visited_link_slave_;
 
   mojo::AssociatedReceiverSet<chrome::mojom::RendererConfiguration>
       renderer_configuration_receivers_;

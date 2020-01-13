@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/web_plugin_unstable_callback_ctocpp.h"
+
 #include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.

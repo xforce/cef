@@ -250,7 +250,7 @@ index ffde51cd276a..3ef2ad8d3945 100644
        }
        case chrome::mojom::PluginStatus::kComponentUpdateRequired: {
 diff --git chrome/renderer/plugins/chrome_plugin_placeholder.cc chrome/renderer/plugins/chrome_plugin_placeholder.cc
-index b86b883882cf..6e95840bd3da 100644
+index b86b883882cf..442bfa6753d8 100644
 --- chrome/renderer/plugins/chrome_plugin_placeholder.cc
 +++ chrome/renderer/plugins/chrome_plugin_placeholder.cc
 @@ -358,8 +358,11 @@ void ChromePluginPlaceholder::OnBlockedContent(
@@ -260,7 +260,7 @@ index b86b883882cf..6e95840bd3da 100644
 -    ContentSettingsAgentImpl::Get(render_frame())
 -        ->DidBlockContentType(ContentSettingsType::PLUGINS);
 +      ContentSettingsAgentImpl *content_settings_agent =
-+          ContentSettingsAgentImpl::Get(render_frame())
++          ContentSettingsAgentImpl::Get(render_frame());
 +      if (content_settings_agent) {
 +        content_settings_agent->DidBlockContentType(ContentSettingsType::PLUGINS);
 +      }

@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/browser_host_ctocpp.h"
+
 #include "libcef_dll/cpptoc/client_cpptoc.h"
 #include "libcef_dll/cpptoc/download_image_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/navigation_entry_visitor_cpptoc.h"
@@ -969,8 +970,8 @@ void CefBrowserHostCToCpp::DragSourceSystemDragEnded() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefNavigationEntry>
-CefBrowserHostCToCpp::GetVisibleNavigationEntry() {
+CefRefPtr<
+    CefNavigationEntry> CefBrowserHostCToCpp::GetVisibleNavigationEntry() {
   shutdown_checker::AssertNotShutdown();
 
   cef_browser_host_t* _struct = GetStruct();

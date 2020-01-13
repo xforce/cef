@@ -85,7 +85,7 @@ index 176aad037ad5..4a16ecd2b67c 100644
  
  void DevToolsSession::FlushProtocolNotifications() {
 diff --git third_party/blink/renderer/core/page/page.cc third_party/blink/renderer/core/page/page.cc
-index 90c4ea4fe9ca..95cbbd6fc78e 100644
+index 90c4ea4fe9ca..4a335f5bfb79 100644
 --- third_party/blink/renderer/core/page/page.cc
 +++ third_party/blink/renderer/core/page/page.cc
 @@ -194,7 +194,8 @@ Page::Page(PageClients& page_clients)
@@ -117,7 +117,7 @@ index 90c4ea4fe9ca..95cbbd6fc78e 100644
  
 -  return plugin_data_.Get();
 +    if (!plugin_data_main_frame_->Origin() ||
-+        !main_frame_origin->IsSameSchemeHostPort(
++        !main_frame_origin->IsSameOriginWith(
 +            plugin_data_main_frame_->Origin())) {
 +      plugin_data_main_frame_->UpdatePluginList(true, main_frame_origin);
 +    }
@@ -128,7 +128,7 @@ index 90c4ea4fe9ca..95cbbd6fc78e 100644
 +      plugin_data_sub_frame_ = MakeGarbageCollected<PluginData>();
 +
 +    if (!plugin_data_sub_frame_->Origin() ||
-+        !main_frame_origin->IsSameSchemeHostPort(
++        !main_frame_origin->IsSameOriginWith(
 +            plugin_data_sub_frame_->Origin())) {
 +      plugin_data_sub_frame_->UpdatePluginList(false, main_frame_origin);
 +    }

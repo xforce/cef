@@ -1546,12 +1546,6 @@ void CefRenderWidgetHostViewOSR::ImeCompositionRangeChanged(
 }
 
 viz::FrameSinkId CefRenderWidgetHostViewOSR::AllocateFrameSinkId() {
-  // GuestViews have two RenderWidgetHostViews and so we need to make sure
-  // we don't have FrameSinkId collisions.
-  // The FrameSinkId generated here must be unique with FrameSinkId allocated
-  // in ContextFactoryPrivate.
-  content::ImageTransportFactory* factory =
-      content::ImageTransportFactory::GetInstance();
   return render_widget_host_->GetFrameSinkId();
 }
 

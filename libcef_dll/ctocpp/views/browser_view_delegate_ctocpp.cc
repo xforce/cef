@@ -13,6 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/views/browser_view_delegate_ctocpp.h"
+
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/views/browser_view_cpptoc.h"
 #include "libcef_dll/cpptoc/views/view_cpptoc.h"
@@ -75,12 +76,11 @@ void CefBrowserViewDelegateCToCpp::OnBrowserDestroyed(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefBrowserViewDelegate>
-CefBrowserViewDelegateCToCpp::GetDelegateForPopupBrowserView(
-    CefRefPtr<CefBrowserView> browser_view,
-    const CefBrowserSettings& settings,
-    CefRefPtr<CefClient> client,
-    bool is_devtools) {
+CefRefPtr<CefBrowserViewDelegate> CefBrowserViewDelegateCToCpp::
+    GetDelegateForPopupBrowserView(CefRefPtr<CefBrowserView> browser_view,
+                                   const CefBrowserSettings& settings,
+                                   CefRefPtr<CefClient> client,
+                                   bool is_devtools) {
   shutdown_checker::AssertNotShutdown();
 
   cef_browser_view_delegate_t* _struct = GetStruct();
@@ -140,8 +140,8 @@ bool CefBrowserViewDelegateCToCpp::OnPopupBrowserViewCreated(
 }
 
 NO_SANITIZE("cfi-icall")
-CefSize CefBrowserViewDelegateCToCpp::GetPreferredSize(
-    CefRefPtr<CefView> view) {
+CefSize
+    CefBrowserViewDelegateCToCpp::GetPreferredSize(CefRefPtr<CefView> view) {
   shutdown_checker::AssertNotShutdown();
 
   cef_view_delegate_t* _struct =
