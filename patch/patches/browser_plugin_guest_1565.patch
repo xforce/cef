@@ -35,7 +35,7 @@ index 4c5fb180bf82..4e21a23e364b 100644
    // Creates a new View that holds a non-top-level widget and receives messages
    // for it.
 diff --git content/browser/web_contents/web_contents_view_aura.cc content/browser/web_contents/web_contents_view_aura.cc
-index 75972bb7f6cc..643a929e9751 100644
+index 75972bb7f6cc..88c1f7e62e83 100644
 --- content/browser/web_contents/web_contents_view_aura.cc
 +++ content/browser/web_contents/web_contents_view_aura.cc
 @@ -962,7 +962,8 @@ void WebContentsViewAura::CreateView(gfx::NativeView context) {
@@ -48,14 +48,6 @@ index 75972bb7f6cc..643a929e9751 100644
    if (render_widget_host->GetView()) {
      // During testing, the view will already be set up in most cases to the
      // test view, so we don't want to clobber it with a real one. To verify that
-@@ -974,6 +975,7 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
-         render_widget_host->GetView());
-   }
- 
-+  const bool is_guest_view_hack = !!embedder_render_widget_host;
-   RenderWidgetHostViewAura* view =
-       g_create_render_widget_host_view
-           ? g_create_render_widget_host_view(render_widget_host)
 diff --git content/browser/web_contents/web_contents_view_aura.h content/browser/web_contents/web_contents_view_aura.h
 index acdba5fb4de2..7c1afe3175ce 100644
 --- content/browser/web_contents/web_contents_view_aura.h
