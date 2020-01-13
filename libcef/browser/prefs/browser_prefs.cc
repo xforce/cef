@@ -282,8 +282,9 @@ std::unique_ptr<PrefService> CreatePrefService(Profile* profile,
     const std::string& accept_language_list = GetAcceptLanguageList(profile);
     if (!accept_language_list.empty()) {
       registry->SetDefaultPrefValue(language::prefs::kAcceptLanguages,
-                                    base::Value(accept_language_list));
+                                    base::Value(accept_language_list));                                    
     }
+    registry->RegisterListPref(prefs::kWebRtcLocalIpsAllowedUrls);
   }
 
   // Build the PrefService that manages the PrefRegistry and PrefStores.
