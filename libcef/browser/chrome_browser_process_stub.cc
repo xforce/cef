@@ -73,7 +73,7 @@ void ChromeBrowserProcessStub::Shutdown() {
   // tasks to run once teardown has started.
   print_job_manager_->Shutdown();
   print_job_manager_.reset(NULL);
-  print_preview_dialog_controller_ = NULL;
+  print_preview_dialog_controller_ = nullptr;
 
   profile_manager_.reset();
   event_router_forwarder_ = nullptr;

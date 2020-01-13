@@ -11,7 +11,7 @@ CefCommandLineImpl::CefCommandLineImpl(base::CommandLine* value,
                                        bool will_delete,
                                        bool read_only)
     : CefValueBase<CefCommandLine, base::CommandLine>(
-          value,
+          value,\
           NULL,
           will_delete ? kOwnerWillDelete : kOwnerNoDelete,
           read_only,

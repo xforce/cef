@@ -1072,8 +1072,8 @@ bool CefV8ContextImpl::Eval(const CefString& code,
                             int start_line,
                             CefRefPtr<CefV8Value>& retval,
                             CefRefPtr<CefV8Exception>& exception) {
-  retval = NULL;
-  exception = NULL;
+  retval = nullptr;
+  exception = nullptr;
 
   CEF_V8_REQUIRE_VALID_HANDLE_RETURN(false);
 
@@ -1822,7 +1822,7 @@ CefRefPtr<CefV8Exception> CefV8ValueImpl::GetException() {
 bool CefV8ValueImpl::ClearException() {
   CEF_V8_REQUIRE_OBJECT_RETURN(false);
 
-  last_exception_ = NULL;
+  last_exception_ = nullptr;
   return true;
 }
 
@@ -2364,7 +2364,7 @@ CefRefPtr<CefV8Value> CefV8ValueImpl::ExecuteFunctionWithContext(
   v8::Local<v8::Value> value = handle_->GetNewV8Handle(false);
   if (!value->IsFunction()) {
     NOTREACHED() << "V8 value is not a function";
-    return 0;
+    return nullptr;
   }
 
   if (context.get() && !context->IsValid()) {
@@ -2448,7 +2448,7 @@ bool CefV8ValueImpl::HasCaught(v8::Local<v8::Context> context,
     return true;
   } else {
     if (last_exception_.get())
-      last_exception_ = NULL;
+      last_exception_ = nullptr;
     return false;
   }
 }

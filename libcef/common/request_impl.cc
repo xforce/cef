@@ -982,7 +982,7 @@ void CefRequestImpl::Reset() {
   method_ = "GET";
   referrer_url_ = GURL();
   referrer_policy_ = REFERRER_POLICY_DEFAULT;
-  postdata_ = NULL;
+  postdata_ = nullptr;
   headermap_.clear();
   resource_type_ = RT_SUB_RESOURCE;
   transition_type_ = TT_EXPLICIT;

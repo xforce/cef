@@ -34,7 +34,6 @@
 #include "libcef/renderer/extensions/extensions_renderer_client.h"
 #include "libcef/renderer/extensions/print_render_frame_helper_delegate.h"
 #include "libcef/renderer/render_frame_observer.h"
-#include "libcef/renderer/render_message_filter.h"
 #include "libcef/renderer/render_thread_observer.h"
 #include "libcef/renderer/thread_util.h"
 #include "libcef/renderer/url_loader_throttle_provider_impl.h"
@@ -194,7 +193,7 @@ CefContentRendererClient* CefContentRendererClient::Get() {
 
 CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForView(
     content::RenderView* view) {
-  CEF_REQUIRE_RT_RETURN(NULL);
+  CEF_REQUIRE_RT_RETURN(nullptr);
 
   BrowserMap::const_iterator it = browsers_.find(view);
   if (it != browsers_.end())
@@ -204,7 +203,7 @@ CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForView(
 
 CefRefPtr<CefBrowserImpl> CefContentRendererClient::GetBrowserForMainFrame(
     blink::WebFrame* frame) {
-  CEF_REQUIRE_RT_RETURN(NULL);
+  CEF_REQUIRE_RT_RETURN(nullptr);
 
   BrowserMap::const_iterator it = browsers_.begin();
   for (; it != browsers_.end(); ++it) {
@@ -397,10 +396,9 @@ void CefContentRendererClient::RenderThreadStarted() {
   }
 
   thread->AddObserver(observer_.get());
-  thread->GetChannel()->AddFilter(new CefRenderMessageFilter);
 
   if (!command_line->HasSwitch(switches::kDisableSpellChecking)) {
-    spellcheck_ = std::make_unique<SpellCheck>(&registry_, this);
+    spellcheck_ = std::make_unique<SpellCheck>(this);
   }
 
   if (content::RenderProcessHost::run_renderer_in_process()) {
@@ -524,8 +522,6 @@ bool CefContentRendererClient::IsPluginHandledExternally(
 
   DCHECK(plugin_element.HasHTMLTagName("object") ||
          plugin_element.HasHTMLTagName("embed"));
-  if (!content::MimeHandlerViewMode::UsesCrossProcessFrame())
-    return false;
   // Blink will next try to load a WebPlugin which would end up in
   // OverrideCreatePlugin, sending another IPC only to find out the plugin is
   // not supported. Here it suffices to return false but there should perhaps be
@@ -580,11 +576,13 @@ void CefContentRendererClient::WillSendRequest(
     blink::WebLocalFrame* frame,
     ui::PageTransition transition_type,
     const blink::WebURL& url,
+    const blink::WebURL& site_for_cookies,
     const url::Origin* initiator_origin,
     GURL* new_url,
     bool* attach_same_site_cookies) {
   if (extensions::ExtensionsEnabled()) {
     extensions_renderer_client_->WillSendRequest(frame, transition_type, url,
+                                                 site_for_cookies,
                                                  initiator_origin, new_url,
                                                  attach_same_site_cookies);
     if (!new_url->is_empty())

@@ -209,7 +209,7 @@ void CefDevToolsFrontend::DisconnectFromTarget() {
   if (!agent_host_)
     return;
   agent_host_->DetachClient(this);
-  agent_host_ = NULL;
+  agent_host_ = nullptr;
 }
 
 CefDevToolsFrontend::CefDevToolsFrontend(

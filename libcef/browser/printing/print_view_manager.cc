@@ -195,7 +195,7 @@ bool CefPrintViewManager::PrintToPDF(content::RenderFrameHost* rfh,
   if (!web_contents() || web_contents()->ShowingInterstitialPage() ||
       web_contents()->IsCrashed()) {
     return false;
-  }
+}
 
   pdf_print_state_.reset(new PdfPrintState);
   pdf_print_state_->printing_rfh_ = rfh;
@@ -209,7 +209,7 @@ bool CefPrintViewManager::PrintToPDF(content::RenderFrameHost* rfh,
       print_render_frame_remote;
   rfh->GetRemoteAssociatedInterfaces()->GetInterface(
       &print_render_frame_remote);
-  print_render_frame_remote->InitiatePrintPreview(nullptr,
+  print_render_frame_remote->InitiatePrintPreview({},
                                                   !!settings.selection_only);
 
   return true;

@@ -213,7 +213,7 @@ void CefBrowserMainParts::PostMainMessageLoopRun() {
   // There should be no additional references to the global CefRequestContext
   // during shutdown. Did you forget to release a CefBrowser reference?
   DCHECK(global_request_context_->HasOneRef());
-  global_request_context_ = NULL;
+  global_request_context_ = nullptr;
 }
 
 void CefBrowserMainParts::PostDestroyThreads() {

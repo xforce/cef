@@ -62,7 +62,8 @@ scoped_refptr<URLLoaderFactoryGetter> URLLoaderFactoryGetter::Create(
   should_proxy |= CefContentBrowserClient::Get()->WillCreateURLLoaderFactory(
       browser_context, render_frame_host, render_process_id,
       content::ContentBrowserClient::URLLoaderFactoryType::kDocumentSubResource,
-      url::Origin(), &maybe_proxy_factory_request, nullptr /* header_client */,
+      url::Origin(), base::nullopt /* navigation_id */,
+      &maybe_proxy_factory_request, nullptr /* header_client */,
       nullptr /* bypass_redirect_checks */,
       nullptr /* factory_override */);
 
@@ -108,7 +109,7 @@ URLLoaderFactoryGetter::GetURLLoaderFactory() {
 }
 
 URLLoaderFactoryGetter::URLLoaderFactoryGetter(
-    std::unique_ptr<network::SharedURLLoaderFactoryInfo> loader_factory_info,
+    std::unique_ptr<network::PendingSharedURLLoaderFactory> loader_factory_info,
     network::mojom::URLLoaderFactoryPtrInfo proxy_factory_ptr_info,
     network::mojom::URLLoaderFactoryRequest proxy_factory_request)
     : loader_factory_info_(std::move(loader_factory_info)),
