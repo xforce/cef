@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/urlrequest_cpptoc.h"
-
 #include "libcef_dll/cpptoc/request_context_cpptoc.h"
 #include "libcef_dll/cpptoc/request_cpptoc.h"
 #include "libcef_dll/cpptoc/response_cpptoc.h"

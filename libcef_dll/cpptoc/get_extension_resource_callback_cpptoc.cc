@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/get_extension_resource_callback_cpptoc.h"
-
 #include "libcef_dll/cpptoc/stream_reader_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 

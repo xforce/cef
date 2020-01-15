@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/views/layout_cpptoc.h"
-
 #include "libcef_dll/cpptoc/views/box_layout_cpptoc.h"
 #include "libcef_dll/cpptoc/views/fill_layout_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"

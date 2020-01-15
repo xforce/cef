@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/browser_process_handler_ctocpp.h"
-
 #include "libcef_dll/cpptoc/command_line_cpptoc.h"
 #include "libcef_dll/cpptoc/list_value_cpptoc.h"
 #include "libcef_dll/ctocpp/print_handler_ctocpp.h"

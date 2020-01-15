@@ -21,7 +21,6 @@
 #endif
 
 #include <vector>
-
 #include "include/capi/cef_command_line_capi.h"
 #include "include/cef_command_line.h"
 #include "libcef_dll/ctocpp/ctocpp_ref_counted.h"

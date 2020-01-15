@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/views/menu_button_pressed_lock_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 
 // CONSTRUCTOR - Do not edit by hand.

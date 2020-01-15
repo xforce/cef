@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/v8interceptor_ctocpp.h"
-
 #include "libcef_dll/cpptoc/v8value_cpptoc.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.

@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/sslinfo_ctocpp.h"
-
 #include "libcef_dll/ctocpp/x509certificate_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 

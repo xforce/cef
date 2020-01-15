@@ -13,15 +13,13 @@
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_child_ctocpp.h"
-
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_child_child_ctocpp.h"
 
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<
-    CefTranslatorTestScopedLibraryChild> CefTranslatorTestScopedLibraryChild::
-    Create(int value, int other_value) {
+CefOwnPtr<CefTranslatorTestScopedLibraryChild>
+CefTranslatorTestScopedLibraryChild::Create(int value, int other_value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute

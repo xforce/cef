@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/server_cpptoc.h"
-
 #include "libcef_dll/cpptoc/task_runner_cpptoc.h"
 #include "libcef_dll/ctocpp/server_handler_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"

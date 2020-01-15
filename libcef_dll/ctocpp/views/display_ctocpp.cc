@@ -13,9 +13,7 @@
 //
 
 #include "libcef_dll/ctocpp/views/display_ctocpp.h"
-
 #include <algorithm>
-
 #include "libcef_dll/shutdown_checker.h"
 
 // STATIC METHODS - Body may be edited by hand.

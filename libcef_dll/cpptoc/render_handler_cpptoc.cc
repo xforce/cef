@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/render_handler_cpptoc.h"
-
 #include "libcef_dll/cpptoc/accessibility_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/drag_data_ctocpp.h"

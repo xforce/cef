@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/domvisitor_ctocpp.h"
-
 #include "libcef_dll/cpptoc/domdocument_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 

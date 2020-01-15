@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/urlrequest_ctocpp.h"
-
 #include "libcef_dll/cpptoc/urlrequest_client_cpptoc.h"
 #include "libcef_dll/ctocpp/request_context_ctocpp.h"
 #include "libcef_dll/ctocpp/request_ctocpp.h"

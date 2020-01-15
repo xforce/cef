@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/command_line_ctocpp.h"
-
 #include "include/cef_api_hash.h"
 #include "libcef_dll/transfer_util.h"
 

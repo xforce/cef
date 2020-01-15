@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/download_item_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {

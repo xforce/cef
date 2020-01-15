@@ -21,7 +21,6 @@
 #endif
 
 #include <vector>
-
 #include "include/capi/cef_browser_capi.h"
 #include "include/capi/cef_client_capi.h"
 #include "include/cef_browser.h"

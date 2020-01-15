@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/views/menu_button_ctocpp.h"
-
 #include "libcef_dll/cpptoc/views/menu_button_delegate_cpptoc.h"
 #include "libcef_dll/cpptoc/views/view_delegate_cpptoc.h"
 #include "libcef_dll/ctocpp/image_ctocpp.h"

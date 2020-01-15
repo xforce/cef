@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/web_plugin_info_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {

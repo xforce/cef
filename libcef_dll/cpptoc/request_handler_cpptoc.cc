@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/request_handler_cpptoc.h"
-
 #include "libcef_dll/cpptoc/resource_request_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/auth_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"

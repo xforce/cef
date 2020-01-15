@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/drag_data_ctocpp.h"
-
 #include "libcef_dll/ctocpp/image_ctocpp.h"
 #include "libcef_dll/ctocpp/stream_writer_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"

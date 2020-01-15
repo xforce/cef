@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/print_job_callback_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 
 namespace {

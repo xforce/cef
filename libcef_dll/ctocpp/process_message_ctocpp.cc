@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/process_message_ctocpp.h"
-
 #include "libcef_dll/ctocpp/list_value_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 

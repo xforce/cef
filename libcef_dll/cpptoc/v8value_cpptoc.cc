@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/v8value_cpptoc.h"
-
 #include "libcef_dll/cpptoc/v8context_cpptoc.h"
 #include "libcef_dll/cpptoc/v8exception_cpptoc.h"
 #include "libcef_dll/ctocpp/base_ref_counted_ctocpp.h"

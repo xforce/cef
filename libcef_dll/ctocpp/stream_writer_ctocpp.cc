@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/stream_writer_ctocpp.h"
-
 #include "libcef_dll/cpptoc/write_handler_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 

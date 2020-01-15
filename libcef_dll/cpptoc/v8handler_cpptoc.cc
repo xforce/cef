@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/v8handler_cpptoc.h"
-
 #include "libcef_dll/ctocpp/v8value_ctocpp.h"
 
 namespace {

@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/server_handler_cpptoc.h"
-
 #include "libcef_dll/ctocpp/callback_ctocpp.h"
 #include "libcef_dll/ctocpp/request_ctocpp.h"
 #include "libcef_dll/ctocpp/server_ctocpp.h"

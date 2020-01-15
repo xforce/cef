@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/views/window_cpptoc.h"
-
 #include "libcef_dll/cpptoc/image_cpptoc.h"
 #include "libcef_dll/cpptoc/menu_model_cpptoc.h"
 #include "libcef_dll/cpptoc/views/box_layout_cpptoc.h"

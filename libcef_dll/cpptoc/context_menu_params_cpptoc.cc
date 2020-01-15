@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/context_menu_params_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 

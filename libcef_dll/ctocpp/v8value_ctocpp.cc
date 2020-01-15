@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/v8value_ctocpp.h"
-
 #include "libcef_dll/cpptoc/base_ref_counted_cpptoc.h"
 #include "libcef_dll/cpptoc/v8accessor_cpptoc.h"
 #include "libcef_dll/cpptoc/v8array_buffer_release_callback_cpptoc.h"
@@ -848,8 +847,8 @@ NO_SANITIZE("cfi-icall") int CefV8ValueCToCpp::GetArrayLength() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefV8ArrayBufferReleaseCallback> CefV8ValueCToCpp::
-    GetArrayBufferReleaseCallback() {
+CefRefPtr<CefV8ArrayBufferReleaseCallback>
+CefV8ValueCToCpp::GetArrayBufferReleaseCallback() {
   cef_v8value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_array_buffer_release_callback))
     return nullptr;

@@ -17,9 +17,10 @@
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<
-    CefTranslatorTestScopedLibraryChildChild> CefTranslatorTestScopedLibraryChildChild::
-    Create(int value, int other_value, int other_other_value) {
+CefOwnPtr<CefTranslatorTestScopedLibraryChildChild>
+CefTranslatorTestScopedLibraryChildChild::Create(int value,
+                                                 int other_value,
+                                                 int other_other_value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute

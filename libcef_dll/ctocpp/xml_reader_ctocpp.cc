@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/xml_reader_ctocpp.h"
-
 #include "libcef_dll/ctocpp/stream_reader_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 

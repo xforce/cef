@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/thread_ctocpp.h"
-
 #include "libcef_dll/ctocpp/task_runner_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 

@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/cookie_access_filter_cpptoc.h"
-
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/frame_ctocpp.h"
 #include "libcef_dll/ctocpp/request_ctocpp.h"

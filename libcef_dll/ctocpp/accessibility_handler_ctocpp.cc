@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/accessibility_handler_ctocpp.h"
-
 #include "libcef_dll/cpptoc/value_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
 

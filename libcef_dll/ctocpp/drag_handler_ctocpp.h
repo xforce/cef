@@ -21,7 +21,6 @@
 #endif
 
 #include <vector>
-
 #include "include/capi/cef_drag_handler_capi.h"
 #include "include/cef_drag_handler.h"
 #include "libcef_dll/ctocpp/ctocpp_ref_counted.h"

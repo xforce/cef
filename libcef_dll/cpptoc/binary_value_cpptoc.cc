@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/cpptoc/binary_value_cpptoc.h"
-
 #include "libcef_dll/shutdown_checker.h"
 
 // GLOBAL FUNCTIONS - Body may be edited by hand.

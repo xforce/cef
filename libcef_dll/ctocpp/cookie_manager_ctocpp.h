@@ -21,7 +21,6 @@
 #endif
 
 #include <vector>
-
 #include "include/capi/cef_cookie_capi.h"
 #include "include/cef_cookie.h"
 #include "libcef_dll/ctocpp/ctocpp_ref_counted.h"

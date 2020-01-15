@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/cookie_manager_ctocpp.h"
-
 #include "libcef_dll/cpptoc/completion_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/cookie_visitor_cpptoc.h"
 #include "libcef_dll/cpptoc/delete_cookies_callback_cpptoc.h"

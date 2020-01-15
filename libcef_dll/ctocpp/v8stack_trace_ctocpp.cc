@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/v8stack_trace_ctocpp.h"
-
 #include "libcef_dll/ctocpp/v8stack_frame_ctocpp.h"
 #include "libcef_dll/shutdown_checker.h"
 

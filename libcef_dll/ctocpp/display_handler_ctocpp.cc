@@ -13,7 +13,6 @@
 //
 
 #include "libcef_dll/ctocpp/display_handler_ctocpp.h"
-
 #include "libcef_dll/cpptoc/browser_cpptoc.h"
 #include "libcef_dll/cpptoc/frame_cpptoc.h"
 #include "libcef_dll/shutdown_checker.h"
