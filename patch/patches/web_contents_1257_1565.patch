@@ -1,5 +1,5 @@
 diff --git content/browser/web_contents/web_contents_impl.cc content/browser/web_contents/web_contents_impl.cc
-index 6f2ee557fb41..9bc7d70ea353 100644
+index 6f2ee557fb41..b2477644d342 100644
 --- content/browser/web_contents/web_contents_impl.cc
 +++ content/browser/web_contents/web_contents_impl.cc
 @@ -2045,16 +2045,24 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
@@ -51,24 +51,6 @@ index 6f2ee557fb41..9bc7d70ea353 100644
    // If |is_new_browsing_instance| is true, defer routing_id allocation
    // to the WebContentsImpl::Create() call. This is required because with
    // a new browsing instance, WebContentsImpl::Create() may elect a different
-@@ -2894,7 +2911,7 @@ RenderFrameHostDelegate* WebContentsImpl::CreateNewWindow(
-       // TODO(brettw): It seems bogus that we have to call this function on the
-       // newly created object and give it one of its own member variables.
-       RenderWidgetHostView* widget_view = new_view->CreateViewForWidget(
--          new_contents_impl->GetRenderViewHost()->GetWidget());
-+          new_contents_impl->GetRenderViewHost()->GetWidget(), nullptr);
-       if (!renderer_started_hidden) {
-         // RenderWidgets for frames always initialize as hidden. If the renderer
-         // created this window as visible, then we show it here.
-@@ -6549,7 +6566,7 @@ InterstitialPageImpl* WebContentsImpl::GetInterstitialForRenderManager() {
- void WebContentsImpl::CreateRenderWidgetHostViewForRenderManager(
-     RenderViewHost* render_view_host) {
-   RenderWidgetHostViewBase* rwh_view =
--      view_->CreateViewForWidget(render_view_host->GetWidget());
-+      view_->CreateViewForWidget(render_view_host->GetWidget(), nullptr);
-   rwh_view->SetSize(GetSizeForNewRenderView(true));
- }
- 
 diff --git content/public/browser/web_contents.cc content/public/browser/web_contents.cc
 index 2e133afb8da8..e9a88a6bb96b 100644
 --- content/public/browser/web_contents.cc

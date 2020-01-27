@@ -98,22 +98,15 @@ gfx::Rect CefWebContentsViewOSR::GetViewBounds() const {
 void CefWebContentsViewOSR::CreateView(gfx::NativeView context) {}
 
 content::RenderWidgetHostViewBase* CefWebContentsViewOSR::CreateViewForWidget(
-    content::RenderWidgetHost* render_widget_host,
-    content::RenderWidgetHost* embedder_render_widget_host) {
+    content::RenderWidgetHost* render_widget_host) {
   if (render_widget_host->GetView()) {
     return static_cast<content::RenderWidgetHostViewBase*>(
         render_widget_host->GetView());
   }
 
-  CefRenderWidgetHostViewOSR* embedder_host_view = nullptr;
-  if (embedder_render_widget_host) {
-    embedder_host_view = static_cast<CefRenderWidgetHostViewOSR*>(
-        embedder_render_widget_host->GetView());
-  }
-
   return new CefRenderWidgetHostViewOSR(
       background_color_, use_shared_texture_, use_external_begin_frame_,
-      render_widget_host, embedder_host_view);
+      render_widget_host, nullptr);
 }
 
 // Called for popup and fullscreen widgets.
