@@ -100,7 +100,7 @@ class ResolveHostHelper : public network::ResolveHostClientBase {
                        net::ERR_FAILED, net::ResolveErrorInfo(net::ERR_FAILED), base::nullopt));
 
     host_resolver_->ResolveHost(
-        net::HostPortPair::FromURL(GURL(origin.ToString())), net::NetworkIsolationKey(), nullptr,
+        net::HostPortPair::FromURL(GURL(origin.ToString())), net::NetworkIsolationKey::Todo(), nullptr,
         receiver_.BindNewPipeAndPassRemote());
   }
 
