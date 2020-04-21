@@ -151,7 +151,7 @@ void CefBrowserMainParts::PostMainMessageLoopStart() {
 #endif
 }
 
-static base::FilePath GetStartupProfilePath(const base::FilePath& user_data_dir,
+static base::FilePath CefGetStartupProfilePath(const base::FilePath& user_data_dir,
                                      const base::CommandLine& command_line) {
 // If the browser is launched due to activation on Windows native notification,
 // the profile id encoded in the notification launch id should be chosen over
@@ -180,7 +180,7 @@ void ProcessSingletonNotificationCallbackImpl(
   base::FilePath user_data_dir =
       g_browser_process->profile_manager()->user_data_dir();
   base::FilePath startup_profile_dir =
-      GetStartupProfilePath(user_data_dir, command_line);
+      CefGetStartupProfilePath(user_data_dir, command_line);
 
 
 #if defined(OS_WIN)

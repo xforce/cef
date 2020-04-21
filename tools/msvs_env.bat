@@ -37,6 +37,14 @@ for %%x in ("%PROGRAMFILES(X86)%" "%PROGRAMFILES%") do (
   )
 )
 
+for %%x in ("%PROGRAMFILES(X86)%" "%PROGRAMFILES%") do (
+  for %%y in (Professional Enterprise Community BuildTools) do (
+    set vcvars="%%~x\Microsoft Visual Studio\2019\%%y\VC\Auxiliary\Build\%vcvarsbat%"
+    if exist !vcvars! goto found_vcvars
+  )
+)
+
+
 echo ERROR: Failed to find vcvars
 set ERRORLEVEL=1
 goto end
