@@ -173,6 +173,7 @@ class StreamReaderURLLoader : public network::mojom::URLLoader {
   // network::mojom::URLLoader methods:
   void FollowRedirect(const std::vector<std::string>& removed_headers,
                       const net::HttpRequestHeaders& modified_headers,
+                      const net::HttpRequestHeaders& modified_cors_exempt_headers,
                       const base::Optional<GURL>& new_url) override;
   void SetPriority(net::RequestPriority priority,
                    int intra_priority_value) override;

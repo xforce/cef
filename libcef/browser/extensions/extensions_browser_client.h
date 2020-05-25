@@ -82,7 +82,7 @@ class CefExtensionsBrowserClient : public ExtensionsBrowserClient {
   bool IsLoggedInAsPublicAccount() override;
   ExtensionSystemProvider* GetExtensionSystemFactory() override;
   void RegisterBrowserInterfaceBindersForFrame(
-      service_manager::BinderMapWithContext<content::RenderFrameHost*>*
+      mojo::BinderMapWithContext<content::RenderFrameHost*>*
           binder_map,
       content::RenderFrameHost* render_frame_host,
       const Extension* extension) const override;
@@ -110,6 +110,8 @@ class CefExtensionsBrowserClient : public ExtensionsBrowserClient {
 
   // Resource manager used to supply resources from pak files.
   std::unique_ptr<ComponentExtensionResourceManager> resource_manager_;
+
+  std::unique_ptr<KioskDelegate> kiosk_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(CefExtensionsBrowserClient);
 };

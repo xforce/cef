@@ -20,6 +20,7 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_win.h"
+#include "ui/base/models/image_model.h"
 #include "ui/base/models/menu_model.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
@@ -288,10 +289,11 @@ class CefNativeMenuWin::MenuHostWindow {
 
       // Draw the icon after the label, otherwise it would be covered
       // by the label.
-      gfx::Image icon;
-      if (data->native_menu_win->model_->GetIconAt(data->model_index, &icon)) {
+      // TODO(alexander): Update to handle VectorIcon
+      ui::ImageModel icon = data->native_menu_win->model_->GetIconAt(data->model_index);
+      if (icon.IsImage()) {
         // We currently don't support items with both icons and checkboxes.
-        const gfx::ImageSkia skia_icon = icon.AsImageSkia();
+        const gfx::ImageSkia skia_icon = icon.GetImage().AsImageSkia();
         DCHECK(type != ui::MenuModel::TYPE_CHECK);
         std::unique_ptr<SkCanvas> canvas = skia::CreatePlatformCanvas(
             skia_icon.width(), skia_icon.height(), false);

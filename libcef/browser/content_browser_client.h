@@ -173,10 +173,12 @@ class CefContentBrowserClient : public content::ContentBrowserClient {
       network::mojom::URLLoaderFactoryOverridePtr* factory_override) override;
   void OnNetworkServiceCreated(
       network::mojom::NetworkService* network_service) override;
-  mojo::Remote<network::mojom::NetworkContext> CreateNetworkContext(
-      content::BrowserContext* context,
-      bool in_memory,
-      const base::FilePath& relative_partition_path) override;
+void ConfigureNetworkContextParams(
+    content::BrowserContext* context,
+    bool in_memory,
+    const base::FilePath& relative_partition_path,
+    network::mojom::NetworkContextParams* network_context_params,
+    network::mojom::CertVerifierCreationParams* cert_verifier_creation_params) override;
   std::vector<base::FilePath> GetNetworkContextsParentDirectory() override;
   bool HandleExternalProtocol(
       const GURL& url,
@@ -200,7 +202,7 @@ class CefContentBrowserClient : public content::ContentBrowserClient {
       content::PictureInPictureWindowController* controller) override;
   void RegisterBrowserInterfaceBindersForFrame(
       content::RenderFrameHost* render_frame_host,
-      service_manager::BinderMapWithContext<content::RenderFrameHost*>* map)
+      mojo::BinderMapWithContext<content::RenderFrameHost*>* map)
       override;
   base::FilePath GetSandboxedStorageServiceDataDirectory() override;
   std::string GetProduct() override;

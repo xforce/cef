@@ -3180,6 +3180,16 @@ typedef enum {
   CEF_MSIT_TOTAL_COUNT,  // The total number of values.
 } cef_media_sink_icon_type_t;
 
+///
+// Represents commands available to TextField.
+///
+typedef enum {
+  kUndo = 0,
+  kDelete,
+  kSelectAll,
+} cef_text_field_commands_t;
+
+
 #ifdef __cplusplus
 }
 #endif

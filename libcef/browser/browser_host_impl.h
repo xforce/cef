@@ -379,6 +379,7 @@ class CefBrowserHostImpl : public CefBrowserHost,
   bool ShouldTransferNavigation(bool is_main_frame_navigation) override;
   void AddNewContents(content::WebContents* source,
                       std::unique_ptr<content::WebContents> new_contents,
+                      const GURL& target_url,
                       WindowOpenDisposition disposition,
                       const gfx::Rect& initial_rect,
                       bool user_gesture,

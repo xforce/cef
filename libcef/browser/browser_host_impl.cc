@@ -195,6 +195,27 @@ void OnDownloadImage(uint32 max_image_size,
                                     image_impl.get());
 }
 
+// class SetCursorInterceptor
+//     : public blink::mojom::WidgetHostInterceptorForTesting {
+//  public:
+//   explicit SetCursorInterceptor(RenderWidgetHost* render_widget_host)
+//       : render_widget_host_(render_widget_host) {
+//     render_widget_host_->widget_host_receiver_for_testing().SwapImplForTesting(
+//         this);
+//   }
+//   ~SetCursorInterceptor() override = default;
+
+//   WidgetHost* GetForwardingInterface() override { return render_widget_host_; }
+
+//   void SetCursor(const ui::Cursor& cursor) override { set_cursor_count_++; }
+
+//   int set_cursor_count() { return set_cursor_count_; }
+
+//  private:
+//   RenderWidgetHost* render_widget_host_;
+//   int set_cursor_count_ = 0;
+// };
+
 static constexpr base::TimeDelta kRecentlyAudibleTimeout =
     base::TimeDelta::FromSeconds(2);
 
@@ -2044,6 +2065,7 @@ bool CefBrowserHostImpl::ShouldTransferNavigation(
 void CefBrowserHostImpl::AddNewContents(
     content::WebContents* source,
     std::unique_ptr<content::WebContents> new_contents,
+    const GURL& target_url,
     WindowOpenDisposition disposition,
     const gfx::Rect& initial_rect,
     bool user_gesture,
@@ -2058,7 +2080,8 @@ void CefBrowserHostImpl::AddNewContents(
 
   if (extension_host_) {
     extension_host_->AddNewContents(source, std::move(new_contents),
-                                    disposition, initial_rect, user_gesture,
+                                    target_url, disposition, initial_rect,
+                                    user_gesture,
                                     was_blocked);
   }
 }
@@ -2729,8 +2752,9 @@ void CefBrowserHostImpl::OnRecentlyAudibleTimerFired() {
 bool CefBrowserHostImpl::OnMessageReceived(const IPC::Message& message) {
   // Handle the cursor message here if mouse cursor change is disabled instead
   // of propegating the message to the normal handler.
-  if (message.type() == WidgetHostMsg_SetCursor::ID)
-    return IsMouseCursorChangeDisabled();
+  // TODO(alexander): Implement SetCursorInterceptor
+  // if (message.type() == WidgetHostMsg_SetCursor::ID)
+  //   return IsMouseCursorChangeDisabled();
 
   return false;
 }

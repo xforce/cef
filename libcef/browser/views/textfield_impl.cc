@@ -6,6 +6,19 @@
 
 #include "libcef/browser/thread_util.h"
 
+namespace {
+  static views::Textfield::MenuCommands CefCommandIdToChromeId(cef_text_field_commands_t command_id) {
+    switch (command_id) {
+      case cef_text_field_commands_t::kUndo:
+        return views::Textfield::MenuCommands::kUndo;
+      case cef_text_field_commands_t::kDelete:
+        return views::Textfield::MenuCommands::kDelete;
+      case cef_text_field_commands_t::kSelectAll:
+        return views::Textfield::MenuCommands::kSelectAll;
+    }
+  }
+}
+
 // static
 CefRefPtr<CefTextfield> CefTextfield::CreateTextfield(
     CefRefPtr<CefTextfieldDelegate> delegate) {
@@ -154,15 +167,15 @@ void CefTextfieldImpl::ApplyTextStyle(cef_text_style_t style,
   }
 }
 
-bool CefTextfieldImpl::IsCommandEnabled(int command_id) {
+bool CefTextfieldImpl::IsCommandEnabled(cef_text_field_commands_t command_id) {
   CEF_REQUIRE_VALID_RETURN(false);
-  return root_view()->IsCommandIdEnabled(command_id);
+  return root_view()->IsCommandIdEnabled(CefCommandIdToChromeId(command_id));
 }
 
-void CefTextfieldImpl::ExecuteCommand(int command_id) {
+void CefTextfieldImpl::ExecuteCommand(cef_text_field_commands_t command_id) {
   CEF_REQUIRE_VALID_RETURN_VOID();
-  if (root_view()->IsCommandIdEnabled(command_id))
-    root_view()->ExecuteCommand(command_id, ui::EF_NONE);
+  if (root_view()->IsCommandIdEnabled(CefCommandIdToChromeId(command_id)))
+    root_view()->ExecuteCommand(CefCommandIdToChromeId(command_id), ui::EF_NONE);
 }
 
 void CefTextfieldImpl::ClearEditHistory() {

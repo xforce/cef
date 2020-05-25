@@ -160,6 +160,7 @@ class InterceptedRequest : public network::mojom::URLLoader,
   // mojom::URLLoader methods:
   void FollowRedirect(const std::vector<std::string>& removed_headers,
                       const net::HttpRequestHeaders& modified_headers,
+                      const net::HttpRequestHeaders& modified_cors_exempt_headers,
                       const base::Optional<GURL>& new_url) override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
@@ -561,6 +562,7 @@ void InterceptedRequest::OnComplete(
 void InterceptedRequest::FollowRedirect(
     const std::vector<std::string>& removed_headers_ext,
     const net::HttpRequestHeaders& modified_headers_ext,
+    const net::HttpRequestHeaders& modified_cors_exempt_headers,
     const base::Optional<GURL>& new_url) {
   std::vector<std::string> removed_headers = removed_headers_ext;
   net::HttpRequestHeaders modified_headers = modified_headers_ext;
@@ -642,14 +644,13 @@ void InterceptedRequest::InterceptResponseReceived(
     if (request_.headers.GetHeader(net::HttpRequestHeaders::kOrigin, &origin) &&
         origin != url::Origin().Serialize()) {
       // Allow redirects of cross-origin resource loads.
-      headers->AddHeader(MakeHeader(
-          network::cors::header_names::kAccessControlAllowOrigin, origin));
+      headers->AddHeader(network::cors::header_names::kAccessControlAllowOrigin, origin);
     }
 
     if (request_.credentials_mode ==
         network::mojom::CredentialsMode::kInclude) {
-      headers->AddHeader(MakeHeader(
-          network::cors::header_names::kAccessControlAllowCredentials, "true"));
+      headers->AddHeader(network::cors::header_names::kAccessControlAllowCredentials, 
+                          "true");
     }
 
     const net::RedirectInfo& redirect_info =
@@ -941,7 +942,7 @@ void InterceptedRequest::OnURLLoaderClientError() {
 void InterceptedRequest::OnURLLoaderError(uint32_t custom_reason,
                                           const std::string& description) {
   if (custom_reason == network::mojom::URLLoader::kClientDisconnectReason)
-    SendErrorCallback(safe_browsing::GetNetErrorCodeForSafeBrowsing(), true);
+    SendErrorCallback(safe_browsing::kNetErrorCodeForSafeBrowsing, true);
 
   got_loader_error_ = true;
 
