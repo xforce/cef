@@ -251,6 +251,9 @@ def GetRequiredArgs():
 
       # Don't use the chrome style plugin.
       'clang_use_chrome_plugins': False,
+
+      # Disable PGO
+      'chrome_pgo_phase': 0,
   }
 
   if platform == 'linux':
