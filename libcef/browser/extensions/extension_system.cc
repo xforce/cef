@@ -493,8 +493,8 @@ void CefExtensionSystem::InstallUpdate(
 }
 
 void CefExtensionSystem::PerformActionBasedOnOmahaAttributes(
-      const std::string& extension_id,
-      const base::Value& attributes) {
+    const std::string& extension_id,
+    const base::Value& attributes) {
   NOTREACHED();
 }
 

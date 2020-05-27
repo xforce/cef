@@ -7,17 +7,23 @@
 #include "libcef/browser/thread_util.h"
 
 namespace {
-  static views::Textfield::MenuCommands CefCommandIdToChromeId(cef_text_field_commands_t command_id) {
-    switch (command_id) {
-      case cef_text_field_commands_t::kUndo:
-        return views::Textfield::MenuCommands::kUndo;
-      case cef_text_field_commands_t::kDelete:
-        return views::Textfield::MenuCommands::kDelete;
-      case cef_text_field_commands_t::kSelectAll:
-        return views::Textfield::MenuCommands::kSelectAll;
-    }
+static int CefCommandIdToChromeId(cef_text_field_commands_t command_id) {
+  switch (command_id) {
+    case cef_text_field_commands_t::CEF_TFC_CUT:
+      return views::Textfield::kCut;
+    case cef_text_field_commands_t::CEF_TFC_COPY:
+      return views::Textfield::kCopy;
+    case cef_text_field_commands_t::CEF_TFC_PASTE:
+      return views::Textfield::kPaste;
+    case cef_text_field_commands_t::CEF_TFC_UNDO:
+      return views::Textfield::kUndo;
+    case cef_text_field_commands_t::CEF_TFC_DELETE:
+      return views::Textfield::kDelete;
+    case cef_text_field_commands_t::CEF_TFC_SELECT_ALL:
+      return views::Textfield::kSelectAll;
   }
 }
+}  // namespace
 
 // static
 CefRefPtr<CefTextfield> CefTextfield::CreateTextfield(
@@ -175,7 +181,8 @@ bool CefTextfieldImpl::IsCommandEnabled(cef_text_field_commands_t command_id) {
 void CefTextfieldImpl::ExecuteCommand(cef_text_field_commands_t command_id) {
   CEF_REQUIRE_VALID_RETURN_VOID();
   if (root_view()->IsCommandIdEnabled(CefCommandIdToChromeId(command_id)))
-    root_view()->ExecuteCommand(CefCommandIdToChromeId(command_id), ui::EF_NONE);
+    root_view()->ExecuteCommand(CefCommandIdToChromeId(command_id),
+                                ui::EF_NONE);
 }
 
 void CefTextfieldImpl::ClearEditHistory() {

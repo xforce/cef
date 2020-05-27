@@ -97,8 +97,8 @@ void TextfieldContentsImpl() {
   EXPECT_EQ(cursor_pos, textfield->GetCursorPosition());
 
   // Test selection with command.
-  EXPECT_TRUE(textfield->IsCommandEnabled(cef_text_field_commands_t::kSelectAll));
-  textfield->ExecuteCommand(cef_text_field_commands_t::kSelectAll);
+  EXPECT_TRUE(textfield->IsCommandEnabled(CEF_TFC_SELECT_ALL));
+  textfield->ExecuteCommand(CEF_TFC_SELECT_ALL);
   EXPECT_TRUE(textfield->HasSelection());
   EXPECT_EQ(CefRange(0, static_cast<int>(cursor_pos)),
             textfield->GetSelectedRange());

@@ -1322,7 +1322,7 @@ void CefContentBrowserClient::ConfigureNetworkContextParams(
   profile->ConfigureNetworkContextParams(in_memory, relative_partition_path,
                                          network_context_params,
                                          cert_verifier_creation_params);
-  // TODO(cef): Remove this and add required NetworkIsolationKeys, 
+  // TODO(cef): Remove this and add required NetworkIsolationKeys,
   // this is currently not the case and this was not required pre M84.
   network_context_params->require_network_isolation_key = false;
 }
@@ -1460,7 +1460,8 @@ std::string CefContentBrowserClient::GetUserAgent() {
 blink::UserAgentMetadata CefContentBrowserClient::GetUserAgentMetadata() {
   blink::UserAgentMetadata metadata;
 
-  metadata.brand_version_list = { blink::UserAgentBrandVersion {version_info::GetProductName(), version_info::GetMajorVersionNumber()}};
+  metadata.brand_version_list = {blink::UserAgentBrandVersion{
+      version_info::GetProductName(), version_info::GetMajorVersionNumber()}};
   metadata.full_version = version_info::GetVersionNumber();
   metadata.platform = version_info::GetOSType();
 

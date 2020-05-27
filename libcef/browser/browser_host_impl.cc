@@ -205,7 +205,8 @@ void OnDownloadImage(uint32 max_image_size,
 //   }
 //   ~SetCursorInterceptor() override = default;
 
-//   WidgetHost* GetForwardingInterface() override { return render_widget_host_; }
+//   WidgetHost* GetForwardingInterface() override { return render_widget_host_;
+//   }
 
 //   void SetCursor(const ui::Cursor& cursor) override { set_cursor_count_++; }
 
@@ -2079,9 +2080,8 @@ void CefBrowserHostImpl::AddNewContents(
   }
 
   if (extension_host_) {
-    extension_host_->AddNewContents(source, std::move(new_contents),
-                                    target_url, disposition, initial_rect,
-                                    user_gesture,
+    extension_host_->AddNewContents(source, std::move(new_contents), target_url,
+                                    disposition, initial_rect, user_gesture,
                                     was_blocked);
   }
 }

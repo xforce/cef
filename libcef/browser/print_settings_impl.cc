@@ -142,7 +142,8 @@ int CefPrintSettingsImpl::GetCopies() {
 
 void CefPrintSettingsImpl::SetDuplexMode(DuplexMode mode) {
   CEF_VALUE_VERIFY_RETURN_VOID(true);
-  mutable_value()->set_duplex_mode(static_cast<printing::mojom::DuplexMode>(mode));
+  mutable_value()->set_duplex_mode(
+      static_cast<printing::mojom::DuplexMode>(mode));
 }
 
 CefPrintSettings::DuplexMode CefPrintSettingsImpl::GetDuplexMode() {

@@ -1086,11 +1086,12 @@ void CefRenderWidgetHostViewOSR::SendKeyEvent(
   if (target_host && target_host->GetView()) {
     // Direct routing requires that events go directly to the View.
     target_host->ForwardKeyboardEventWithLatencyInfo(
-        event, ui::LatencyInfo(event.GetType() == blink::WebInputEvent::Type::kChar ||
-                                       event.GetType() ==
-                                           blink::WebInputEvent::Type::kRawKeyDown
-                                   ? ui::SourceEventType::KEY_PRESS
-                                   : ui::SourceEventType::OTHER));
+        event,
+        ui::LatencyInfo(event.GetType() == blink::WebInputEvent::Type::kChar ||
+                                event.GetType() ==
+                                    blink::WebInputEvent::Type::kRawKeyDown
+                            ? ui::SourceEventType::KEY_PRESS
+                            : ui::SourceEventType::OTHER));
   }
 }
 
@@ -1282,8 +1283,9 @@ void CefRenderWidgetHostViewOSR::SendTouchEvent(const CefTouchEvent& event) {
                                                           latency_info);
   }
 
-  bool touch_end = touch_event.GetType() == blink::WebInputEvent::Type::kTouchEnd ||
-                   touch_event.GetType() == blink::WebInputEvent::Type::kTouchCancel;
+  bool touch_end =
+      touch_event.GetType() == blink::WebInputEvent::Type::kTouchEnd ||
+      touch_event.GetType() == blink::WebInputEvent::Type::kTouchCancel;
 
   if (touch_end && IsPopupWidget() && parent_host_view_ &&
       parent_host_view_->popup_host_view_ == this) {

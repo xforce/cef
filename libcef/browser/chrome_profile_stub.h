@@ -27,10 +27,12 @@ class ChromeProfileStub : public Profile {
   scoped_refptr<base::SequencedTaskRunner> GetIOTaskRunner() override;
   std::string GetProfileUserName() const override;
   ProfileType GetProfileType() const override;
-  Profile* GetOffTheRecordProfile(const Profile::OTRProfileID& otr_profile_id) override;
+  Profile* GetOffTheRecordProfile(
+      const Profile::OTRProfileID& otr_profile_id) override;
   std::vector<Profile*> GetAllOffTheRecordProfiles() override;
   void DestroyOffTheRecordProfile(Profile* otr_profile) override;
-  bool HasOffTheRecordProfile(const Profile::OTRProfileID& otr_profile_id) override;
+  bool HasOffTheRecordProfile(
+      const Profile::OTRProfileID& otr_profile_id) override;
   bool HasAnyOffTheRecordProfile() override;
   Profile* GetOriginalProfile() override;
   const Profile* GetOriginalProfile() const override;

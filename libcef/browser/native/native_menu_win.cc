@@ -290,7 +290,8 @@ class CefNativeMenuWin::MenuHostWindow {
       // Draw the icon after the label, otherwise it would be covered
       // by the label.
       // TODO(alexander): Update to handle VectorIcon
-      ui::ImageModel icon = data->native_menu_win->model_->GetIconAt(data->model_index);
+      ui::ImageModel icon =
+          data->native_menu_win->model_->GetIconAt(data->model_index);
       if (icon.IsImage()) {
         // We currently don't support items with both icons and checkboxes.
         const gfx::ImageSkia skia_icon = icon.GetImage().AsImageSkia();

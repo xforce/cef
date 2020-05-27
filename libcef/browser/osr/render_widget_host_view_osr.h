@@ -197,8 +197,9 @@ class CefRenderWidgetHostViewOSR : public content::RenderWidgetHostViewBase,
       bool did_update_state) override;
 
   // ui::GestureProviderClient implementation.
-  void ProcessAckedTouchEvent(const content::TouchEventWithLatencyInfo& touch,
-                              blink::mojom::InputEventResultState ack_result) override;
+  void ProcessAckedTouchEvent(
+      const content::TouchEventWithLatencyInfo& touch,
+      blink::mojom::InputEventResultState ack_result) override;
   void OnGestureEvent(const ui::GestureEventData& gesture) override;
 
   bool InstallTransparency();

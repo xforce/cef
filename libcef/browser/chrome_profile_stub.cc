@@ -73,12 +73,14 @@ Profile::ProfileType ChromeProfileStub::GetProfileType() const {
   return REGULAR_PROFILE;
 }
 
-Profile* ChromeProfileStub::GetOffTheRecordProfile(const Profile::OTRProfileID& otr_profile_id) {
+Profile* ChromeProfileStub::GetOffTheRecordProfile(
+    const Profile::OTRProfileID& otr_profile_id) {
   NOTREACHED();
   return nullptr;
 }
 
 std::vector<Profile*> ChromeProfileStub::GetAllOffTheRecordProfiles() {
+  NOTREACHED();
   return {};
 }
 
@@ -86,7 +88,8 @@ void ChromeProfileStub::DestroyOffTheRecordProfile(Profile* otr_profile) {
   NOTREACHED();
 }
 
-bool ChromeProfileStub::HasOffTheRecordProfile(const Profile::OTRProfileID& otr_profile_id) {
+bool ChromeProfileStub::HasOffTheRecordProfile(
+    const Profile::OTRProfileID& otr_profile_id) {
   return false;
 }
 

@@ -282,7 +282,7 @@ index 44e9eef3492e..ddf197d53b8c 100644
    DCHECK(xev);
    DCHECK(drag_drop_client_);
 diff --git ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h
-index 8cd6b80ee1ea..d06a542fbe87 100644
+index 8cd6b80ee1ea..442c33c77d92 100644
 --- ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h
 +++ ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h
 @@ -30,12 +30,21 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11 : public DesktopWindowTreeHostLinux,
@@ -311,10 +311,10 @@ index 8cd6b80ee1ea..d06a542fbe87 100644
    // directly. See https://crbug.com/990756.
    const ui::XWindow* GetXWindow() const;
  
-+  // Override the screen bounds when the host is a ch
++  // Override the screen bounds when the host is a child window.
 +  gfx::Rect screen_bounds_;
 +
-+  // True if the widget has a external parent view/wi
++  // True if the widget has a external parent view/window outside of the
 +  // Chromium-controlled view/window hierarchy.
 +  bool has_external_parent_ = false;
 +

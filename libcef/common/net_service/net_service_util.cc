@@ -127,14 +127,14 @@ scoped_refptr<net::HttpResponseHeaders> MakeResponseHeaders(
       status_code != net::HTTP_RESET_CONTENT) {
     if (!mime_type.empty()) {
       headers->AddHeader(net::HttpRequestHeaders::kContentType,
-                                    MakeContentTypeValue(mime_type, charset));
+                         MakeContentTypeValue(mime_type, charset));
       set_headers_lowercase.insert(
           base::ToLowerASCII(net::HttpRequestHeaders::kContentType));
     }
 
     if (content_length >= 0) {
       headers->AddHeader(net::HttpRequestHeaders::kContentLength,
-                                    base::NumberToString(content_length));
+                         base::NumberToString(content_length));
       set_headers_lowercase.insert(
           base::ToLowerASCII(net::HttpRequestHeaders::kContentLength));
     }

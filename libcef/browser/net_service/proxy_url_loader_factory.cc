@@ -158,10 +158,11 @@ class InterceptedRequest : public network::mojom::URLLoader,
   void OnComplete(const network::URLLoaderCompletionStatus& status) override;
 
   // mojom::URLLoader methods:
-  void FollowRedirect(const std::vector<std::string>& removed_headers,
-                      const net::HttpRequestHeaders& modified_headers,
-                      const net::HttpRequestHeaders& modified_cors_exempt_headers,
-                      const base::Optional<GURL>& new_url) override;
+  void FollowRedirect(
+      const std::vector<std::string>& removed_headers,
+      const net::HttpRequestHeaders& modified_headers,
+      const net::HttpRequestHeaders& modified_cors_exempt_headers,
+      const base::Optional<GURL>& new_url) override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
   void PauseReadingBodyFromNet() override;
@@ -644,13 +645,14 @@ void InterceptedRequest::InterceptResponseReceived(
     if (request_.headers.GetHeader(net::HttpRequestHeaders::kOrigin, &origin) &&
         origin != url::Origin().Serialize()) {
       // Allow redirects of cross-origin resource loads.
-      headers->AddHeader(network::cors::header_names::kAccessControlAllowOrigin, origin);
+      headers->AddHeader(network::cors::header_names::kAccessControlAllowOrigin,
+                         origin);
     }
 
     if (request_.credentials_mode ==
         network::mojom::CredentialsMode::kInclude) {
-      headers->AddHeader(network::cors::header_names::kAccessControlAllowCredentials, 
-                          "true");
+      headers->AddHeader(
+          network::cors::header_names::kAccessControlAllowCredentials, "true");
     }
 
     const net::RedirectInfo& redirect_info =

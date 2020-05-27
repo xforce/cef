@@ -209,7 +209,7 @@ index 9ea80370a842..3043f7d32f33 100644
  extern void InitCrashKeysForTesting();
  
 diff --git components/crash/core/app/crash_reporter_client.cc components/crash/core/app/crash_reporter_client.cc
-index 44e81b2f95f6..cbf204f0855e 100644
+index 44e81b2f95f6..bfa419e46bc8 100644
 --- components/crash/core/app/crash_reporter_client.cc
 +++ components/crash/core/app/crash_reporter_client.cc
 @@ -88,7 +88,7 @@ int CrashReporterClient::GetResultCodeRespawnFailed() {
@@ -237,17 +237,13 @@ index 44e81b2f95f6..cbf204f0855e 100644
  
  #if defined(OS_WIN)
  bool CrashReporterClient::GetCrashDumpLocation(base::string16* crash_dir) {
-@@ -148,6 +150,32 @@ bool CrashReporterClient::ReportingIsEnforcedByPolicy(bool* breakpad_enabled) {
+@@ -148,6 +150,28 @@ bool CrashReporterClient::ReportingIsEnforcedByPolicy(bool* breakpad_enabled) {
    return false;
  }
  
 +bool CrashReporterClient::EnableBreakpadForProcess(
 +    const std::string& process_type) {
 +  return false;
-+}
-+
-+std::string CrashReporterClient::GetCrashServerURL() {
-+  return std::string();
 +}
 +
 +void CrashReporterClient::GetCrashOptionalArguments(
@@ -270,7 +266,7 @@ index 44e81b2f95f6..cbf204f0855e 100644
  #if defined(OS_ANDROID)
  unsigned int CrashReporterClient::GetCrashDumpPercentage() {
    return 100;
-@@ -210,9 +238,11 @@ bool CrashReporterClient::ShouldMonitorCrashHandlerExpensively() {
+@@ -210,9 +234,11 @@ bool CrashReporterClient::ShouldMonitorCrashHandlerExpensively() {
    return false;
  }
  
@@ -286,7 +282,7 @@ index 44e81b2f95f6..cbf204f0855e 100644
  
  }  // namespace crash_reporter
 diff --git components/crash/core/app/crash_reporter_client.h components/crash/core/app/crash_reporter_client.h
-index 05538423d0b9..d54dbe858e8e 100644
+index 05538423d0b9..60b3403b4b0e 100644
 --- components/crash/core/app/crash_reporter_client.h
 +++ components/crash/core/app/crash_reporter_client.h
 @@ -5,7 +5,9 @@
@@ -324,13 +320,10 @@ index 05538423d0b9..d54dbe858e8e 100644
  #endif
  
    // The location where minidump files should be written. Returns true if
-@@ -210,6 +214,30 @@ class CrashReporterClient {
+@@ -210,6 +214,27 @@ class CrashReporterClient {
  
    // Returns true if breakpad should run in the given process type.
    virtual bool EnableBreakpadForProcess(const std::string& process_type);
-+
-+  // Returns the URL for submitting crash reports.
-+  virtual std::string GetCrashServerURL();
 +
 +  // Populate |arguments| with additional optional arguments.
 +  virtual void GetCrashOptionalArguments(std::vector<std::string>* arguments);
