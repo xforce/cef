@@ -155,6 +155,13 @@ bool IsSystemCursorID(LPCWSTR cursor_id) {
 
 ui::PlatformCursor CefRenderWidgetHostViewOSR::GetPlatformCursor(
     ui::mojom::CursorType type) {
+  // Using a dark 1x1 bit bmp kNone cursor may still cause DWM to do composition
+  // work unnecessarily. Better to totally remove it from the screen.
+  // crbug.com/1069698
+  if (type == ui::mojom::CursorType::kNone) {
+    return nullptr;
+  }
+
   HMODULE module_handle = NULL;
   const wchar_t* cursor_id = ToCursorID(type);
   if (!IsSystemCursorID(cursor_id)) {
