@@ -396,7 +396,7 @@ CefBrowserPlatformDelegateNativeMac::TranslateWebKeyEvent(
     const CefKeyEvent& key_event) const {
   content::NativeWebKeyboardEvent result(
       blink::WebInputEvent::Type::kUndefined,
-      blink::WebInputEvent::Type::kNoModifiers, ui::EventTimeForNow());
+      blink::WebInputEvent::Modifiers::kNoModifiers, ui::EventTimeForNow());
 
   // Use a synthetic NSEvent in order to obtain the windowsKeyCode member from
   // the NativeWebKeyboardEvent constructor. This is the only member which can
