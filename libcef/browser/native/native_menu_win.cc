@@ -292,9 +292,14 @@ class CefNativeMenuWin::MenuHostWindow {
       // TODO(alexander): Update to handle VectorIcon
       ui::ImageModel icon =
           data->native_menu_win->model_->GetIconAt(data->model_index);
-      if (icon.IsImage()) {
+      if (icon.IsImage() || icon.IsVectorIcon()) {
+        ui::NativeTheme* native_theme =
+            ui::NativeTheme::GetInstanceForNativeUi();
+
         // We currently don't support items with both icons and checkboxes.
-        const gfx::ImageSkia skia_icon = icon.GetImage().AsImageSkia();
+        const gfx::ImageSkia skia_icon = icon.IsImage() ? icon.GetImage().AsImageSkia()
+            : ui::ThemedVectorIcon(icon.GetVectorIcon()).GetImageSkia(native_theme, 16);
+
         DCHECK(type != ui::MenuModel::TYPE_CHECK);
         std::unique_ptr<SkCanvas> canvas = skia::CreatePlatformCanvas(
             skia_icon.width(), skia_icon.height(), false);
